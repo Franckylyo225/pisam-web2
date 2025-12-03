@@ -134,7 +134,7 @@ const HeroSection = () => {
             </div>
 
             {/* Trust badges */}
-            <div className="flex flex-wrap gap-8 justify-center pb-16">
+            <div className="flex flex-wrap gap-8 justify-center">
               <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm px-5 py-3 rounded-xl">
                 <div className="w-10 h-10 rounded-full bg-pisam-gold/30 flex items-center justify-center">
                   <span className="text-pisam-gold font-bold text-sm">ISO</span>
@@ -167,8 +167,8 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Slider Navigation */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-4">
+      {/* Slider Navigation - Left side */}
+      <div className="absolute left-6 md:left-10 top-1/2 -translate-y-1/2 z-20 flex flex-col items-center gap-4">
         <button
           onClick={scrollPrev}
           className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/30 transition-colors"
@@ -177,15 +177,15 @@ const HeroSection = () => {
           <ChevronLeft className="h-5 w-5" />
         </button>
         
-        <div className="flex gap-2">
+        <div className="flex flex-col gap-2">
           {slides.map((_, index) => (
             <button
               key={index}
               onClick={() => emblaApi?.scrollTo(index)}
-              className={`h-2 rounded-full transition-all duration-300 ${
+              className={`w-2 rounded-full transition-all duration-300 ${
                 selectedIndex === index
-                  ? "w-8 bg-white"
-                  : "w-2 bg-white/50 hover:bg-white/70"
+                  ? "h-8 bg-white"
+                  : "h-2 bg-white/50 hover:bg-white/70"
               }`}
               aria-label={`Aller au slide ${index + 1}`}
             />
