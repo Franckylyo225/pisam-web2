@@ -6,6 +6,7 @@ import Autoplay from "embla-carousel-autoplay";
 
 import heroSlide1 from "@/assets/hero-slide-1.jpg";
 import heroSlide2 from "@/assets/hero-slide-2.jpg";
+import heroSlidePisamPlus from "@/assets/hero-slide-pisam-plus.jpg";
 
 const slides = [
   {
@@ -19,6 +20,12 @@ const slides = [
     subtitle: "PISAM 2.0",
     title: "Un hôpital plus proche de vous",
     description: "La PISAM se réinvente pour mieux répondre à vos besoins. Grâce à des services digitalisés, une meilleure accessibilité et des équipes toujours à votre écoute, nous rapprochons la qualité des soins de chaque patient, où qu'il soit.",
+  },
+  {
+    image: heroSlidePisamPlus,
+    subtitle: "CARTE PISAM+",
+    title: "Santé, technologie et paix d'esprit",
+    description: "Avec la carte PISAM+, bénéficiez d'une expérience de santé simplifiée et connectée. Accédez à vos services médicaux, à vos suivis personnalisés et à des avantages exclusifs pour une prise en charge rapide et sereine.",
   },
 ];
 
