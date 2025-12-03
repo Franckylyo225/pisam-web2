@@ -107,7 +107,7 @@ const HeroSection = () => {
                   </h1>
 
                   {/* Description */}
-                  <p className="text-lg md:text-xl lg:text-2xl text-white/90 mb-10 max-w-3xl mx-auto leading-relaxed font-light">
+                  <p className="text-base md:text-lg text-white/85 mb-10 max-w-2xl mx-auto leading-relaxed font-light">
                     {slide.description}
                   </p>
                 </div>
@@ -134,7 +134,7 @@ const HeroSection = () => {
             </div>
 
             {/* Trust badges */}
-            <div className="flex flex-wrap gap-8 justify-center">
+            <div className="flex flex-wrap gap-8 justify-center pb-16">
               <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm px-5 py-3 rounded-xl">
                 <div className="w-10 h-10 rounded-full bg-pisam-gold/30 flex items-center justify-center">
                   <span className="text-pisam-gold font-bold text-sm">ISO</span>
@@ -168,7 +168,7 @@ const HeroSection = () => {
       </div>
 
       {/* Slider Navigation */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-4">
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-4">
         <button
           onClick={scrollPrev}
           className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/30 transition-colors"
