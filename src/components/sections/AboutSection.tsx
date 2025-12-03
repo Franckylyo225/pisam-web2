@@ -12,10 +12,10 @@ const features = [
 ];
 
 const stats = [
-  { icon: Building2, value: "30+", label: "Années d'excellence" },
-  { icon: Users, value: "150+", label: "Médecins spécialistes" },
-  { icon: Award, value: "ISO", label: "Certifié qualité" },
-  { icon: Clock, value: "24/7", label: "Service d'urgences" },
+  { icon: Users, value: "+150", label: "Professionnels de santé" },
+  { icon: Award, value: "+50", label: "Spécialités médicales et chirurgicales" },
+  { icon: Building2, value: "+300", label: "Lits d'hospitalisation" },
+  { icon: Clock, value: "+30", label: "Années d'excellence" },
 ];
 
 const AboutSection = () => {
@@ -39,11 +39,11 @@ const AboutSection = () => {
               <div className="absolute -bottom-8 -right-8 bg-card rounded-2xl p-6 shadow-pisam-lg border border-border/50">
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 rounded-full bg-pisam-green/10 flex items-center justify-center">
-                    <Award className="h-8 w-8 text-pisam-green" />
+                    <Building2 className="h-8 w-8 text-pisam-green" />
                   </div>
                   <div>
-                    <div className="text-3xl font-bold text-foreground">30+</div>
-                    <div className="text-sm text-muted-foreground">ans d'excellence</div>
+                    <div className="text-3xl font-bold text-foreground">+300</div>
+                    <div className="text-sm text-muted-foreground">lits d'hospitalisation</div>
                   </div>
                 </div>
               </div>
