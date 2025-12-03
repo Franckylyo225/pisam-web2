@@ -1,4 +1,5 @@
 import { Monitor, Building, Lightbulb, Award, Users, Sparkles } from "lucide-react";
+import labScientist from "@/assets/pisam2-lab-scientist.jpg";
 
 const features = [
   {
@@ -26,12 +27,15 @@ const features = [
 const Pisam2Section = () => {
   return (
     <section id="pisam2" className="relative overflow-hidden">
-      {/* Header with background */}
-      <div className="relative bg-gradient-to-br from-slate-800 via-slate-700 to-slate-800 py-20">
-        {/* Pattern overlay */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:24px_24px]" />
-        </div>
+      {/* Header with background image */}
+      <div className="relative py-24 md:py-32">
+        {/* Background image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${labScientist})` }}
+        />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/75 to-slate-900/60" />
         
         {/* Decorative elements */}
         <div className="absolute top-10 left-10 w-3 h-3 rounded-full bg-red-500 animate-pulse" />
