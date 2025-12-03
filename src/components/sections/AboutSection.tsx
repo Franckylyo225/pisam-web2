@@ -1,6 +1,6 @@
 import { CheckCircle2, Award, Users, Clock, Building2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import clinicBuilding from "@/assets/clinic-building.jpg";
+import pisamAerialView from "@/assets/pisam-aerial-view.jpg";
 
 const features = [
   "Plus de 150 médecins spécialistes qualifiés",
@@ -29,8 +29,8 @@ const AboutSection = () => {
               {/* Main image */}
               <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-pisam-lg">
                 <img
-                  src={clinicBuilding}
-                  alt="Bâtiment de la clinique PISAM"
+                  src={pisamAerialView}
+                  alt="Vue aérienne de la PISAM - Polyclinique Internationale Sainte Anne-Marie"
                   className="w-full h-full object-cover"
                 />
               </div>
