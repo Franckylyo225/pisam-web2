@@ -1,4 +1,53 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+
+/* Proxima Nova font - using Montserrat as visual equivalent fallback */
+@font-face {
+  font-family: 'Proxima Nova';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Proxima Nova Light'), local('ProximaNova-Light');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Proxima Nova';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Proxima Nova Regular'), local('ProximaNova-Regular');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Proxima Nova';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Proxima Nova Medium'), local('ProximaNova-Medium');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Proxima Nova';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Proxima Nova Semibold'), local('ProximaNova-Semibold');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Proxima Nova';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Proxima Nova Bold'), local('ProximaNova-Bold');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Proxima Nova';
+  font-style: normal;
+  font-weight: 800;
+  src: local('Proxima Nova Extrabold'), local('ProximaNova-Extrabold');
+  font-display: swap;
+}
 
 @tailwind base;
 @tailwind components;
@@ -109,12 +158,12 @@
   
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Proxima Nova', 'Montserrat', system-ui, sans-serif;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
-    @apply font-semibold tracking-tight;
+    font-family: 'Proxima Nova', 'Montserrat', sans-serif;
+    @apply font-bold tracking-tight;
   }
 }
 

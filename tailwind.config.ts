@@ -14,8 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        serif: ['Playfair Display', 'Georgia', 'serif'],
+        sans: ['Proxima Nova', 'Montserrat', 'system-ui', 'sans-serif'],
+        serif: ['Proxima Nova', 'Montserrat', 'sans-serif'],
+        heading: ['Proxima Nova', 'Montserrat', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",

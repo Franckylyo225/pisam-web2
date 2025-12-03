@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Phone, Calendar, Shield, Award, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, Phone, Calendar, Shield, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
@@ -81,111 +81,85 @@ const HeroSection = () => {
         </svg>
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 min-h-[90vh] flex items-center">
+      {/* Content - Centered */}
+      <div className="relative z-10 min-h-[90vh] flex items-center justify-center">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left content */}
-            <div className="text-white">
-              {slides.map((slide, index) => (
-                <div
-                  key={index}
-                  className={`transition-all duration-700 ${
-                    selectedIndex === index
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 translate-y-4 absolute pointer-events-none"
-                  }`}
-                >
-                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm mb-6">
+          <div className="max-w-4xl mx-auto text-center text-white">
+            {slides.map((slide, index) => (
+              <div
+                key={index}
+                className={`transition-all duration-700 ${
+                  selectedIndex === index
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-4 absolute inset-0 pointer-events-none flex items-center justify-center"
+                }`}
+              >
+                <div className={selectedIndex === index ? "" : "max-w-4xl mx-auto px-4"}>
+                  {/* Subtitle badge */}
+                  <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/15 backdrop-blur-sm rounded-full text-sm font-semibold mb-8 tracking-wider uppercase">
                     <Shield className="h-4 w-4" />
                     <span>{slide.subtitle}</span>
                   </div>
 
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold leading-tight mb-6">
+                  {/* Title */}
+                  <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-8 tracking-tight">
                     {slide.title}
                   </h1>
 
-                  <p className="text-lg md:text-xl text-white/90 mb-8 max-w-xl">
+                  {/* Description */}
+                  <p className="text-lg md:text-xl lg:text-2xl text-white/90 mb-10 max-w-3xl mx-auto leading-relaxed font-light">
                     {slide.description}
                   </p>
                 </div>
-              ))}
-
-              <div className="flex flex-col sm:flex-row gap-4 mb-12">
-                <Button variant="hero-outline" size="xl" className="group">
-                  <Calendar className="h-5 w-5" />
-                  Prendre Rendez-vous
-                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-                </Button>
-                <Button variant="hero" size="xl" className="bg-white text-pisam-teal hover:bg-white/90">
-                  <Phone className="h-5 w-5" />
-                  +225 27 22 44 53 53
-                </Button>
               </div>
+            ))}
 
-              {/* Trust badges */}
-              <div className="flex flex-wrap gap-8">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
-                    <Award className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <div className="font-semibold">Certifié</div>
-                    <div className="text-sm text-white/70">ISO 9001</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
-                    <span className="text-xl font-bold">24</span>
-                  </div>
-                  <div>
-                    <div className="font-semibold">Urgences</div>
-                    <div className="text-sm text-white/70">24h/24 - 7j/7</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
-                    <span className="text-xl font-bold">50+</span>
-                  </div>
-                  <div>
-                    <div className="font-semibold">Spécialités</div>
-                    <div className="text-sm text-white/70">Médicales</div>
-                  </div>
-                </div>
-              </div>
+            {/* CTA Buttons - Always visible */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+              <Button 
+                size="xl" 
+                className="bg-pisam-green hover:bg-pisam-green/90 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 group"
+              >
+                <Calendar className="h-5 w-5" />
+                Prendre Rendez-vous
+                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </Button>
+              <Button 
+                size="xl" 
+                className="bg-white text-pisam-teal hover:bg-white/95 font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                <Phone className="h-5 w-5" />
+                +225 27 22 44 53 53
+              </Button>
             </div>
 
-            {/* Right content - Stats cards */}
-            <div className="hidden lg:block relative">
-              <div className="relative">
-                {/* Main card */}
-                <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 shadow-2xl">
-                  <div className="grid grid-cols-2 gap-6">
-                    <div className="text-center p-6 bg-white/10 rounded-2xl">
-                      <div className="text-4xl font-bold text-white mb-2">30+</div>
-                      <div className="text-white/70 text-sm">Années d'expérience</div>
-                    </div>
-                    <div className="text-center p-6 bg-white/10 rounded-2xl">
-                      <div className="text-4xl font-bold text-white mb-2">150+</div>
-                      <div className="text-white/70 text-sm">Médecins spécialistes</div>
-                    </div>
-                    <div className="text-center p-6 bg-white/10 rounded-2xl">
-                      <div className="text-4xl font-bold text-white mb-2">500K+</div>
-                      <div className="text-white/70 text-sm">Patients soignés</div>
-                    </div>
-                    <div className="text-center p-6 bg-white/10 rounded-2xl">
-                      <div className="text-4xl font-bold text-white mb-2">98%</div>
-                      <div className="text-white/70 text-sm">Satisfaction</div>
-                    </div>
-                  </div>
+            {/* Trust badges */}
+            <div className="flex flex-wrap gap-8 justify-center">
+              <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm px-5 py-3 rounded-xl">
+                <div className="w-10 h-10 rounded-full bg-pisam-gold/30 flex items-center justify-center">
+                  <span className="text-pisam-gold font-bold text-sm">ISO</span>
                 </div>
-
-                {/* Floating badge */}
-                <div className="absolute -bottom-6 -left-6 bg-pisam-green text-white px-6 py-3 rounded-xl shadow-lg animate-float">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 bg-white rounded-full animate-pulse" />
-                    <span className="font-semibold">Urgences ouvertes</span>
-                  </div>
+                <div className="text-left">
+                  <div className="font-semibold text-sm">Certifié</div>
+                  <div className="text-xs text-white/70">ISO 9001</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm px-5 py-3 rounded-xl">
+                <div className="w-10 h-10 rounded-full bg-red-500/30 flex items-center justify-center">
+                  <span className="text-red-300 font-bold text-sm">24</span>
+                </div>
+                <div className="text-left">
+                  <div className="font-semibold text-sm">Urgences</div>
+                  <div className="text-xs text-white/70">24h/24 - 7j/7</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm px-5 py-3 rounded-xl">
+                <div className="w-10 h-10 rounded-full bg-pisam-turquoise/30 flex items-center justify-center">
+                  <span className="text-pisam-turquoise font-bold text-sm">50+</span>
+                </div>
+                <div className="text-left">
+                  <div className="font-semibold text-sm">Spécialités</div>
+                  <div className="text-xs text-white/70">Médicales</div>
                 </div>
               </div>
             </div>
@@ -225,16 +199,6 @@ const HeroSection = () => {
         >
           <ChevronRight className="h-5 w-5" />
         </button>
-      </div>
-
-      {/* Bottom wave */}
-      <div className="absolute bottom-0 left-0 right-0 z-10">
-        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
-          <path
-            d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z"
-            fill="hsl(var(--background))"
-          />
-        </svg>
       </div>
     </section>
   );
