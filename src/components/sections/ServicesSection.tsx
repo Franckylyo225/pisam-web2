@@ -46,9 +46,9 @@ const services = [
 const checkerboardColors = [
   "bg-primary", // teal
   "bg-pisam-turquoise", // turquoise
-  "bg-primary", // teal
+  "bg-pisam-green", // green
   "bg-pisam-turquoise", // turquoise
-  "bg-pisam-turquoise", // turquoise
+  "bg-pisam-green", // green
   "bg-primary", // teal
 ];
 
