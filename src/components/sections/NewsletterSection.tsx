@@ -25,9 +25,9 @@ const NewsletterSection = () => {
   };
 
   return (
-    <section className="relative overflow-visible bg-gradient-to-r from-pisam-teal/10 via-pisam-turquoise/5 to-pisam-green/10">
+    <section className="relative overflow-visible bg-gradient-to-r from-pisam-green/20 via-pisam-green/30 to-pisam-turquoise/20">
       {/* Gradient bar at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-primary via-pisam-teal to-pisam-turquoise" />
+      <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-pisam-green via-pisam-turquoise to-pisam-green" />
 
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row items-end justify-between gap-8 lg:gap-16">
