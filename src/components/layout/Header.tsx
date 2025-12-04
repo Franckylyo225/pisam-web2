@@ -35,7 +35,7 @@ const Header = () => {
         { href: "/pisam", label: "PISAM en Bref" },
         { href: "/plateau-technique", label: "Plateau technique" },
         { href: "/certification-iso", label: "Certification ISO" },
-        { href: "/pisam#pisam-2", label: "PISAM 2.0" },
+        { href: "/pisam-2", label: "PISAM 2.0" },
       ]
     },
     { href: "/patients", label: "Patients", isRoute: true },
