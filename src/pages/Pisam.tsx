@@ -270,9 +270,18 @@ const Pisam = () => {
               </div>
 
               {/* Mission */}
-              <div className="max-w-4xl mx-auto mb-16">
-                <Card className="border-primary/20 bg-primary/5">
-                  <CardContent className="p-8">
+              <div className="mb-20">
+                <div className="grid lg:grid-cols-2 gap-10 items-center">
+                  <div className="relative order-2 lg:order-1">
+                    <img 
+                      src={pisamAerial} 
+                      alt="PISAM - Notre mission" 
+                      className="rounded-2xl shadow-pisam w-full object-cover aspect-[4/3]"
+                    />
+                    <div className="absolute -bottom-4 -left-4 w-24 h-24 rounded-xl bg-primary/10 -z-10" />
+                    <div className="absolute -top-4 -right-4 w-16 h-16 rounded-full bg-pisam-green/10 -z-10" />
+                  </div>
+                  <div className="order-1 lg:order-2">
                     <div className="flex items-center gap-4 mb-6">
                       <div className="w-14 h-14 rounded-xl bg-primary flex items-center justify-center">
                         <Target className="h-7 w-7 text-primary-foreground" />
@@ -293,12 +302,12 @@ const Pisam = () => {
                         </li>
                       ))}
                     </ul>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               </div>
 
               {/* Valeurs */}
-              <div className="max-w-4xl mx-auto">
+              <div>
                 <div className="text-center mb-8">
                   <h3 className="text-2xl font-serif font-bold text-foreground mb-3">Nos Valeurs</h3>
                   <p className="text-muted-foreground max-w-2xl mx-auto">
