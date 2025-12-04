@@ -157,10 +157,17 @@ const HeroSection = () => {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 text-white/80">
+      <button 
+        onClick={() => {
+          const nextSection = document.getElementById('about');
+          nextSection?.scrollIntoView({ behavior: 'smooth' });
+        }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 text-white/80 hover:text-white transition-colors cursor-pointer"
+        aria-label="Défiler vers le contenu"
+      >
         <span className="text-xs uppercase tracking-widest font-medium">Découvrir</span>
         <ChevronDown className="h-6 w-6 animate-bounce" />
-      </div>
+      </button>
 
       {/* Slider Navigation - Left side (hidden on mobile) */}
       <div className="absolute left-6 md:left-10 top-1/2 -translate-y-1/2 z-20 hidden md:flex flex-col items-center gap-4">
