@@ -47,21 +47,21 @@ const AboutSection = () => {
                 La Polyclinique Internationale Sainte Anne-Marie (PISAM) est un établissement hospitalier pluridisciplinaire, leader dans le secteur privé de la santé en Côte d'Ivoire et dans la sous-région depuis plus de 30 ans.
               </p>
               <div className="grid grid-cols-2 gap-3 mb-6">
-                <div className="bg-white rounded-lg px-4 py-3 flex items-center gap-2">
-                  <Building2 className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-primary text-sm font-medium">Plateau technique moderne</span>
+                <div className="flex items-center gap-2">
+                  <Building2 className="h-5 w-5 text-white/80 flex-shrink-0" />
+                  <span className="text-white text-sm">Plateau technique moderne</span>
                 </div>
-                <div className="bg-white rounded-lg px-4 py-3 flex items-center gap-2">
-                  <Stethoscope className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-primary text-sm font-medium">Bloc opératoire aux normes</span>
+                <div className="flex items-center gap-2">
+                  <Stethoscope className="h-5 w-5 text-white/80 flex-shrink-0" />
+                  <span className="text-white text-sm">Bloc opératoire aux normes</span>
                 </div>
-                <div className="bg-white rounded-lg px-4 py-3 flex items-center gap-2">
-                  <FlaskConical className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-primary text-sm font-medium">Laboratoire accrédité</span>
+                <div className="flex items-center gap-2">
+                  <FlaskConical className="h-5 w-5 text-white/80 flex-shrink-0" />
+                  <span className="text-white text-sm">Laboratoire accrédité</span>
                 </div>
-                <div className="bg-white rounded-lg px-4 py-3 flex items-center gap-2">
-                  <Siren className="h-5 w-5 text-primary flex-shrink-0" />
-                  <span className="text-primary text-sm font-medium">Urgences 24h/24</span>
+                <div className="flex items-center gap-2">
+                  <Siren className="h-5 w-5 text-white/80 flex-shrink-0" />
+                  <span className="text-white text-sm">Urgences 24h/24</span>
                 </div>
               </div>
               
