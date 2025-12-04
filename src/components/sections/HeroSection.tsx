@@ -174,8 +174,8 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Slider Navigation - Left side */}
-      <div className="absolute left-6 md:left-10 top-1/2 -translate-y-1/2 z-20 flex flex-col items-center gap-4">
+      {/* Slider Navigation - Left side (hidden on mobile) */}
+      <div className="absolute left-6 md:left-10 top-1/2 -translate-y-1/2 z-20 hidden md:flex flex-col items-center gap-4">
         <button
           onClick={scrollPrev}
           className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/30 transition-colors"
