@@ -2,84 +2,78 @@ import { Helmet } from "react-helmet-async";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { Shield, FileText, ClipboardList, LogOut, Users } from "lucide-react";
 import contactHero from "@/assets/contact-hero.jpg";
-
-const insuranceLogos = [
-  { name: "NSIA Assurances", color: "bg-blue-600" },
-  { name: "Allianz", color: "bg-blue-800" },
-  { name: "AXA", color: "bg-red-600" },
-  { name: "SUNU Assurances", color: "bg-green-600" },
-  { name: "Saham Assurance", color: "bg-orange-500" },
-  { name: "Atlantique Assurances", color: "bg-teal-600" },
-  { name: "COLINA", color: "bg-purple-600" },
-  { name: "Prudential Belife", color: "bg-indigo-600" },
-  { name: "SONAR", color: "bg-amber-600" },
-  { name: "GAC", color: "bg-emerald-600" },
-];
-
-const charteArticles = [
-  {
-    title: "Article 1 : Droit à l'information",
-    content: "Le patient a le droit d'être informé sur son état de santé, les traitements proposés, leurs alternatives et leurs risques. Cette information doit être claire, compréhensible et adaptée à chaque patient. Le médecin doit répondre à toutes les questions du patient concernant sa santé."
-  },
-  {
-    title: "Article 2 : Consentement éclairé",
-    content: "Aucun acte médical ni aucun traitement ne peut être pratiqué sans le consentement libre et éclairé du patient. Ce consentement peut être retiré à tout moment. Le patient a le droit de refuser un traitement après avoir été informé des conséquences de ce refus."
-  },
-  {
-    title: "Article 3 : Respect de la dignité",
-    content: "Le patient a droit au respect de sa dignité. Il doit être traité avec égards et considération, quels que soient son origine, son sexe, sa situation de famille, son âge, son état de santé, son handicap, ses mœurs, son orientation sexuelle, ses opinions politiques ou ses convictions religieuses."
-  },
-  {
-    title: "Article 4 : Confidentialité et secret médical",
-    content: "Le patient a droit au respect de la confidentialité des informations le concernant. Le secret médical couvre l'ensemble des informations relatives au patient : son état de santé, son diagnostic, son pronostic, son traitement et toute information personnelle le concernant."
-  },
-  {
-    title: "Article 5 : Accès au dossier médical",
-    content: "Le patient a le droit d'accéder à son dossier médical directement ou par l'intermédiaire d'un médecin qu'il désigne. Ce droit s'exerce dans le respect des règles de déontologie médicale et des dispositions légales en vigueur."
-  },
-  {
-    title: "Article 6 : Qualité des soins",
-    content: "Le patient a le droit de recevoir des soins de qualité, appropriés à son état de santé, selon les données actuelles de la science et les bonnes pratiques professionnelles. Les soins doivent être prodigués avec compétence et dans le respect des règles de l'art médical."
-  },
-  {
-    title: "Article 7 : Prise en charge de la douleur",
-    content: "Tout patient a le droit de recevoir des soins visant à soulager sa douleur. La prise en charge de la douleur doit être une préoccupation constante de l'équipe soignante. Le patient doit être informé des moyens mis à sa disposition pour l'évaluation et le traitement de sa douleur."
-  },
-  {
-    title: "Article 8 : Accompagnement en fin de vie",
-    content: "Le patient en fin de vie a droit à des soins palliatifs et à un accompagnement adapté à sa situation. Sa dignité doit être préservée et ses proches doivent pouvoir l'entourer. Les souhaits du patient concernant sa fin de vie doivent être respectés dans la mesure du possible."
-  },
-  {
-    title: "Article 9 : Droit de recours",
-    content: "Le patient a le droit d'exprimer ses observations, ses réclamations et ses plaintes. Il peut saisir la direction de l'établissement ou le département qualité pour toute remarque concernant sa prise en charge. Ses plaintes seront traitées avec diligence et impartialité."
-  },
-  {
-    title: "Article 10 : Devoirs du patient",
-    content: "Le patient s'engage à respecter les règles de fonctionnement de l'établissement, à fournir des informations exactes sur son état de santé, à suivre les prescriptions médicales et à respecter les autres patients ainsi que le personnel soignant."
-  },
-  {
-    title: "Article 11 : Participation aux frais",
-    content: "Le patient est informé des conditions financières de sa prise en charge. Il s'engage à s'acquitter des frais restant à sa charge après intervention de son organisme d'assurance maladie et de sa mutuelle ou assurance complémentaire."
-  },
-];
-
+const insuranceLogos = [{
+  name: "NSIA Assurances",
+  color: "bg-blue-600"
+}, {
+  name: "Allianz",
+  color: "bg-blue-800"
+}, {
+  name: "AXA",
+  color: "bg-red-600"
+}, {
+  name: "SUNU Assurances",
+  color: "bg-green-600"
+}, {
+  name: "Saham Assurance",
+  color: "bg-orange-500"
+}, {
+  name: "Atlantique Assurances",
+  color: "bg-teal-600"
+}, {
+  name: "COLINA",
+  color: "bg-purple-600"
+}, {
+  name: "Prudential Belife",
+  color: "bg-indigo-600"
+}, {
+  name: "SONAR",
+  color: "bg-amber-600"
+}, {
+  name: "GAC",
+  color: "bg-emerald-600"
+}];
+const charteArticles = [{
+  title: "Article 1 : Droit à l'information",
+  content: "Le patient a le droit d'être informé sur son état de santé, les traitements proposés, leurs alternatives et leurs risques. Cette information doit être claire, compréhensible et adaptée à chaque patient. Le médecin doit répondre à toutes les questions du patient concernant sa santé."
+}, {
+  title: "Article 2 : Consentement éclairé",
+  content: "Aucun acte médical ni aucun traitement ne peut être pratiqué sans le consentement libre et éclairé du patient. Ce consentement peut être retiré à tout moment. Le patient a le droit de refuser un traitement après avoir été informé des conséquences de ce refus."
+}, {
+  title: "Article 3 : Respect de la dignité",
+  content: "Le patient a droit au respect de sa dignité. Il doit être traité avec égards et considération, quels que soient son origine, son sexe, sa situation de famille, son âge, son état de santé, son handicap, ses mœurs, son orientation sexuelle, ses opinions politiques ou ses convictions religieuses."
+}, {
+  title: "Article 4 : Confidentialité et secret médical",
+  content: "Le patient a droit au respect de la confidentialité des informations le concernant. Le secret médical couvre l'ensemble des informations relatives au patient : son état de santé, son diagnostic, son pronostic, son traitement et toute information personnelle le concernant."
+}, {
+  title: "Article 5 : Accès au dossier médical",
+  content: "Le patient a le droit d'accéder à son dossier médical directement ou par l'intermédiaire d'un médecin qu'il désigne. Ce droit s'exerce dans le respect des règles de déontologie médicale et des dispositions légales en vigueur."
+}, {
+  title: "Article 6 : Qualité des soins",
+  content: "Le patient a le droit de recevoir des soins de qualité, appropriés à son état de santé, selon les données actuelles de la science et les bonnes pratiques professionnelles. Les soins doivent être prodigués avec compétence et dans le respect des règles de l'art médical."
+}, {
+  title: "Article 7 : Prise en charge de la douleur",
+  content: "Tout patient a le droit de recevoir des soins visant à soulager sa douleur. La prise en charge de la douleur doit être une préoccupation constante de l'équipe soignante. Le patient doit être informé des moyens mis à sa disposition pour l'évaluation et le traitement de sa douleur."
+}, {
+  title: "Article 8 : Accompagnement en fin de vie",
+  content: "Le patient en fin de vie a droit à des soins palliatifs et à un accompagnement adapté à sa situation. Sa dignité doit être préservée et ses proches doivent pouvoir l'entourer. Les souhaits du patient concernant sa fin de vie doivent être respectés dans la mesure du possible."
+}, {
+  title: "Article 9 : Droit de recours",
+  content: "Le patient a le droit d'exprimer ses observations, ses réclamations et ses plaintes. Il peut saisir la direction de l'établissement ou le département qualité pour toute remarque concernant sa prise en charge. Ses plaintes seront traitées avec diligence et impartialité."
+}, {
+  title: "Article 10 : Devoirs du patient",
+  content: "Le patient s'engage à respecter les règles de fonctionnement de l'établissement, à fournir des informations exactes sur son état de santé, à suivre les prescriptions médicales et à respecter les autres patients ainsi que le personnel soignant."
+}, {
+  title: "Article 11 : Participation aux frais",
+  content: "Le patient est informé des conditions financières de sa prise en charge. Il s'engage à s'acquitter des frais restant à sa charge après intervention de son organisme d'assurance maladie et de sa mutuelle ou assurance complémentaire."
+}];
 const Patients = () => {
-  return (
-    <>
+  return <>
       <Helmet>
         <title>Patients | PISAM - Polyclinique Internationale Sainte Anne-Marie</title>
         <meta name="description" content="Informations pour les patients de PISAM : assurances acceptées, procédures d'admission, consultation, hospitalisation et charte du patient." />
@@ -90,10 +84,9 @@ const Patients = () => {
       <main>
         {/* Hero Section */}
         <section className="relative h-[40vh] min-h-[300px] flex items-center justify-center overflow-hidden">
-          <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url(${contactHero})` }}
-          />
+          <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{
+          backgroundImage: `url(${contactHero})`
+        }} />
           <div className="absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/70 to-secondary/60" />
           
           <div className="container mx-auto px-4 text-center relative z-10">
@@ -122,29 +115,21 @@ const Patients = () => {
               </p>
             </div>
 
-            <Carousel
-              opts={{
-                align: "start",
-                loop: true,
-              }}
-              plugins={[
-                Autoplay({
-                  delay: 2000,
-                  stopOnInteraction: false,
-                }),
-              ]}
-              className="w-full"
-            >
+            <Carousel opts={{
+            align: "start",
+            loop: true
+          }} plugins={[Autoplay({
+            delay: 2000,
+            stopOnInteraction: false
+          })]} className="w-full">
               <CarouselContent className="-ml-4">
-                {insuranceLogos.map((insurance, index) => (
-                  <CarouselItem key={index} className="pl-4 basis-1/2 md:basis-1/4 lg:basis-1/6">
+                {insuranceLogos.map((insurance, index) => <CarouselItem key={index} className="pl-4 basis-1/2 md:basis-1/4 lg:basis-1/6">
                     <div className="p-4">
                       <div className={`${insurance.color} h-20 rounded-xl flex items-center justify-center text-white font-bold text-sm text-center p-2 shadow-md hover:shadow-lg transition-shadow`}>
                         {insurance.name}
                       </div>
                     </div>
-                  </CarouselItem>
-                ))}
+                  </CarouselItem>)}
               </CarouselContent>
             </Carousel>
           </div>
@@ -161,31 +146,21 @@ const Patients = () => {
               <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
                 Admissions
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Tout ce que vous devez savoir pour préparer votre venue à PISAM
-              </p>
+              <p className="text-muted-foreground max-w-2xl mx-auto">Orientez-vous efficacement dans vos démarches.
+Si vous ne disposez pas de numéro de dossier, informez-vous auprès de l’accueil.</p>
             </div>
 
             <Tabs defaultValue="consultation" className="w-full max-w-4xl mx-auto">
               <TabsList className="grid w-full grid-cols-3 h-auto p-1 bg-muted/50 rounded-xl mb-8">
-                <TabsTrigger 
-                  value="consultation" 
-                  className="flex items-center gap-2 py-3 px-4 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-white transition-all"
-                >
+                <TabsTrigger value="consultation" className="flex items-center gap-2 py-3 px-4 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-white transition-all">
                   <ClipboardList className="h-4 w-4" />
                   <span className="hidden sm:inline">Consultation</span>
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="hospitalisation"
-                  className="flex items-center gap-2 py-3 px-4 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-white transition-all"
-                >
+                <TabsTrigger value="hospitalisation" className="flex items-center gap-2 py-3 px-4 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-white transition-all">
                   <Users className="h-4 w-4" />
                   <span className="hidden sm:inline">Hospitalisation</span>
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="sortie"
-                  className="flex items-center gap-2 py-3 px-4 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-white transition-all"
-                >
+                <TabsTrigger value="sortie" className="flex items-center gap-2 py-3 px-4 rounded-lg data-[state=active]:bg-primary data-[state=active]:text-white transition-all">
                   <LogOut className="h-4 w-4" />
                   <span className="hidden sm:inline">Formalités de sortie</span>
                 </TabsTrigger>
@@ -311,12 +286,7 @@ const Patients = () => {
 
             <div className="max-w-4xl mx-auto">
               <Accordion type="single" collapsible className="space-y-3">
-                {charteArticles.map((article, index) => (
-                  <AccordionItem 
-                    key={index} 
-                    value={`article-${index}`}
-                    className="bg-card rounded-xl border shadow-sm overflow-hidden"
-                  >
+                {charteArticles.map((article, index) => <AccordionItem key={index} value={`article-${index}`} className="bg-card rounded-xl border shadow-sm overflow-hidden">
                     <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-muted/50 transition-colors">
                       <span className="text-left font-semibold text-foreground">
                         {article.title}
@@ -325,8 +295,7 @@ const Patients = () => {
                     <AccordionContent className="px-6 pb-4 text-muted-foreground leading-relaxed">
                       {article.content}
                     </AccordionContent>
-                  </AccordionItem>
-                ))}
+                  </AccordionItem>)}
               </Accordion>
             </div>
           </div>
@@ -334,8 +303,6 @@ const Patients = () => {
       </main>
 
       <Footer />
-    </>
-  );
+    </>;
 };
-
 export default Patients;
