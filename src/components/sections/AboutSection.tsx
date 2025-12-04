@@ -1,14 +1,39 @@
 import { Award, Users, Clock, Building2, Stethoscope, FlaskConical, Siren, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useCounterAnimation } from "@/hooks/use-counter-animation";
 import pisamAerialView from "@/assets/pisam-aerial-view.jpg";
 
 const stats = [
-  { icon: Users, value: "+150", label: "Professionnels de santé" },
-  { icon: Award, value: "+50", label: "Spécialités médicales et chirurgicales" },
-  { icon: Building2, value: "+300", label: "Lits d'hospitalisation" },
-  { icon: Clock, value: "+30", label: "Années d'excellence" },
+  { icon: Users, value: 150, label: "Professionnels de santé", prefix: "+" },
+  { icon: Award, value: 50, label: "Spécialités médicales et chirurgicales", prefix: "+" },
+  { icon: Building2, value: 300, label: "Lits d'hospitalisation", prefix: "+" },
+  { icon: Clock, value: 30, label: "Années d'excellence", prefix: "+" },
 ];
+
+const StatCard = ({ stat, index }: { stat: typeof stats[0]; index: number }) => {
+  const { ref, displayValue, isVisible } = useCounterAnimation({
+    end: stat.value,
+    duration: 2000,
+    prefix: stat.prefix,
+  });
+
+  return (
+    <div
+      ref={ref}
+      className={`text-center p-8 bg-card rounded-2xl border border-border/50 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 ${
+        isVisible ? 'animate-fade-in' : 'opacity-0'
+      }`}
+      style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'both' }}
+    >
+      <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+        <stat.icon className="h-7 w-7 text-primary" />
+      </div>
+      <div className="text-3xl md:text-4xl font-bold text-primary mb-2">{displayValue}</div>
+      <div className="text-sm text-muted-foreground">{stat.label}</div>
+    </div>
+  );
+};
 
 const AboutSection = () => {
   return (
@@ -69,17 +94,7 @@ const AboutSection = () => {
         {/* Stats row - full width */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {stats.map((stat, index) => (
-            <div
-              key={stat.label}
-              className="text-center p-8 bg-card rounded-2xl border border-border/50 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 animate-fade-in"
-              style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'both' }}
-            >
-              <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                <stat.icon className="h-7 w-7 text-primary" />
-              </div>
-              <div className="text-3xl md:text-4xl font-bold text-primary mb-2">{stat.value}</div>
-              <div className="text-sm text-muted-foreground">{stat.label}</div>
-            </div>
+            <StatCard key={stat.label} stat={stat} index={index} />
           ))}
         </div>
       </div>
