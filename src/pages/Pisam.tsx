@@ -227,7 +227,7 @@ const Pisam = () => {
                   align: "start",
                   loop: true,
                 }}
-                className="w-full max-w-5xl mx-auto"
+                className="w-full"
               >
                 <CarouselContent className="-ml-4">
                   {leaders.map((leader, index) => (
@@ -327,58 +327,6 @@ const Pisam = () => {
                       </CardContent>
                     </Card>
                   ))}
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Politique Qualité / ISO Section */}
-          <section className="py-20 bg-primary text-primary-foreground relative overflow-hidden">
-            <div className="absolute inset-0 opacity-10">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(255,255,255,0.3)_1px,transparent_1px)] bg-[length:32px_32px]" />
-            </div>
-            <div className="container mx-auto px-4 relative z-10">
-              <div className="max-w-4xl mx-auto">
-                <div className="grid md:grid-cols-2 gap-12 items-center">
-                  <div>
-                    <span className="inline-block px-4 py-1.5 bg-white/10 text-white rounded-full text-sm font-medium mb-4">
-                      Certification
-                    </span>
-                    <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">
-                      Notre politique qualité : Certifiée ISO 9001:2015
-                    </h2>
-                    <p className="text-white/80 mb-6">
-                      PISAM est fière d'être certifiée ISO 9001:2015, attestant de notre engagement constant 
-                      pour l'amélioration continue de nos services et la satisfaction de nos patients.
-                    </p>
-                    <ul className="space-y-3">
-                      {[
-                        "Processus de soins standardisés et optimisés",
-                        "Formation continue du personnel médical",
-                        "Évaluation régulière de la satisfaction patient",
-                        "Amélioration continue de nos pratiques",
-                        "Traçabilité et sécurité des soins"
-                      ].map((item, index) => (
-                        <li key={index} className="flex items-start gap-3">
-                          <CheckCircle2 className="h-5 w-5 text-pisam-green flex-shrink-0 mt-0.5" />
-                          <span className="text-white/90">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="flex justify-center">
-                    <div className="relative">
-                      <div className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center">
-                        <div className="text-center">
-                          <Award className="h-16 w-16 md:h-20 md:w-20 text-white mx-auto mb-2" />
-                          <p className="text-2xl md:text-3xl font-bold">ISO</p>
-                          <p className="text-lg md:text-xl">9001:2015</p>
-                        </div>
-                      </div>
-                      <div className="absolute -top-4 -right-4 w-20 h-20 rounded-full bg-pisam-green/20 animate-pulse" />
-                      <div className="absolute -bottom-4 -left-4 w-16 h-16 rounded-full bg-pisam-gold/20 animate-pulse delay-500" />
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
