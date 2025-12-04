@@ -34,7 +34,7 @@ const Header = () => {
       submenu: [
         { href: "/pisam", label: "PISAM en Bref" },
         { href: "/plateau-technique", label: "Plateau technique" },
-        { href: "/pisam#certification", label: "Certification ISO" },
+        { href: "/certification-iso", label: "Certification ISO" },
         { href: "/pisam#pisam-2", label: "PISAM 2.0" },
       ]
     },
