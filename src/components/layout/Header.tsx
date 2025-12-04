@@ -39,7 +39,7 @@ const Header = () => {
       ]
     },
     { href: "/patients", label: "Patients", isRoute: true },
-    { href: "#medecins", label: "Médecins", isRoute: false },
+    { href: "/medecins", label: "Médecins", isRoute: true },
     { 
       href: "#services", 
       label: "Services", 
