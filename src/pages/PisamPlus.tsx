@@ -275,13 +275,16 @@ const PisamPlus = () => {
               {/* PISAM Advantages */}
               <Card className="border-primary/20 hover:shadow-xl transition-all duration-300">
                 <CardContent className="p-6">
-                  <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-6">
+                  <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                     <Heart className="h-7 w-7 text-primary" />
                   </div>
-                  <h3 className="font-proxima text-xl font-bold text-foreground mb-4">
+                  <h3 className="font-proxima text-xl font-bold text-foreground mb-2">
                     Avantages à la PISAM
                   </h3>
-                  <ul className="space-y-3">
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Accès facilité aux soins et réductions exclusives.
+                  </p>
+                  <ul className="space-y-2">
                     {pisamAdvantages.map((advantage, index) => (
                       <li key={index} className="flex items-start gap-2 text-sm text-muted-foreground">
                         <CheckCircle className="h-4 w-4 text-primary shrink-0 mt-0.5" />
@@ -295,13 +298,16 @@ const PisamPlus = () => {
               {/* Bank Advantages */}
               <Card className="border-secondary/20 hover:shadow-xl transition-all duration-300">
                 <CardContent className="p-6">
-                  <div className="w-14 h-14 rounded-full bg-secondary/10 flex items-center justify-center mb-6">
+                  <div className="w-14 h-14 rounded-full bg-secondary/10 flex items-center justify-center mb-4">
                     <Building2 className="h-7 w-7 text-secondary" />
                   </div>
-                  <h3 className="font-proxima text-xl font-bold text-foreground mb-4">
+                  <h3 className="font-proxima text-xl font-bold text-foreground mb-2">
                     Avantages Banques & Assurances
                   </h3>
-                  <ul className="space-y-3 mb-6">
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Carte VISA prépayée et options d'assurance.
+                  </p>
+                  <ul className="space-y-2 mb-4">
                     {bankAdvantages.map((advantage, index) => (
                       <li key={index} className="flex items-start gap-2 text-sm text-muted-foreground">
                         <CheckCircle className="h-4 w-4 text-secondary shrink-0 mt-0.5" />
@@ -309,12 +315,12 @@ const PisamPlus = () => {
                       </li>
                     ))}
                   </ul>
-                  <div className="pt-4 border-t border-border">
-                    <p className="text-sm font-semibold text-foreground mb-2">Possibilité d'adhérer à :</p>
-                    <ul className="space-y-2">
+                  <div className="pt-3 border-t border-border">
+                    <p className="text-xs font-semibold text-foreground mb-2">Assurances disponibles :</p>
+                    <ul className="space-y-1">
                       {insuranceOptions.map((option, index) => (
-                        <li key={index} className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <Shield className="h-4 w-4 text-secondary" />
+                        <li key={index} className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <Shield className="h-3 w-3 text-secondary" />
                           <span>{option}</span>
                         </li>
                       ))}
@@ -326,17 +332,20 @@ const PisamPlus = () => {
               {/* Partner Discounts */}
               <Card className="border-accent/20 hover:shadow-xl transition-all duration-300">
                 <CardContent className="p-6">
-                  <div className="w-14 h-14 rounded-full bg-accent/30 flex items-center justify-center mb-6">
+                  <div className="w-14 h-14 rounded-full bg-accent/30 flex items-center justify-center mb-4">
                     <ShoppingBag className="h-7 w-7 text-accent-foreground" />
                   </div>
-                  <h3 className="font-proxima text-xl font-bold text-foreground mb-4">
+                  <h3 className="font-proxima text-xl font-bold text-foreground mb-2">
                     Privilèges chez nos partenaires
                   </h3>
-                  <ul className="space-y-3">
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Réductions exclusives chez nos partenaires.
+                  </p>
+                  <ul className="space-y-2">
                     {partnerDiscounts.map((item, index) => (
-                      <li key={index} className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
+                      <li key={index} className="flex items-center justify-between p-2 rounded-lg bg-muted/50">
                         <span className="text-sm text-foreground">{item.partner}</span>
-                        <Badge variant="secondary" className="font-bold">
+                        <Badge variant="secondary" className="font-bold text-xs">
                           {item.discount}
                         </Badge>
                       </li>
