@@ -47,7 +47,7 @@ const Header = () => {
       submenu: [
         { href: "/biocsam", label: "BioCSAM" },
         { href: "/cisam", label: "CISAM" },
-        { href: "/#pisam-plus", label: "Carte PISAM+" },
+        { href: "/pisam-plus", label: "Carte PISAM+" },
       ]
     },
     { href: "/blog", label: "Actualité", isRoute: true },
