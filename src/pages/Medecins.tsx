@@ -6,8 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Stethoscope, Clock, Phone, Mail, Search } from "lucide-react";
+import { Stethoscope, Clock, Phone, Mail } from "lucide-react";
 
 interface Doctor {
   id: number;
@@ -81,18 +80,12 @@ const categories = [...new Set(doctors.map(d => d.category))];
 const Medecins = () => {
   const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const filteredDoctors = doctors.filter(d => {
-    const matchesCategory = selectedCategory ? d.category === selectedCategory : true;
-    const matchesSearch = searchQuery 
-      ? d.name.toLowerCase().includes(searchQuery.toLowerCase()) 
-      : true;
-    return matchesCategory && matchesSearch;
-  });
+  const filteredDoctors = selectedCategory 
+    ? doctors.filter(d => d.category === selectedCategory)
+    : [];
 
   const currentSpecialtyInfo = selectedCategory ? specialtyDescriptions[selectedCategory] : null;
-  const showDoctors = selectedCategory || searchQuery;
 
   return (
     <>
@@ -122,72 +115,46 @@ const Medecins = () => {
           </div>
         </section>
 
-        {/* Filters Section */}
+        {/* Specialty Selector */}
         <section className="py-12 bg-muted/30">
           <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto space-y-6">
-              {/* Search Bar */}
-              <div>
-                <label className="block text-sm font-medium text-muted-foreground mb-3 text-center">
-                  Rechercher un médecin par nom
-                </label>
-                <div className="relative">
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                  <Input
-                    type="text"
-                    placeholder="Tapez le nom d'un médecin..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full h-14 pl-12 text-lg bg-background border-2 border-primary/20 focus:border-primary"
-                  />
-                </div>
-              </div>
-
-              {/* Specialty Select */}
-              <div>
-                <label className="block text-sm font-medium text-muted-foreground mb-3 text-center">
-                  Ou filtrer par spécialité médicale
-                </label>
-                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                  <SelectTrigger className="w-full h-14 text-lg bg-background border-2 border-primary/20 focus:border-primary">
-                    <SelectValue placeholder="Choisir une spécialité..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map((category) => (
-                      <SelectItem key={category} value={category} className="text-base py-3">
-                        {category}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+            <div className="max-w-xl mx-auto">
+              <label className="block text-sm font-medium text-muted-foreground mb-3 text-center">
+                Sélectionnez une spécialité médicale
+              </label>
+              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <SelectTrigger className="w-full h-14 text-lg bg-background border-2 border-primary/20 focus:border-primary">
+                  <SelectValue placeholder="Choisir une spécialité..." />
+                </SelectTrigger>
+                <SelectContent>
+                  {categories.map((category) => (
+                    <SelectItem key={category} value={category} className="text-base py-3">
+                      {category}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </section>
 
         {/* Specialty Description & Doctors */}
-        {showDoctors && (
+        {selectedCategory && currentSpecialtyInfo && (
           <section className="py-16 bg-background">
             <div className="container mx-auto px-4">
               {/* Specialty Description */}
-              {currentSpecialtyInfo && (
-                <div className="max-w-3xl mx-auto mb-12 text-center">
-                  <div className="flex items-center justify-center gap-3 mb-4">
-                    <Stethoscope className="h-8 w-8 text-primary" />
-                    <h2 className="font-proxima text-3xl md:text-4xl font-bold text-foreground">
-                      {currentSpecialtyInfo.name}
-                    </h2>
-                  </div>
-                  <p className="text-muted-foreground text-lg leading-relaxed">
-                    {currentSpecialtyInfo.description}
-                  </p>
+              <div className="max-w-3xl mx-auto mb-12 text-center">
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <Stethoscope className="h-8 w-8 text-primary" />
+                  <h2 className="font-proxima text-3xl md:text-4xl font-bold text-foreground">
+                    {currentSpecialtyInfo.name}
+                  </h2>
                 </div>
-              )}
-              
-              {/* Results Count */}
-              <div className="text-center mb-8">
-                <Badge variant="secondary">
-                  {filteredDoctors.length} médecin{filteredDoctors.length > 1 ? 's' : ''} trouvé{filteredDoctors.length > 1 ? 's' : ''}
+                <p className="text-muted-foreground text-lg leading-relaxed">
+                  {currentSpecialtyInfo.description}
+                </p>
+                <Badge variant="secondary" className="mt-4">
+                  {filteredDoctors.length} médecin{filteredDoctors.length > 1 ? 's' : ''} disponible{filteredDoctors.length > 1 ? 's' : ''}
                 </Badge>
               </div>
 
@@ -235,12 +202,12 @@ const Medecins = () => {
         )}
 
         {/* Empty State */}
-        {!showDoctors && (
+        {!selectedCategory && (
           <section className="py-24 bg-background">
             <div className="container mx-auto px-4 text-center">
               <Stethoscope className="h-16 w-16 text-muted-foreground/30 mx-auto mb-4" />
               <h3 className="text-xl font-medium text-muted-foreground">
-                Recherchez un médecin ou sélectionnez une spécialité
+                Sélectionnez une spécialité pour voir les médecins disponibles
               </h3>
             </div>
           </section>
