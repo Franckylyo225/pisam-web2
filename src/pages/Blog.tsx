@@ -24,6 +24,7 @@ const allArticles = [
     categoryLabel: "Innovation",
     date: "28 Nov 2024",
     readTime: "4 min",
+    image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=600&h=400&fit=crop",
   },
   {
     id: 2,
@@ -33,6 +34,7 @@ const allArticles = [
     categoryLabel: "Événement",
     date: "14 Nov 2024",
     readTime: "3 min",
+    image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&h=400&fit=crop",
   },
   {
     id: 3,
@@ -42,6 +44,7 @@ const allArticles = [
     categoryLabel: "Actualité",
     date: "05 Nov 2024",
     readTime: "5 min",
+    image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=600&h=400&fit=crop",
   },
   {
     id: 4,
@@ -51,6 +54,7 @@ const allArticles = [
     categoryLabel: "Innovation",
     date: "25 Oct 2024",
     readTime: "4 min",
+    image: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?w=600&h=400&fit=crop",
   },
   {
     id: 5,
@@ -60,6 +64,7 @@ const allArticles = [
     categoryLabel: "Événement",
     date: "18 Oct 2024",
     readTime: "3 min",
+    image: "https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?w=600&h=400&fit=crop",
   },
   {
     id: 6,
@@ -69,6 +74,7 @@ const allArticles = [
     categoryLabel: "Santé",
     date: "10 Oct 2024",
     readTime: "6 min",
+    image: "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?w=600&h=400&fit=crop",
   },
   {
     id: 7,
@@ -78,6 +84,7 @@ const allArticles = [
     categoryLabel: "Prévention",
     date: "01 Oct 2024",
     readTime: "7 min",
+    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&h=400&fit=crop",
   },
   {
     id: 8,
@@ -87,6 +94,7 @@ const allArticles = [
     categoryLabel: "Actualité",
     date: "22 Sep 2024",
     readTime: "4 min",
+    image: "https://images.unsplash.com/photo-1562774053-701939374585?w=600&h=400&fit=crop",
   },
   {
     id: 9,
@@ -96,6 +104,7 @@ const allArticles = [
     categoryLabel: "Prévention",
     date: "15 Sep 2024",
     readTime: "3 min",
+    image: "https://images.unsplash.com/photo-1615631648086-325025c9e51e?w=600&h=400&fit=crop",
   },
 ];
 
@@ -189,43 +198,55 @@ const Blog = () => {
                     {filteredArticles.map((article) => (
                       <article
                         key={article.id}
-                        className="group bg-card rounded-2xl p-6 shadow-sm border border-border/50 hover:shadow-pisam-lg transition-all duration-300"
+                        className="group bg-card rounded-2xl overflow-hidden shadow-sm border border-border/50 hover:shadow-pisam-lg transition-all duration-300"
                       >
-                        {/* Category badge */}
-                        <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full mb-4">
-                          {article.categoryLabel}
-                        </span>
-
-                        {/* Title */}
-                        <h2 className="text-lg font-bold text-foreground mb-3 line-clamp-2 group-hover:text-primary transition-colors">
-                          {article.title}
-                        </h2>
-
-                        {/* Excerpt */}
-                        <p className="text-muted-foreground text-sm line-clamp-3 mb-4">
-                          {article.excerpt}
-                        </p>
-
-                        {/* Meta */}
-                        <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
-                          <div className="flex items-center gap-1">
-                            <Calendar className="h-4 w-4" />
-                            <span>{article.date}</span>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <Clock className="h-4 w-4" />
-                            <span>{article.readTime}</span>
+                        {/* Image */}
+                        <div className="relative aspect-[16/10] overflow-hidden">
+                          <img
+                            src={article.image}
+                            alt={article.title}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                          <div className="absolute top-4 left-4">
+                            <span className="px-3 py-1 bg-primary text-primary-foreground text-xs font-medium rounded-full">
+                              {article.categoryLabel}
+                            </span>
                           </div>
                         </div>
 
-                        {/* Read more link */}
-                        <a
-                          href="#"
-                          className="inline-flex items-center gap-2 text-primary font-medium text-sm group/link"
-                        >
-                          Lire l'article
-                          <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
-                        </a>
+                        {/* Content */}
+                        <div className="p-6">
+                          {/* Title */}
+                          <h2 className="text-lg font-bold text-foreground mb-3 line-clamp-2 group-hover:text-primary transition-colors">
+                            {article.title}
+                          </h2>
+
+                          {/* Excerpt */}
+                          <p className="text-muted-foreground text-sm line-clamp-2 mb-4">
+                            {article.excerpt}
+                          </p>
+
+                          {/* Meta */}
+                          <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
+                            <div className="flex items-center gap-1">
+                              <Calendar className="h-4 w-4" />
+                              <span>{article.date}</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Clock className="h-4 w-4" />
+                              <span>{article.readTime}</span>
+                            </div>
+                          </div>
+
+                          {/* Read more link */}
+                          <a
+                            href="#"
+                            className="inline-flex items-center gap-2 text-primary font-medium text-sm group/link"
+                          >
+                            Lire l'article
+                            <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+                          </a>
+                        </div>
                       </article>
                     ))}
                   </div>
