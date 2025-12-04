@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Phone, Calendar, Shield, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, Calendar, Shield, ChevronLeft, ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
@@ -14,18 +15,24 @@ const slides = [
     subtitle: "GROUPE PISAM",
     title: "Un havre de santé au cœur d'Abidjan",
     description: "Depuis plus de trois décennies, la PISAM incarne l'excellence médicale en Côte d'Ivoire. Au cœur d'Abidjan, notre hôpital allie expertise, humanité et innovation pour offrir des soins de qualité, dans un environnement moderne et bienveillant.",
+    primaryBtn: { label: "Qui Sommes-nous ?", link: "/pisam" },
+    secondaryBtn: { label: "Prendre Rendez-vous", link: "#" },
   },
   {
     image: heroSlide2,
     subtitle: "PISAM 2.0",
     title: "Un hôpital plus proche de vous",
     description: "La PISAM se réinvente pour mieux répondre à vos besoins. Grâce à des services digitalisés, une meilleure accessibilité et des équipes toujours à votre écoute, nous rapprochons la qualité des soins de chaque patient, où qu'il soit.",
+    primaryBtn: { label: "En savoir plus", link: "/pisam-2" },
+    secondaryBtn: { label: "Prendre Rendez-vous", link: "#" },
   },
   {
     image: heroSlidePisamPlus,
     subtitle: "CARTE PISAM+",
     title: "Santé, technologie et paix d'esprit",
     description: "Avec la carte PISAM+, bénéficiez d'une expérience de santé simplifiée et connectée. Accédez à vos services médicaux, à vos suivis personnalisés et à des avantages exclusifs pour une prise en charge rapide et sereine.",
+    primaryBtn: { label: "Commandez ma Carte", link: "/pisam-plus" },
+    secondaryBtn: { label: "Prendre Rendez-vous", link: "#" },
   },
 ];
 
@@ -121,22 +128,27 @@ const HeroSection = () => {
               </div>
             ))}
 
-            {/* CTA Buttons - Always visible */}
+            {/* CTA Buttons - Dynamic per slide */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
               <Button 
+                asChild
                 size="xl" 
                 className="bg-pisam-green hover:bg-pisam-green/90 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 group"
               >
-                <Calendar className="h-5 w-5" />
-                Prendre Rendez-vous
-                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                <Link to={slides[selectedIndex].primaryBtn.link}>
+                  {slides[selectedIndex].primaryBtn.label}
+                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </Link>
               </Button>
               <Button 
+                asChild
                 size="xl" 
-                className="bg-white text-pisam-teal hover:bg-white/95 font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                className="bg-white/20 backdrop-blur-sm text-white border border-white/30 hover:bg-white/30 font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                <Phone className="h-5 w-5" />
-                +225 27 22 44 53 53
+                <Link to={slides[selectedIndex].secondaryBtn.link}>
+                  <Calendar className="h-5 w-5" />
+                  {slides[selectedIndex].secondaryBtn.label}
+                </Link>
               </Button>
             </div>
 
