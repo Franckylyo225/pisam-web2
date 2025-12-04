@@ -5,8 +5,8 @@ import Footer from "@/components/layout/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Calendar } from "@/components/ui/calendar";
-import { Stethoscope, Clock, Phone, Mail, User } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Stethoscope, Clock, Phone, Mail } from "lucide-react";
 
 interface Doctor {
   id: number;
@@ -16,54 +16,76 @@ interface Doctor {
   phone: string;
   email: string;
   image: string;
-  availableDays: number[]; // 0 = Sunday, 1 = Monday, etc.
+  availableDays: string[];
   consultationHours: string;
 }
 
+interface SpecialtyInfo {
+  name: string;
+  description: string;
+}
+
+const specialtyDescriptions: Record<string, SpecialtyInfo> = {
+  "Cardiologie": {
+    name: "Cardiologie",
+    description: "La cardiologie est la spécialité médicale qui étudie le cœur et les vaisseaux sanguins. Nos cardiologues prennent en charge les maladies cardiovasculaires : hypertension artérielle, insuffisance cardiaque, troubles du rythme, maladies coronariennes et valvulopathies."
+  },
+  "Chirurgie": {
+    name: "Chirurgie",
+    description: "Notre service de chirurgie offre une prise en charge complète des pathologies nécessitant une intervention chirurgicale. Nos chirurgiens sont spécialisés en chirurgie générale, orthopédique, digestive et traumatologique."
+  },
+  "Pédiatrie": {
+    name: "Pédiatrie",
+    description: "La pédiatrie est consacrée à la santé et au développement de l'enfant, de la naissance à l'adolescence. Nos pédiatres assurent le suivi médical, les vaccinations et le traitement des maladies infantiles."
+  },
+  "Gynécologie": {
+    name: "Gynécologie",
+    description: "Notre service de gynécologie-obstétrique accompagne les femmes tout au long de leur vie : suivi gynécologique, contraception, grossesse, accouchement et prise en charge des pathologies féminines."
+  },
+  "Neurologie": {
+    name: "Neurologie",
+    description: "La neurologie traite les maladies du système nerveux central et périphérique : migraines, épilepsie, AVC, maladie de Parkinson, sclérose en plaques et troubles de la mémoire."
+  },
+  "Ophtalmologie": {
+    name: "Ophtalmologie",
+    description: "L'ophtalmologie prend en charge toutes les pathologies de l'œil et de la vision : troubles de la réfraction, cataracte, glaucome, dégénérescence maculaire et chirurgie réfractive."
+  },
+  "Dermatologie": {
+    name: "Dermatologie",
+    description: "La dermatologie traite les maladies de la peau, des cheveux et des ongles : acné, eczéma, psoriasis, allergies cutanées, infections et dépistage des cancers de la peau."
+  },
+  "Médecine interne": {
+    name: "Médecine interne",
+    description: "La médecine interne est une spécialité de synthèse qui prend en charge les patients présentant des pathologies complexes ou multiples, nécessitant une approche diagnostique globale."
+  }
+};
+
 const doctors: Doctor[] = [
-  // Cardiologie
-  { id: 1, name: "Dr. Kouassi Yao", specialty: "Cardiologie", category: "Cardiologie", phone: "+225 27 22 44 53 53", email: "k.yao@pisam.ci", image: "", availableDays: [1, 2, 3, 4, 5], consultationHours: "08h00 - 16h00" },
-  { id: 2, name: "Dr. Ahoua Marie", specialty: "Cardiologie interventionnelle", category: "Cardiologie", phone: "+225 27 22 44 53 53", email: "a.marie@pisam.ci", image: "", availableDays: [1, 3, 5], consultationHours: "09h00 - 14h00" },
-  // Chirurgie
-  { id: 3, name: "Dr. Touré Ibrahim", specialty: "Chirurgie générale", category: "Chirurgie", phone: "+225 27 22 44 53 53", email: "t.ibrahim@pisam.ci", image: "", availableDays: [1, 2, 4, 5], consultationHours: "07h30 - 15h00" },
-  { id: 4, name: "Dr. Koné Fatou", specialty: "Chirurgie orthopédique", category: "Chirurgie", phone: "+225 27 22 44 53 53", email: "k.fatou@pisam.ci", image: "", availableDays: [2, 3, 4], consultationHours: "08h00 - 14h00" },
-  // Pédiatrie
-  { id: 5, name: "Dr. Diallo Aminata", specialty: "Pédiatrie générale", category: "Pédiatrie", phone: "+225 27 22 44 53 53", email: "d.aminata@pisam.ci", image: "", availableDays: [1, 2, 3, 4, 5], consultationHours: "08h00 - 17h00" },
-  { id: 6, name: "Dr. Bamba Sekou", specialty: "Néonatologie", category: "Pédiatrie", phone: "+225 27 22 44 53 53", email: "b.sekou@pisam.ci", image: "", availableDays: [1, 3, 4, 5], consultationHours: "09h00 - 16h00" },
-  // Gynécologie
-  { id: 7, name: "Dr. Ouattara Mariam", specialty: "Gynécologie-Obstétrique", category: "Gynécologie", phone: "+225 27 22 44 53 53", email: "o.mariam@pisam.ci", image: "", availableDays: [1, 2, 3, 4, 5], consultationHours: "08h00 - 16h00" },
-  { id: 8, name: "Dr. N'Guessan Aya", specialty: "Médecine de la reproduction", category: "Gynécologie", phone: "+225 27 22 44 53 53", email: "n.aya@pisam.ci", image: "", availableDays: [2, 4], consultationHours: "10h00 - 15h00" },
-  // Neurologie
-  { id: 9, name: "Dr. Coulibaly Moussa", specialty: "Neurologie", category: "Neurologie", phone: "+225 27 22 44 53 53", email: "c.moussa@pisam.ci", image: "", availableDays: [1, 2, 3, 5], consultationHours: "08h30 - 15h30" },
-  // Ophtalmologie
-  { id: 10, name: "Dr. Konan Serge", specialty: "Ophtalmologie", category: "Ophtalmologie", phone: "+225 27 22 44 53 53", email: "k.serge@pisam.ci", image: "", availableDays: [1, 3, 4, 5], consultationHours: "09h00 - 16h00" },
-  // Dermatologie
-  { id: 11, name: "Dr. Aka Christelle", specialty: "Dermatologie", category: "Dermatologie", phone: "+225 27 22 44 53 53", email: "a.christelle@pisam.ci", image: "", availableDays: [2, 3, 5], consultationHours: "08h00 - 14h00" },
-  // Médecine interne
-  { id: 12, name: "Dr. Diabaté Lamine", specialty: "Médecine interne", category: "Médecine interne", phone: "+225 27 22 44 53 53", email: "d.lamine@pisam.ci", image: "", availableDays: [1, 2, 3, 4, 5], consultationHours: "08h00 - 17h00" },
+  { id: 1, name: "Dr. Kouassi Yao", specialty: "Cardiologie", category: "Cardiologie", phone: "+225 27 22 44 53 53", email: "k.yao@pisam.ci", image: "", availableDays: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"], consultationHours: "08h00 - 16h00" },
+  { id: 2, name: "Dr. Ahoua Marie", specialty: "Cardiologie interventionnelle", category: "Cardiologie", phone: "+225 27 22 44 53 53", email: "a.marie@pisam.ci", image: "", availableDays: ["Lundi", "Mercredi", "Vendredi"], consultationHours: "09h00 - 14h00" },
+  { id: 3, name: "Dr. Touré Ibrahim", specialty: "Chirurgie générale", category: "Chirurgie", phone: "+225 27 22 44 53 53", email: "t.ibrahim@pisam.ci", image: "", availableDays: ["Lundi", "Mardi", "Jeudi", "Vendredi"], consultationHours: "07h30 - 15h00" },
+  { id: 4, name: "Dr. Koné Fatou", specialty: "Chirurgie orthopédique", category: "Chirurgie", phone: "+225 27 22 44 53 53", email: "k.fatou@pisam.ci", image: "", availableDays: ["Mardi", "Mercredi", "Jeudi"], consultationHours: "08h00 - 14h00" },
+  { id: 5, name: "Dr. Diallo Aminata", specialty: "Pédiatrie générale", category: "Pédiatrie", phone: "+225 27 22 44 53 53", email: "d.aminata@pisam.ci", image: "", availableDays: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"], consultationHours: "08h00 - 17h00" },
+  { id: 6, name: "Dr. Bamba Sekou", specialty: "Néonatologie", category: "Pédiatrie", phone: "+225 27 22 44 53 53", email: "b.sekou@pisam.ci", image: "", availableDays: ["Lundi", "Mercredi", "Jeudi", "Vendredi"], consultationHours: "09h00 - 16h00" },
+  { id: 7, name: "Dr. Ouattara Mariam", specialty: "Gynécologie-Obstétrique", category: "Gynécologie", phone: "+225 27 22 44 53 53", email: "o.mariam@pisam.ci", image: "", availableDays: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"], consultationHours: "08h00 - 16h00" },
+  { id: 8, name: "Dr. N'Guessan Aya", specialty: "Médecine de la reproduction", category: "Gynécologie", phone: "+225 27 22 44 53 53", email: "n.aya@pisam.ci", image: "", availableDays: ["Mardi", "Jeudi"], consultationHours: "10h00 - 15h00" },
+  { id: 9, name: "Dr. Coulibaly Moussa", specialty: "Neurologie", category: "Neurologie", phone: "+225 27 22 44 53 53", email: "c.moussa@pisam.ci", image: "", availableDays: ["Lundi", "Mardi", "Mercredi", "Vendredi"], consultationHours: "08h30 - 15h30" },
+  { id: 10, name: "Dr. Konan Serge", specialty: "Ophtalmologie", category: "Ophtalmologie", phone: "+225 27 22 44 53 53", email: "k.serge@pisam.ci", image: "", availableDays: ["Lundi", "Mercredi", "Jeudi", "Vendredi"], consultationHours: "09h00 - 16h00" },
+  { id: 11, name: "Dr. Aka Christelle", specialty: "Dermatologie", category: "Dermatologie", phone: "+225 27 22 44 53 53", email: "a.christelle@pisam.ci", image: "", availableDays: ["Mardi", "Mercredi", "Vendredi"], consultationHours: "08h00 - 14h00" },
+  { id: 12, name: "Dr. Diabaté Lamine", specialty: "Médecine interne", category: "Médecine interne", phone: "+225 27 22 44 53 53", email: "d.lamine@pisam.ci", image: "", availableDays: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"], consultationHours: "08h00 - 17h00" },
 ];
 
 const categories = [...new Set(doctors.map(d => d.category))];
 
 const Medecins = () => {
   const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
 
   const filteredDoctors = selectedCategory 
     ? doctors.filter(d => d.category === selectedCategory)
-    : doctors;
+    : [];
 
-  const isDayAvailable = (date: Date) => {
-    if (!selectedDoctor) return false;
-    const dayOfWeek = date.getDay();
-    return selectedDoctor.availableDays.includes(dayOfWeek);
-  };
-
-  const groupedDoctors = categories.reduce((acc, category) => {
-    acc[category] = filteredDoctors.filter(d => d.category === category);
-    return acc;
-  }, {} as Record<string, Doctor[]>);
+  const currentSpecialtyInfo = selectedCategory ? specialtyDescriptions[selectedCategory] : null;
 
   return (
     <>
@@ -93,98 +115,108 @@ const Medecins = () => {
           </div>
         </section>
 
-        {/* Category Filter */}
-        <section className="py-8 bg-muted/30">
+        {/* Specialty Selector */}
+        <section className="py-12 bg-muted/30">
           <div className="container mx-auto px-4">
-            <div className="flex flex-wrap gap-3 justify-center">
-              <Badge 
-                variant={selectedCategory === null ? "default" : "outline"}
-                className="cursor-pointer text-sm px-4 py-2 hover:bg-primary hover:text-primary-foreground transition-colors"
-                onClick={() => setSelectedCategory(null)}
-              >
-                Toutes les spécialités
-              </Badge>
-              {categories.map((category) => (
-                <Badge 
-                  key={category}
-                  variant={selectedCategory === category ? "default" : "outline"}
-                  className="cursor-pointer text-sm px-4 py-2 hover:bg-primary hover:text-primary-foreground transition-colors"
-                  onClick={() => setSelectedCategory(category)}
-                >
-                  {category}
-                </Badge>
-              ))}
+            <div className="max-w-xl mx-auto">
+              <label className="block text-sm font-medium text-muted-foreground mb-3 text-center">
+                Sélectionnez une spécialité médicale
+              </label>
+              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <SelectTrigger className="w-full h-14 text-lg bg-background border-2 border-primary/20 focus:border-primary">
+                  <SelectValue placeholder="Choisir une spécialité..." />
+                </SelectTrigger>
+                <SelectContent>
+                  {categories.map((category) => (
+                    <SelectItem key={category} value={category} className="text-base py-3">
+                      {category}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </section>
 
-        {/* Doctors Directory */}
-        <section className="py-16 bg-background">
-          <div className="container mx-auto px-4">
-            {Object.entries(groupedDoctors).map(([category, categoryDoctors]) => (
-              categoryDoctors.length > 0 && (
-                <div key={category} className="mb-12">
-                  <div className="flex items-center gap-3 mb-6">
-                    <Stethoscope className="h-6 w-6 text-primary" />
-                    <h2 className="font-proxima text-2xl md:text-3xl font-bold text-foreground">
-                      {category}
-                    </h2>
-                    <Badge variant="secondary" className="ml-2">
-                      {categoryDoctors.length} médecin{categoryDoctors.length > 1 ? 's' : ''}
-                    </Badge>
-                  </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {categoryDoctors.map((doctor) => (
-                      <Card 
-                        key={doctor.id}
-                        className="group cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-border/50"
-                        onClick={() => {
-                          setSelectedDoctor(doctor);
-                          setSelectedDate(undefined);
-                        }}
-                      >
-                        <CardContent className="p-6">
-                          <div className="flex items-center gap-4 mb-4">
-                            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white text-xl font-bold">
-                              {doctor.name.split(' ').slice(1).map(n => n[0]).join('')}
-                            </div>
-                            <div className="flex-1">
-                              <h3 className="font-proxima font-semibold text-foreground group-hover:text-primary transition-colors">
-                                {doctor.name}
-                              </h3>
-                              <p className="text-sm text-muted-foreground">
-                                {doctor.specialty}
-                              </p>
-                            </div>
-                          </div>
-                          
-                          <div className="space-y-2 text-sm text-muted-foreground">
-                            <div className="flex items-center gap-2">
-                              <Clock className="h-4 w-4 text-accent" />
-                              <span>{doctor.consultationHours}</span>
-                            </div>
-                          </div>
-                          
-                          <div className="mt-4 pt-4 border-t border-border/50">
-                            <span className="text-xs text-primary font-medium">
-                              Cliquez pour voir les disponibilités →
-                            </span>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
+        {/* Specialty Description & Doctors */}
+        {selectedCategory && currentSpecialtyInfo && (
+          <section className="py-16 bg-background">
+            <div className="container mx-auto px-4">
+              {/* Specialty Description */}
+              <div className="max-w-3xl mx-auto mb-12 text-center">
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <Stethoscope className="h-8 w-8 text-primary" />
+                  <h2 className="font-proxima text-3xl md:text-4xl font-bold text-foreground">
+                    {currentSpecialtyInfo.name}
+                  </h2>
                 </div>
-              )
-            ))}
-          </div>
-        </section>
+                <p className="text-muted-foreground text-lg leading-relaxed">
+                  {currentSpecialtyInfo.description}
+                </p>
+                <Badge variant="secondary" className="mt-4">
+                  {filteredDoctors.length} médecin{filteredDoctors.length > 1 ? 's' : ''} disponible{filteredDoctors.length > 1 ? 's' : ''}
+                </Badge>
+              </div>
+
+              {/* Doctors Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {filteredDoctors.map((doctor) => (
+                  <Card 
+                    key={doctor.id}
+                    className="group cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-border/50"
+                    onClick={() => setSelectedDoctor(doctor)}
+                  >
+                    <CardContent className="p-6">
+                      <div className="flex items-center gap-4 mb-4">
+                        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white text-xl font-bold">
+                          {doctor.name.split(' ').slice(1).map(n => n[0]).join('')}
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-proxima font-semibold text-foreground group-hover:text-primary transition-colors">
+                            {doctor.name}
+                          </h3>
+                          <p className="text-sm text-muted-foreground">
+                            {doctor.specialty}
+                          </p>
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-2 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-2">
+                          <Clock className="h-4 w-4 text-accent" />
+                          <span>{doctor.consultationHours}</span>
+                        </div>
+                      </div>
+                      
+                      <div className="mt-4 pt-4 border-t border-border/50">
+                        <span className="text-xs text-primary font-medium">
+                          Cliquez pour voir les disponibilités →
+                        </span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Empty State */}
+        {!selectedCategory && (
+          <section className="py-24 bg-background">
+            <div className="container mx-auto px-4 text-center">
+              <Stethoscope className="h-16 w-16 text-muted-foreground/30 mx-auto mb-4" />
+              <h3 className="text-xl font-medium text-muted-foreground">
+                Sélectionnez une spécialité pour voir les médecins disponibles
+              </h3>
+            </div>
+          </section>
+        )}
       </main>
 
       {/* Doctor Availability Modal */}
       <Dialog open={!!selectedDoctor} onOpenChange={() => setSelectedDoctor(null)}>
-        <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+        <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold">
@@ -215,59 +247,46 @@ const Medecins = () => {
                     <p className="text-sm font-medium">{selectedDoctor.email}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg sm:col-span-2">
-                  <Clock className="h-5 w-5 text-accent" />
-                  <div>
-                    <p className="text-xs text-muted-foreground">Heures de consultation</p>
-                    <p className="text-sm font-medium">{selectedDoctor.consultationHours}</p>
-                  </div>
-                </div>
               </div>
 
-              {/* Availability Calendar */}
-              <div>
-                <h4 className="font-proxima font-semibold mb-3 flex items-center gap-2">
-                  <User className="h-5 w-5 text-primary" />
-                  Calendrier de disponibilité
+              {/* Availability */}
+              <div className="space-y-4">
+                <h4 className="font-proxima font-semibold flex items-center gap-2">
+                  <Clock className="h-5 w-5 text-primary" />
+                  Disponibilités
                 </h4>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Les jours colorés indiquent les disponibilités du médecin. Sélectionnez une date pour prendre rendez-vous.
-                </p>
-                <div className="flex justify-center">
-                  <Calendar
-                    mode="single"
-                    selected={selectedDate}
-                    onSelect={setSelectedDate}
-                    className="rounded-lg border shadow-sm pointer-events-auto"
-                    modifiers={{
-                      available: (date) => isDayAvailable(date) && date >= new Date(),
-                    }}
-                    modifiersStyles={{
-                      available: {
-                        backgroundColor: 'hsl(var(--accent))',
-                        color: 'hsl(var(--accent-foreground))',
-                        fontWeight: 'bold',
-                      }
-                    }}
-                    disabled={(date) => !isDayAvailable(date) || date < new Date()}
-                  />
-                </div>
                 
-                {selectedDate && (
-                  <div className="mt-4 p-4 bg-accent/20 rounded-lg text-center">
-                    <p className="text-sm font-medium text-foreground">
-                      Date sélectionnée : {selectedDate.toLocaleDateString('fr-FR', { 
-                        weekday: 'long', 
-                        year: 'numeric', 
-                        month: 'long', 
-                        day: 'numeric' 
-                      })}
-                    </p>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      Contactez-nous au +225 27 22 44 53 53 pour confirmer votre rendez-vous
+                {/* Days */}
+                <div>
+                  <p className="text-sm text-muted-foreground mb-2">Jours de consultation</p>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedDoctor.availableDays.map((day) => (
+                      <Badge key={day} variant="secondary" className="bg-accent/20 text-accent-foreground">
+                        {day}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Hours */}
+                <div>
+                  <p className="text-sm text-muted-foreground mb-2">Horaires</p>
+                  <div className="p-4 bg-primary/10 rounded-lg text-center">
+                    <p className="text-lg font-semibold text-primary">
+                      {selectedDoctor.consultationHours}
                     </p>
                   </div>
-                )}
+                </div>
+
+                {/* Contact CTA */}
+                <div className="p-4 bg-muted/50 rounded-lg text-center">
+                  <p className="text-sm text-muted-foreground">
+                    Pour prendre rendez-vous, contactez-nous au
+                  </p>
+                  <p className="text-lg font-bold text-primary mt-1">
+                    +225 27 22 44 53 53
+                  </p>
+                </div>
               </div>
             </div>
           )}
