@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { useState, useEffect } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import PisamPlusSubscriptionForm from "@/components/PisamPlusSubscriptionForm";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -212,10 +213,14 @@ const PisamPlus = () => {
                 Sécurisée, simple d'usage, économique et rechargeable.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="text-lg px-8">
-                  <CreditCard className="h-5 w-5 mr-2" />
-                  Commander ma carte
-                </Button>
+                <PisamPlusSubscriptionForm
+                  trigger={
+                    <Button size="lg" className="text-lg px-8">
+                      <CreditCard className="h-5 w-5 mr-2" />
+                      Commander ma carte
+                    </Button>
+                  }
+                />
                 <Button size="lg" variant="outline" className="text-lg px-8 bg-white/10 border-white text-white hover:bg-white hover:text-primary">
                   En savoir plus
                 </Button>
@@ -403,9 +408,13 @@ const PisamPlus = () => {
                           La carte PISAM PLUS est en vente <strong>uniquement à la PISAM</strong>. 
                           Elle ne coûte que <strong>10.000 FCFA</strong> et est valide pour <strong>3 ans</strong>.
                         </p>
-                        <Button>
-                          Commander ma carte
-                        </Button>
+                        <PisamPlusSubscriptionForm
+                          trigger={
+                            <Button>
+                              Commander ma carte
+                            </Button>
+                          }
+                        />
                       </div>
                     </div>
                   </CardContent>
@@ -625,10 +634,14 @@ const PisamPlus = () => {
               </div>
 
               <div className="text-center mt-12">
-                <Button size="lg" variant="secondary" className="text-lg px-8 bg-white text-primary hover:bg-white/90">
-                  <CreditCard className="h-5 w-5 mr-2" />
-                  Commander ma carte PISAM PLUS
-                </Button>
+                <PisamPlusSubscriptionForm
+                  trigger={
+                    <Button size="lg" variant="secondary" className="text-lg px-8 bg-white text-primary hover:bg-white/90">
+                      <CreditCard className="h-5 w-5 mr-2" />
+                      Commander ma carte PISAM PLUS
+                    </Button>
+                  }
+                />
               </div>
             </div>
           </div>
