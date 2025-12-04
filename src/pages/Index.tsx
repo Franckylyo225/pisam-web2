@@ -7,7 +7,7 @@ import AboutSection from "@/components/sections/AboutSection";
 import VideoSection from "@/components/sections/VideoSection";
 import Pisam2Section from "@/components/sections/Pisam2Section";
 import PisamPlusSection from "@/components/sections/PisamPlusSection";
-import TeamSection from "@/components/sections/TeamSection";
+import NewsSection from "@/components/sections/NewsSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import ContactSection from "@/components/sections/ContactSection";
 import CTASection from "@/components/sections/CTASection";
@@ -34,7 +34,7 @@ const Index = () => {
           <VideoSection />
           <Pisam2Section />
           <PisamPlusSection />
-          <TeamSection />
+          <NewsSection />
           <TestimonialsSection />
           <CTASection />
           <ContactSection />
