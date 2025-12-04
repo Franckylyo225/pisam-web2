@@ -270,33 +270,55 @@ const Pisam = () => {
               </div>
 
               {/* Mission */}
-              <div className="max-w-3xl mx-auto mb-16 text-center">
+              <div className="max-w-4xl mx-auto mb-16">
                 <Card className="border-primary/20 bg-primary/5">
                   <CardContent className="p-8">
-                    <Target className="h-12 w-12 text-primary mx-auto mb-4" />
-                    <h3 className="text-xl font-semibold text-foreground mb-4">Notre Mission</h3>
-                    <p className="text-muted-foreground">
-                      Offrir à chaque patient des soins de santé de qualité internationale, accessibles et 
-                      personnalisés, dans un environnement sécurisé et bienveillant. Nous nous engageons à 
-                      être le partenaire santé de confiance des familles ivoiriennes et de la sous-région.
-                    </p>
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="w-14 h-14 rounded-xl bg-primary flex items-center justify-center">
+                        <Target className="h-7 w-7 text-primary-foreground" />
+                      </div>
+                      <h3 className="text-2xl font-serif font-bold text-foreground">Votre santé avant tout</h3>
+                    </div>
+                    <ul className="space-y-4">
+                      {[
+                        "Dispenser des soins généraux et spécialisés de la plus haute qualité à notre clientèle adulte et pédiatrique ainsi qu'à leur famille, tout en mettant l'accent sur la sécurité, l'humanité, le respect et l'empathie.",
+                        "Assurer la continuité des soins via le développement d'une politique de réseau.",
+                        "Contribuer à l'évolution des pratiques médicales et à la formation continue.",
+                        "Développer et promouvoir un environnement de santé propice à assurer la position de leadership de l'établissement.",
+                        "Assurer aux membres du personnel et du corps médical un environnement professionnel propre et sûr, garantissant les meilleures conditions de travail."
+                      ].map((item, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-1" />
+                          <span className="text-muted-foreground">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </CardContent>
                 </Card>
               </div>
 
               {/* Valeurs */}
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {values.map((value, index) => (
-                  <Card key={index} className="border-0 shadow-pisam hover:shadow-lg transition-shadow duration-300 group">
-                    <CardContent className="p-6">
-                      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
-                        <value.icon className="h-6 w-6 text-primary group-hover:text-primary-foreground transition-colors duration-300" />
-                      </div>
-                      <h3 className="font-semibold text-foreground text-lg mb-2">{value.title}</h3>
-                      <p className="text-muted-foreground text-sm">{value.description}</p>
-                    </CardContent>
-                  </Card>
-                ))}
+              <div className="max-w-4xl mx-auto">
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl font-serif font-bold text-foreground mb-3">Nos Valeurs</h3>
+                  <p className="text-muted-foreground max-w-2xl mx-auto">
+                    Les valeurs auxquelles nous sommes attachées dictent notre comportement à l'égard de l'ensemble 
+                    des patients et de leur famille ainsi qu'auprès des professionnels de l'établissement.
+                  </p>
+                </div>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {values.map((value, index) => (
+                    <Card key={index} className="border-0 shadow-pisam hover:shadow-lg transition-shadow duration-300 group">
+                      <CardContent className="p-6">
+                        <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
+                          <value.icon className="h-6 w-6 text-primary group-hover:text-primary-foreground transition-colors duration-300" />
+                        </div>
+                        <h3 className="font-semibold text-foreground text-lg mb-2">{value.title}</h3>
+                        <p className="text-muted-foreground text-sm">{value.description}</p>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
               </div>
             </div>
           </section>
