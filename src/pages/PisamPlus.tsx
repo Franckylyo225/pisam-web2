@@ -178,7 +178,7 @@ const PisamPlus = () => {
           ))}
           
           {/* Overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/30 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/85 via-primary/70 to-secondary/60" />
           
           {/* Slide indicators */}
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
