@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -8,8 +9,10 @@ import {
   CarouselContent, 
   CarouselItem, 
   CarouselNext, 
-  CarouselPrevious 
+  CarouselPrevious,
+  type CarouselApi
 } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 import { 
   Heart, 
   Target, 
@@ -88,6 +91,21 @@ const values = [
 ];
 
 const Pisam = () => {
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!api) return;
+
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap());
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap());
+    });
+  }, [api]);
+
   return (
     <>
       <Helmet>
@@ -224,10 +242,18 @@ const Pisam = () => {
 
               <div className="relative">
                 <Carousel
+                  setApi={setApi}
                   opts={{
                     align: "start",
                     loop: true,
                   }}
+                  plugins={[
+                    Autoplay({
+                      delay: 4000,
+                      stopOnInteraction: false,
+                      stopOnMouseEnter: true,
+                    }),
+                  ]}
                   className="w-full"
                 >
                   <CarouselContent className="-ml-4">
@@ -255,6 +281,22 @@ const Pisam = () => {
                   <CarouselPrevious className="absolute -left-4 md:left-0 top-1/2 -translate-y-1/2 h-12 w-12 bg-primary text-primary-foreground hover:bg-primary/90 border-0 shadow-lg" />
                   <CarouselNext className="absolute -right-4 md:right-0 top-1/2 -translate-y-1/2 h-12 w-12 bg-primary text-primary-foreground hover:bg-primary/90 border-0 shadow-lg" />
                 </Carousel>
+
+                {/* Pagination dots */}
+                <div className="flex justify-center gap-2 mt-6">
+                  {Array.from({ length: count }).map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => api?.scrollTo(index)}
+                      className={`h-2.5 rounded-full transition-all duration-300 ${
+                        index === current 
+                          ? "w-8 bg-primary" 
+                          : "w-2.5 bg-primary/30 hover:bg-primary/50"
+                      }`}
+                      aria-label={`Aller à la diapositive ${index + 1}`}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </section>
