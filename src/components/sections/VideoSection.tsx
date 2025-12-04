@@ -9,8 +9,20 @@ const VideoSection = () => {
   return (
     <section id="video" className="py-24 bg-muted/30">
       <div className="container mx-auto px-4">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Video thumbnail */}
+        {/* Title at top */}
+        <div className="text-center mb-12">
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <Film className="h-5 w-5 text-primary" />
+            <span className="text-primary font-medium text-sm uppercase tracking-wider">Visite virtuelle</span>
+          </div>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-foreground leading-tight">
+            Explorez notre Univers de Soins et d'Attention
+          </h2>
+          <div className="w-24 h-1 bg-gradient-to-r from-primary to-pisam-turquoise mx-auto mt-6 rounded-full"></div>
+        </div>
+
+        {/* Video thumbnail - centered and large */}
+        <div className="max-w-5xl mx-auto">
           <div className="relative group cursor-pointer" onClick={() => setIsOpen(true)}>
             <div className="relative aspect-video rounded-3xl overflow-hidden shadow-pisam-lg">
               <img
@@ -23,8 +35,8 @@ const VideoSection = () => {
               
               {/* Play button */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300">
-                  <Play className="h-8 w-8 md:h-10 md:w-10 text-pisam-teal fill-pisam-teal ml-1" />
+                <div className="w-20 h-20 md:w-28 md:h-28 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300">
+                  <Play className="h-8 w-8 md:h-12 md:w-12 text-pisam-teal fill-pisam-teal ml-1" />
                 </div>
               </div>
             </div>
@@ -32,35 +44,6 @@ const VideoSection = () => {
             {/* Decorative elements */}
             <div className="absolute -top-4 -left-4 w-24 h-24 bg-primary/10 rounded-full blur-2xl" />
             <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-pisam-turquoise/10 rounded-full blur-2xl" />
-          </div>
-
-          {/* Content */}
-          <div className="lg:pl-8">
-            <div className="flex items-center gap-2 mb-6">
-              <Film className="h-5 w-5 text-primary" />
-              <span className="text-primary font-medium text-sm uppercase tracking-wider">Visite virtuelle</span>
-            </div>
-            
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-foreground leading-tight mb-6">
-              Explorez notre Univers de Soins et d'Attention
-            </h2>
-            
-            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-              Visitez notre centre de santé d'Excellence. Découvrez nos installations modernes, 
-              notre équipement de pointe et l'environnement bienveillant que nous offrons à chaque patient.
-            </p>
-
-            <button 
-              onClick={() => setIsOpen(true)}
-              className="inline-flex items-center gap-3 text-primary font-semibold group/btn"
-            >
-              <span className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover/btn:bg-primary/20 transition-colors">
-                <Play className="h-5 w-5 fill-primary" />
-              </span>
-              <span className="border-b-2 border-transparent group-hover/btn:border-primary transition-colors">
-                Regarder la vidéo
-              </span>
-            </button>
           </div>
         </div>
       </div>
