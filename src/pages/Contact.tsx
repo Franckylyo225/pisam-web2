@@ -15,6 +15,7 @@ import {
   Mail,
   Send
 } from "lucide-react";
+import contactHero from "@/assets/contact-hero.jpg";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -59,8 +60,12 @@ const Contact = () => {
       
       <main>
         {/* Hero Section */}
-        <section className="relative h-[40vh] min-h-[300px] flex items-center justify-center bg-gradient-to-br from-primary via-primary-light to-secondary overflow-hidden">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0djItSDI0di0yaDEyek0zNiAyNHYySDI0di0yaDEyeiIvPjwvZz48L2c+PC9zdmc+')] opacity-30" />
+        <section className="relative h-[40vh] min-h-[300px] flex items-center justify-center overflow-hidden">
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${contactHero})` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/70 to-secondary/60" />
           
           <div className="container mx-auto px-4 text-center relative z-10">
             <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
