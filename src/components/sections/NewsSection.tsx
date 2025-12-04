@@ -9,7 +9,6 @@ const articles = [
     category: "Innovation",
     date: "28 Nov 2024",
     readTime: "4 min",
-    image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=600&h=400&fit=crop",
   },
   {
     id: 2,
@@ -18,7 +17,6 @@ const articles = [
     category: "Événement",
     date: "14 Nov 2024",
     readTime: "3 min",
-    image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&h=400&fit=crop",
   },
   {
     id: 3,
@@ -27,7 +25,6 @@ const articles = [
     category: "Actualité",
     date: "05 Nov 2024",
     readTime: "5 min",
-    image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=600&h=400&fit=crop",
   },
 ];
 
@@ -56,55 +53,43 @@ const NewsSection = () => {
           {articles.map((article) => (
             <article
               key={article.id}
-              className="group bg-card rounded-2xl overflow-hidden shadow-sm border border-border/50 hover:shadow-pisam-lg transition-all duration-300"
+              className="group bg-card rounded-2xl p-6 shadow-sm border border-border/50 hover:shadow-pisam-lg transition-all duration-300"
             >
-              {/* Image */}
-              <div className="relative aspect-[16/10] overflow-hidden">
-                <img
-                  src={article.image}
-                  alt={article.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute top-4 left-4">
-                  <span className="px-3 py-1 bg-primary text-primary-foreground text-xs font-medium rounded-full">
-                    {article.category}
-                  </span>
+              {/* Category badge */}
+              <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full mb-4">
+                {article.category}
+              </span>
+
+              {/* Title */}
+              <h3 className="text-lg font-bold text-foreground mb-3 line-clamp-2 group-hover:text-primary transition-colors">
+                {article.title}
+              </h3>
+
+              {/* Excerpt */}
+              <p className="text-muted-foreground text-sm line-clamp-3 mb-4">
+                {article.excerpt}
+              </p>
+
+              {/* Meta */}
+              <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
+                <div className="flex items-center gap-1">
+                  <Calendar className="h-4 w-4" />
+                  <span>{article.date}</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Clock className="h-4 w-4" />
+                  <span>{article.readTime}</span>
                 </div>
               </div>
 
-              {/* Content */}
-              <div className="p-6">
-                {/* Meta */}
-                <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
-                  <div className="flex items-center gap-1">
-                    <Calendar className="h-4 w-4" />
-                    <span>{article.date}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Clock className="h-4 w-4" />
-                    <span>{article.readTime}</span>
-                  </div>
-                </div>
-
-                {/* Title */}
-                <h3 className="text-lg font-bold text-foreground mb-3 line-clamp-2 group-hover:text-primary transition-colors">
-                  {article.title}
-                </h3>
-
-                {/* Excerpt */}
-                <p className="text-muted-foreground text-sm line-clamp-3 mb-4">
-                  {article.excerpt}
-                </p>
-
-                {/* Read more link */}
-                <a
-                  href="#"
-                  className="inline-flex items-center gap-2 text-primary font-medium text-sm group/link"
-                >
-                  Lire l'article
-                  <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
-                </a>
-              </div>
+              {/* Read more link */}
+              <a
+                href="#"
+                className="inline-flex items-center gap-2 text-primary font-medium text-sm group/link"
+              >
+                Lire l'article
+                <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+              </a>
             </article>
           ))}
         </div>
