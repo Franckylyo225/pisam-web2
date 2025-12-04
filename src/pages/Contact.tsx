@@ -87,193 +87,211 @@ const Contact = () => {
           />
         </section>
 
-        {/* Contact Info & Form Section */}
+        {/* Contact Info Section */}
         <section className="py-16 md:py-24 bg-muted/30">
           <div className="container mx-auto px-4">
-            <div className="grid lg:grid-cols-2 gap-12">
-              {/* Contact Information */}
-              <div className="space-y-8">
-                <div>
-                  <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-6">
-                    Nos coordonnées
-                  </h2>
-                  <p className="text-muted-foreground text-lg">
-                    N'hésitez pas à nous contacter pour toute information ou pour prendre rendez-vous.
+            <div className="text-center mb-12">
+              <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Nos coordonnées
+              </h2>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                N'hésitez pas à nous contacter pour toute information ou pour prendre rendez-vous.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Address Card */}
+              <Card className="group hover:shadow-xl transition-all duration-300 border-t-4 border-t-primary bg-background">
+                <CardContent className="p-6 text-center">
+                  <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
+                    <MapPin className="w-8 h-8 text-primary group-hover:text-primary-foreground transition-colors" />
+                  </div>
+                  <h3 className="font-heading text-xl font-semibold text-foreground mb-3">Adresse</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    Abidjan, Cocody<br />
+                    Rue Cannebière<br />
+                    Avenue Joseph Blohorn<br />
+                    01 BP 1463 Abidjan 01<br />
+                    Côte d'Ivoire
                   </p>
-                </div>
+                </CardContent>
+              </Card>
 
-                {/* Address Card */}
-                <Card className="border-l-4 border-l-primary">
-                  <CardContent className="p-6">
-                    <div className="flex gap-4">
-                      <div className="flex-shrink-0">
-                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                          <MapPin className="w-6 h-6 text-primary" />
-                        </div>
-                      </div>
-                      <div>
-                        <h3 className="font-heading text-xl font-semibold text-foreground mb-2">Adresse</h3>
-                        <p className="text-muted-foreground leading-relaxed">
-                          Abidjan, Cocody<br />
-                          Rue Cannebière, Avenue Joseph Blohorn<br />
-                          01 BP 1463 Abidjan 01, Côte d'Ivoire
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+              {/* Hours Card */}
+              <Card className="group hover:shadow-xl transition-all duration-300 border-t-4 border-t-secondary bg-background">
+                <CardContent className="p-6 text-center">
+                  <div className="w-16 h-16 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-secondary group-hover:scale-110 transition-all duration-300">
+                    <Clock className="w-8 h-8 text-secondary group-hover:text-secondary-foreground transition-colors" />
+                  </div>
+                  <h3 className="font-heading text-xl font-semibold text-foreground mb-3">Heures d'ouverture</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    <span className="block">Lun - Ven : 07h30 - 19h30</span>
+                    <span className="block">Samedi : 07h30 - 12h00</span>
+                    <span className="block mt-2 text-primary font-semibold">Urgences 24h/24 - 7j/7</span>
+                  </p>
+                </CardContent>
+              </Card>
 
-                {/* Hours Card */}
-                <Card className="border-l-4 border-l-secondary">
-                  <CardContent className="p-6">
-                    <div className="flex gap-4">
-                      <div className="flex-shrink-0">
-                        <div className="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center">
-                          <Clock className="w-6 h-6 text-secondary" />
-                        </div>
-                      </div>
-                      <div>
-                        <h3 className="font-heading text-xl font-semibold text-foreground mb-2">Heures d'ouverture</h3>
-                        <p className="text-muted-foreground leading-relaxed">
-                          07h30 - 19h30 GMT les jours ouvrables<br />
-                          07h30 - 12h00 GMT les samedis<br />
-                          <span className="text-primary font-medium">Urgences 24h/24, 7 jours / 7</span>
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+              {/* Phone Card */}
+              <Card className="group hover:shadow-xl transition-all duration-300 border-t-4 border-t-accent bg-background">
+                <CardContent className="p-6 text-center">
+                  <div className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-accent group-hover:scale-110 transition-all duration-300">
+                    <Phone className="w-8 h-8 text-accent group-hover:text-accent-foreground transition-colors" />
+                  </div>
+                  <h3 className="font-heading text-xl font-semibold text-foreground mb-3">Téléphones</h3>
+                  <div className="text-muted-foreground text-sm space-y-1">
+                    <p><span className="font-medium">Standard :</span><br />(+225) 27 22 48 31 31</p>
+                    <p className="text-primary font-semibold"><span className="font-medium text-foreground">Urgences :</span><br />(+225) 27 22 48 31 12</p>
+                  </div>
+                </CardContent>
+              </Card>
 
-                {/* Contact Card */}
-                <Card className="border-l-4 border-l-accent">
-                  <CardContent className="p-6">
-                    <div className="flex gap-4">
-                      <div className="flex-shrink-0">
-                        <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center">
-                          <Phone className="w-6 h-6 text-accent" />
-                        </div>
-                      </div>
-                      <div className="space-y-3">
-                        <h3 className="font-heading text-xl font-semibold text-foreground">Contactez-nous</h3>
-                        <div className="text-muted-foreground space-y-2">
-                          <p><span className="font-medium text-foreground">Standard :</span> (+225) 27 22 48 31 31</p>
-                          <p><span className="font-medium text-foreground">Fax :</span> (+225) 27 22 48 31 32 / (+225) 27 22 48 31 33</p>
-                          <p><span className="font-medium text-foreground">Urgences :</span> <span className="text-primary font-semibold">(+225) 27 22 48 31 12</span></p>
-                          <p><span className="font-medium text-foreground">Département Qualité :</span> (+225) 07 47 93 20 30</p>
-                          <p><span className="font-medium text-foreground">Direction Commerciale :</span> (+225) 27 22 48 31 44 / (+225) 27 22 48 31 04</p>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+              {/* Email Card */}
+              <Card className="group hover:shadow-xl transition-all duration-300 border-t-4 border-t-primary bg-background">
+                <CardContent className="p-6 text-center">
+                  <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
+                    <Mail className="w-8 h-8 text-primary group-hover:text-primary-foreground transition-colors" />
+                  </div>
+                  <h3 className="font-heading text-xl font-semibold text-foreground mb-3">Emails</h3>
+                  <div className="space-y-2">
+                    <a href="mailto:info@pisam.ci" className="block text-primary hover:underline text-sm">info@pisam.ci</a>
+                    <a href="mailto:bilandesanté@pisam.ci" className="block text-primary hover:underline text-sm">bilandesanté@pisam.ci</a>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
 
-                {/* Email Card */}
-                <Card className="border-l-4 border-l-primary">
-                  <CardContent className="p-6">
-                    <div className="flex gap-4">
-                      <div className="flex-shrink-0">
-                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                          <Mail className="w-6 h-6 text-primary" />
-                        </div>
-                      </div>
-                      <div>
-                        <h3 className="font-heading text-xl font-semibold text-foreground mb-2">Emails</h3>
-                        <div className="space-y-1">
-                          <a href="mailto:info@pisam.ci" className="block text-primary hover:underline">info@pisam.ci</a>
-                          <a href="mailto:bilandesanté@pisam.ci" className="block text-primary hover:underline">bilandesanté@pisam.ci</a>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+            {/* Additional Contact Details */}
+            <div className="mt-12 grid md:grid-cols-3 gap-6">
+              <div className="bg-background rounded-xl p-6 shadow-sm border">
+                <h4 className="font-heading font-semibold text-foreground mb-2">Fax</h4>
+                <p className="text-muted-foreground text-sm">(+225) 27 22 48 31 32<br />(+225) 27 22 48 31 33</p>
+              </div>
+              <div className="bg-background rounded-xl p-6 shadow-sm border">
+                <h4 className="font-heading font-semibold text-foreground mb-2">Département Qualité</h4>
+                <p className="text-muted-foreground text-sm">(+225) 07 47 93 20 30</p>
+              </div>
+              <div className="bg-background rounded-xl p-6 shadow-sm border">
+                <h4 className="font-heading font-semibold text-foreground mb-2">Direction Commerciale</h4>
+                <p className="text-muted-foreground text-sm">(+225) 27 22 48 31 44<br />(+225) 27 22 48 31 04</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Contact Form Section */}
+        <section className="py-16 md:py-24 bg-gradient-to-br from-primary/5 via-background to-secondary/5">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
+                  Envoyez-nous un message
+                </h2>
+                <p className="text-muted-foreground text-lg">
+                  Remplissez le formulaire ci-dessous et nous vous répondrons dans les plus brefs délais.
+                </p>
               </div>
 
-              {/* Contact Form */}
-              <div>
-                <Card className="shadow-lg">
-                  <CardContent className="p-8">
-                    <h2 className="font-heading text-2xl md:text-3xl font-bold text-foreground mb-6">
-                      Envoyez-nous un message
-                    </h2>
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                      <div className="grid sm:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="name">Nom complet *</Label>
-                          <Input
-                            id="name"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            placeholder="Votre nom"
-                            required
-                            maxLength={100}
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="email">Email *</Label>
-                          <Input
-                            id="email"
-                            name="email"
-                            type="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            placeholder="votre@email.com"
-                            required
-                            maxLength={255}
-                          />
-                        </div>
-                      </div>
-
-                      <div className="grid sm:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="phone">Téléphone</Label>
-                          <Input
-                            id="phone"
-                            name="phone"
-                            type="tel"
-                            value={formData.phone}
-                            onChange={handleChange}
-                            placeholder="+225 XX XX XX XX XX"
-                            maxLength={20}
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="subject">Sujet *</Label>
-                          <Input
-                            id="subject"
-                            name="subject"
-                            value={formData.subject}
-                            onChange={handleChange}
-                            placeholder="Objet de votre message"
-                            required
-                            maxLength={150}
-                          />
-                        </div>
-                      </div>
-
+              <Card className="shadow-2xl border-0 overflow-hidden">
+                <div className="h-2 bg-gradient-to-r from-primary via-secondary to-accent" />
+                <CardContent className="p-8 md:p-12">
+                  <form onSubmit={handleSubmit} className="space-y-8">
+                    <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <Label htmlFor="message">Message *</Label>
-                        <Textarea
-                          id="message"
-                          name="message"
-                          value={formData.message}
+                        <Label htmlFor="name" className="text-foreground font-medium">
+                          Nom complet <span className="text-primary">*</span>
+                        </Label>
+                        <Input
+                          id="name"
+                          name="name"
+                          value={formData.name}
                           onChange={handleChange}
-                          placeholder="Décrivez votre demande..."
-                          rows={6}
+                          placeholder="Entrez votre nom complet"
                           required
-                          maxLength={2000}
-                          className="resize-none"
+                          maxLength={100}
+                          className="h-12 bg-muted/50 border-muted-foreground/20 focus:border-primary focus:ring-primary/20"
                         />
                       </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="email" className="text-foreground font-medium">
+                          Adresse email <span className="text-primary">*</span>
+                        </Label>
+                        <Input
+                          id="email"
+                          name="email"
+                          type="email"
+                          value={formData.email}
+                          onChange={handleChange}
+                          placeholder="votre@email.com"
+                          required
+                          maxLength={255}
+                          className="h-12 bg-muted/50 border-muted-foreground/20 focus:border-primary focus:ring-primary/20"
+                        />
+                      </div>
+                    </div>
 
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <Label htmlFor="phone" className="text-foreground font-medium">
+                          Numéro de téléphone
+                        </Label>
+                        <Input
+                          id="phone"
+                          name="phone"
+                          type="tel"
+                          value={formData.phone}
+                          onChange={handleChange}
+                          placeholder="+225 XX XX XX XX XX"
+                          maxLength={20}
+                          className="h-12 bg-muted/50 border-muted-foreground/20 focus:border-primary focus:ring-primary/20"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="subject" className="text-foreground font-medium">
+                          Sujet <span className="text-primary">*</span>
+                        </Label>
+                        <Input
+                          id="subject"
+                          name="subject"
+                          value={formData.subject}
+                          onChange={handleChange}
+                          placeholder="Objet de votre message"
+                          required
+                          maxLength={150}
+                          className="h-12 bg-muted/50 border-muted-foreground/20 focus:border-primary focus:ring-primary/20"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="message" className="text-foreground font-medium">
+                        Votre message <span className="text-primary">*</span>
+                      </Label>
+                      <Textarea
+                        id="message"
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        placeholder="Décrivez votre demande en détail..."
+                        rows={6}
+                        required
+                        maxLength={2000}
+                        className="resize-none bg-muted/50 border-muted-foreground/20 focus:border-primary focus:ring-primary/20"
+                      />
+                    </div>
+
+                    <div className="pt-4">
                       <Button 
                         type="submit" 
-                        className="w-full"
+                        className="w-full h-14 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
                         size="lg"
                         disabled={isSubmitting}
                       >
                         {isSubmitting ? (
-                          "Envoi en cours..."
+                          <span className="flex items-center gap-2">
+                            <span className="w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+                            Envoi en cours...
+                          </span>
                         ) : (
                           <>
                             <Send className="w-5 h-5 mr-2" />
@@ -281,10 +299,10 @@ const Contact = () => {
                           </>
                         )}
                       </Button>
-                    </form>
-                  </CardContent>
-                </Card>
-              </div>
+                    </div>
+                  </form>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>
