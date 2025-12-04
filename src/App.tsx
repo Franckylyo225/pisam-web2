@@ -13,6 +13,7 @@ import BioCSAM from "./pages/BioCSAM";
 import CISAM from "./pages/CISAM";
 import PisamPlus from "./pages/PisamPlus";
 import PlateauTechnique from "./pages/PlateauTechnique";
+import CertificationISO from "./pages/CertificationISO";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
@@ -34,6 +35,7 @@ const App = () => (
             <Route path="/cisam" element={<CISAM />} />
             <Route path="/pisam-plus" element={<PisamPlus />} />
             <Route path="/plateau-technique" element={<PlateauTechnique />} />
+            <Route path="/certification-iso" element={<CertificationISO />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/contact" element={<Contact />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
