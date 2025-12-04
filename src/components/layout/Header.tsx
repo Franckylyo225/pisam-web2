@@ -41,13 +41,13 @@ const Header = () => {
     { href: "/patients", label: "Patients", isRoute: true },
     { href: "/medecins", label: "Médecins", isRoute: true },
     { 
-      href: "#services", 
+      href: "/biocsam", 
       label: "Services", 
-      isRoute: false,
+      isRoute: true,
       submenu: [
-        { href: "#biocsam", label: "BioCSAM" },
-        { href: "#cisam", label: "CISAM" },
-        { href: "#pisam-plus", label: "Carte PISAM+" },
+        { href: "/biocsam", label: "BioCSAM" },
+        { href: "/cisam", label: "CISAM" },
+        { href: "/#pisam-plus", label: "Carte PISAM+" },
       ]
     },
     { href: "/blog", label: "Actualité", isRoute: true },
