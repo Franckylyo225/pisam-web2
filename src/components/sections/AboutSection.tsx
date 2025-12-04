@@ -2,7 +2,7 @@ import { Award, Users, Clock, Building2, Stethoscope, FlaskConical, Siren, Arrow
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useCounterAnimation } from "@/hooks/use-counter-animation";
-import pisamBuilding from "@/assets/pisam-building.jpg";
+import pisamAerialView from "@/assets/pisam-aerial-view.jpg";
 
 const stats = [
   { icon: Users, value: 150, label: "Professionnels de santé", prefix: "+" },
@@ -51,8 +51,8 @@ const AboutSection = () => {
           {/* Image at top on mobile */}
           <div className="rounded-2xl overflow-hidden mb-6">
             <img
-              src={pisamBuilding}
-              alt="Bâtiment de la PISAM - Polyclinique Internationale Sainte Anne-Marie"
+              src={pisamAerialView}
+              alt="Vue aérienne de la PISAM - Polyclinique Internationale Sainte Anne-Marie"
               className="w-full h-48 object-cover"
             />
           </div>
@@ -101,8 +101,8 @@ const AboutSection = () => {
           {/* Background image */}
           <div className="aspect-[21/9] w-full">
             <img
-              src={pisamBuilding}
-              alt="Bâtiment de la PISAM - Polyclinique Internationale Sainte Anne-Marie"
+              src={pisamAerialView}
+              alt="Vue aérienne de la PISAM - Polyclinique Internationale Sainte Anne-Marie"
               className="w-full h-full object-cover"
             />
           </div>
