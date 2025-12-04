@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { 
   Heart, 
   Baby, 
@@ -9,7 +10,9 @@ import {
   Syringe,
   Activity,
   Scan,
-  ArrowRight
+  ArrowRight,
+  ChevronDown,
+  ChevronUp
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -77,6 +80,8 @@ const services = [
 ];
 
 const ServicesSection = () => {
+  const [showAllMobile, setShowAllMobile] = useState(false);
+
   return (
     <section id="services" className="py-24 bg-muted/30">
       <div className="container mx-auto px-4">
@@ -95,11 +100,13 @@ const ServicesSection = () => {
         </div>
 
         {/* Services grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-8">
           {services.map((service, index) => (
             <div
               key={service.title}
-              className="group bg-card rounded-2xl p-6 shadow-pisam hover:shadow-pisam-lg transition-all duration-300 hover:-translate-y-1 border border-border/50"
+              className={`group bg-card rounded-2xl p-6 shadow-pisam hover:shadow-pisam-lg transition-all duration-300 hover:-translate-y-1 border border-border/50 ${
+                !showAllMobile && index >= 4 ? 'hidden md:block' : ''
+              }`}
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className={`w-14 h-14 rounded-xl ${service.color} border flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
@@ -113,6 +120,27 @@ const ServicesSection = () => {
               </p>
             </div>
           ))}
+        </div>
+
+        {/* Mobile show more button */}
+        <div className="text-center mb-8 md:hidden">
+          <Button 
+            variant="outline" 
+            onClick={() => setShowAllMobile(!showAllMobile)}
+            className="group"
+          >
+            {showAllMobile ? (
+              <>
+                Voir moins
+                <ChevronUp className="ml-2 h-4 w-4" />
+              </>
+            ) : (
+              <>
+                Voir les {services.length - 4} autres spécialités
+                <ChevronDown className="ml-2 h-4 w-4" />
+              </>
+            )}
+          </Button>
         </div>
 
         {/* CTA */}
