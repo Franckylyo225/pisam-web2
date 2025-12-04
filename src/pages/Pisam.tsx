@@ -208,7 +208,7 @@ const Pisam = () => {
           </section>
 
           {/* Dirigeants Section */}
-          <section className="py-20 bg-background">
+          <section className="py-20 bg-background overflow-hidden">
             <div className="container mx-auto px-4">
               <div className="text-center mb-12">
                 <span className="inline-block px-4 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
@@ -222,38 +222,40 @@ const Pisam = () => {
                 </p>
               </div>
 
-              <Carousel
-                opts={{
-                  align: "start",
-                  loop: true,
-                }}
-                className="w-full"
-              >
-                <CarouselContent className="-ml-4">
-                  {leaders.map((leader, index) => (
-                    <CarouselItem key={index} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/4">
-                      <Card className="border-0 shadow-pisam overflow-hidden group">
-                        <CardContent className="p-0">
-                          <div className="relative overflow-hidden">
-                            <img 
-                              src={leader.image} 
-                              alt={leader.name}
-                              className="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-105"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                          </div>
-                          <div className="p-5 text-center bg-background">
-                            <h3 className="font-semibold text-foreground text-lg">{leader.name}</h3>
-                            <p className="text-sm text-primary">{leader.role}</p>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <CarouselPrevious className="hidden sm:flex -left-12" />
-                <CarouselNext className="hidden sm:flex -right-12" />
-              </Carousel>
+              <div className="relative">
+                <Carousel
+                  opts={{
+                    align: "start",
+                    loop: true,
+                  }}
+                  className="w-full"
+                >
+                  <CarouselContent className="-ml-4">
+                    {leaders.map((leader, index) => (
+                      <CarouselItem key={index} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/4">
+                        <Card className="border-0 shadow-pisam overflow-hidden group">
+                          <CardContent className="p-0">
+                            <div className="relative overflow-hidden">
+                              <img 
+                                src={leader.image} 
+                                alt={leader.name}
+                                className="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-105"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            </div>
+                            <div className="p-5 text-center bg-background">
+                              <h3 className="font-semibold text-foreground text-lg">{leader.name}</h3>
+                              <p className="text-sm text-primary">{leader.role}</p>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  <CarouselPrevious className="absolute -left-4 md:left-0 top-1/2 -translate-y-1/2 h-12 w-12 bg-primary text-primary-foreground hover:bg-primary/90 border-0 shadow-lg" />
+                  <CarouselNext className="absolute -right-4 md:right-0 top-1/2 -translate-y-1/2 h-12 w-12 bg-primary text-primary-foreground hover:bg-primary/90 border-0 shadow-lg" />
+                </Carousel>
+              </div>
             </div>
           </section>
 
