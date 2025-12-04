@@ -10,6 +10,7 @@ import PisamPlusSection from "@/components/sections/PisamPlusSection";
 import NewsSection from "@/components/sections/NewsSection";
 import ContactSection from "@/components/sections/ContactSection";
 import CTASection from "@/components/sections/CTASection";
+import NewsletterSection from "@/components/sections/NewsletterSection";
 
 const Index = () => {
   return (
@@ -36,6 +37,7 @@ const Index = () => {
           <NewsSection />
           <CTASection />
           <ContactSection />
+          <NewsletterSection />
         </main>
         <Footer />
       </div>
