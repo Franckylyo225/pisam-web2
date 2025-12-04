@@ -38,7 +38,7 @@ const Header = () => {
         { href: "/pisam#pisam-2", label: "PISAM 2.0" },
       ]
     },
-    { href: "#patients", label: "Patients", isRoute: false },
+    { href: "/patients", label: "Patients", isRoute: true },
     { href: "#medecins", label: "Médecins", isRoute: false },
     { 
       href: "#services", 
