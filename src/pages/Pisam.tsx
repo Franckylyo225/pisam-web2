@@ -203,21 +203,42 @@ const Pisam = () => {
                     <h2 className="text-2xl md:text-3xl font-serif font-bold text-foreground mb-6">
                       Le mot du Président
                     </h2>
-                    <div className="space-y-4 text-muted-foreground italic">
+                    <div className="space-y-4 text-muted-foreground">
                       <p>
-                        "Depuis plus de trois décennies, PISAM œuvre chaque jour pour offrir à ses patients 
-                        des soins de qualité internationale, dans le respect de nos valeurs fondamentales : 
-                        l'excellence, l'humanité et l'innovation.
+                        Bienvenue sur le site internet de la PISAM qui a pour but de vous informer sur l'organisation, 
+                        le fonctionnement et les activités de notre établissement. Nous continuerons de le mettre à jour, 
+                        toujours pour rapprocher la PISAM de sa patientèle.
                       </p>
                       <p>
-                        Notre engagement envers vous est simple : vous accompagner à chaque étape de votre 
-                        parcours de santé avec professionnalisme, compassion et dévouement. Nous investissons 
-                        continuellement dans la formation de nos équipes et dans l'acquisition d'équipements 
-                        de dernière génération.
+                        Depuis sa création en 1985, la PISAM s'est engagée dans une dynamique d'amélioration continue 
+                        de la qualité des soins et de ses prestations faisant d'elle le leader dans le domaine privé de la santé.
                       </p>
                       <p>
-                        PISAM, c'est bien plus qu'une clinique. C'est une famille dédiée à votre bien-être, 
-                        prête à vous accueillir 24h/24 pour répondre à tous vos besoins de santé."
+                        La PISAM, c'est aujourd'hui la plus grande polyclinique de la sous-région par sa capacité d'accueil 
+                        et la taille de son plateau technique qui comprend entre autres :
+                      </p>
+                      <ul className="space-y-2 ml-4">
+                        <li className="flex items-start gap-2">
+                          <span className="text-primary mt-1">•</span>
+                          <span>Un laboratoire de biologie médicale (BIOCSAM) ayant développé de nouvelles branches comme 
+                          l'immuno-histochimie et l'anatomo-cytopathologie;</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-primary mt-1">•</span>
+                          <span>Un centre d'imagerie (CISAM) comprenant des appareils d'imagerie diagnostique de dernière 
+                          génération (Scanner 64 barrettes, IRM 1,5T, Sénographe, etc).</span>
+                        </li>
+                      </ul>
+                      <p>
+                        La PISAM est aussi à ce jour, le seul établissement sanitaire certifié ISO 9001 – 2015 pour tous 
+                        ses processus; cette démarche qualité nous permettant de toujours vous donner le meilleur de nous-mêmes.
+                      </p>
+                      <p>
+                        Pour les années à venir, notre ambition est de moderniser sans cesse notre bel établissement en y 
+                        ajoutant toutes les spécialités médicales nécessaires pour assurer une prise en charge complète de 
+                        nos patients. Bien sûr, nous resterons toujours à votre écoute pour continuer à satisfaire au mieux 
+                        vos besoins parce que vous êtes au cœur de nos priorités et c'est ensemble que nous ferons de la PISAM 
+                        le fleuron de la santé en Côte d'Ivoire et en Afrique.
                       </p>
                     </div>
                   </div>
