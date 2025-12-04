@@ -93,92 +93,88 @@ const Contact = () => {
         </section>
 
         {/* Contact Info Section */}
-        <section className="py-16 md:py-24 bg-muted/30">
+        <section className="py-20 bg-gradient-to-r from-primary to-secondary text-white">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Nos coordonnées
-              </h2>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                N'hésitez pas à nous contacter pour toute information ou pour prendre rendez-vous.
-              </p>
-            </div>
+            <div className="max-w-5xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
+                  Nos coordonnées
+                </h2>
+                <p className="text-lg opacity-90 max-w-2xl mx-auto">
+                  N'hésitez pas à nous contacter pour toute information ou pour prendre rendez-vous.
+                </p>
+              </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {/* Address Card */}
-              <Card className="group hover:shadow-xl transition-all duration-300 border-t-4 border-t-primary bg-background">
-                <CardContent className="p-6 text-center">
-                  <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
-                    <MapPin className="w-8 h-8 text-primary group-hover:text-primary-foreground transition-colors" />
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center mb-12">
+                {/* Address */}
+                <div>
+                  <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center mx-auto mb-4">
+                    <MapPin className="h-7 w-7" />
                   </div>
-                  <h3 className="font-heading text-xl font-semibold text-foreground mb-3">Adresse</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
+                  <h3 className="font-semibold text-lg mb-3">Adresse</h3>
+                  <p className="text-sm opacity-80 leading-relaxed">
                     Abidjan, Cocody<br />
                     Rue Cannebière<br />
                     Avenue Joseph Blohorn<br />
                     01 BP 1463 Abidjan 01<br />
                     Côte d'Ivoire
                   </p>
-                </CardContent>
-              </Card>
+                </div>
 
-              {/* Hours Card */}
-              <Card className="group hover:shadow-xl transition-all duration-300 border-t-4 border-t-secondary bg-background">
-                <CardContent className="p-6 text-center">
-                  <div className="w-16 h-16 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-secondary group-hover:scale-110 transition-all duration-300">
-                    <Clock className="w-8 h-8 text-secondary group-hover:text-secondary-foreground transition-colors" />
+                {/* Hours */}
+                <div>
+                  <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center mx-auto mb-4">
+                    <Clock className="h-7 w-7" />
                   </div>
-                  <h3 className="font-heading text-xl font-semibold text-foreground mb-3">Heures d'ouverture</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    <span className="block">Lun - Ven : 07h30 - 19h30</span>
-                    <span className="block">Samedi : 07h30 - 12h00</span>
-                    <span className="block mt-2 text-primary font-semibold">Urgences 24h/24 - 7j/7</span>
+                  <h3 className="font-semibold text-lg mb-3">Heures d'ouverture</h3>
+                  <p className="text-sm opacity-80 leading-relaxed">
+                    Lun - Ven : 07h30 - 19h30<br />
+                    Samedi : 07h30 - 12h00<br />
+                    <span className="block mt-2 font-semibold text-accent">Urgences 24h/24 - 7j/7</span>
                   </p>
-                </CardContent>
-              </Card>
+                </div>
 
-              {/* Phone Card */}
-              <Card className="group hover:shadow-xl transition-all duration-300 border-t-4 border-t-accent bg-background">
-                <CardContent className="p-6 text-center">
-                  <div className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-accent group-hover:scale-110 transition-all duration-300">
-                    <Phone className="w-8 h-8 text-accent group-hover:text-accent-foreground transition-colors" />
+                {/* Phone */}
+                <div>
+                  <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center mx-auto mb-4">
+                    <Phone className="h-7 w-7" />
                   </div>
-                  <h3 className="font-heading text-xl font-semibold text-foreground mb-3">Téléphones</h3>
-                  <div className="text-muted-foreground text-sm space-y-1">
-                    <p><span className="font-medium">Standard :</span><br />(+225) 27 22 48 31 31</p>
-                    <p className="text-primary font-semibold"><span className="font-medium text-foreground">Urgences :</span><br />(+225) 27 22 48 31 12</p>
-                  </div>
-                </CardContent>
-              </Card>
+                  <h3 className="font-semibold text-lg mb-3">Téléphones</h3>
+                  <p className="text-sm opacity-80 leading-relaxed">
+                    <span className="block">Standard :</span>
+                    (+225) 27 22 48 31 31<br />
+                    <span className="block mt-2 font-semibold text-accent">Urgences :</span>
+                    (+225) 27 22 48 31 12
+                  </p>
+                </div>
 
-              {/* Email Card */}
-              <Card className="group hover:shadow-xl transition-all duration-300 border-t-4 border-t-primary bg-background">
-                <CardContent className="p-6 text-center">
-                  <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
-                    <Mail className="w-8 h-8 text-primary group-hover:text-primary-foreground transition-colors" />
+                {/* Email */}
+                <div>
+                  <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center mx-auto mb-4">
+                    <Mail className="h-7 w-7" />
                   </div>
-                  <h3 className="font-heading text-xl font-semibold text-foreground mb-3">Emails</h3>
-                  <div className="space-y-2">
-                    <a href="mailto:info@pisam.ci" className="block text-primary hover:underline text-sm">info@pisam.ci</a>
-                    <a href="mailto:bilandesanté@pisam.ci" className="block text-primary hover:underline text-sm">bilandesanté@pisam.ci</a>
+                  <h3 className="font-semibold text-lg mb-3">Emails</h3>
+                  <div className="text-sm opacity-80 leading-relaxed space-y-1">
+                    <a href="mailto:info@pisam.ci" className="block hover:text-accent transition-colors">info@pisam.ci</a>
+                    <a href="mailto:bilandesante@pisam.ci" className="block hover:text-accent transition-colors">bilandesante@pisam.ci</a>
                   </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Additional Contact Details */}
-            <div className="mt-12 grid md:grid-cols-3 gap-6">
-              <div className="bg-background rounded-xl p-6 shadow-sm border">
-                <h4 className="font-heading font-semibold text-foreground mb-2">Fax</h4>
-                <p className="text-muted-foreground text-sm">(+225) 27 22 48 31 32<br />(+225) 27 22 48 31 33</p>
+                </div>
               </div>
-              <div className="bg-background rounded-xl p-6 shadow-sm border">
-                <h4 className="font-heading font-semibold text-foreground mb-2">Département Qualité</h4>
-                <p className="text-muted-foreground text-sm">(+225) 07 47 93 20 30</p>
-              </div>
-              <div className="bg-background rounded-xl p-6 shadow-sm border">
-                <h4 className="font-heading font-semibold text-foreground mb-2">Direction Commerciale</h4>
-                <p className="text-muted-foreground text-sm">(+225) 27 22 48 31 44<br />(+225) 27 22 48 31 04</p>
+
+              {/* Additional Contact Details */}
+              <div className="grid md:grid-cols-3 gap-6 pt-8 border-t border-white/20">
+                <div className="text-center">
+                  <h4 className="font-semibold mb-2">Fax</h4>
+                  <p className="text-sm opacity-80">(+225) 27 22 48 31 32<br />(+225) 27 22 48 31 33</p>
+                </div>
+                <div className="text-center">
+                  <h4 className="font-semibold mb-2">Département Qualité</h4>
+                  <p className="text-sm opacity-80">(+225) 07 47 93 20 30</p>
+                </div>
+                <div className="text-center">
+                  <h4 className="font-semibold mb-2">Direction Commerciale</h4>
+                  <p className="text-sm opacity-80">(+225) 27 22 48 31 44<br />(+225) 27 22 48 31 04</p>
+                </div>
               </div>
             </div>
           </div>
