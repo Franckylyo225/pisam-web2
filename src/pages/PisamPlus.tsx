@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Card, CardContent } from "@/components/ui/card";
@@ -30,6 +30,15 @@ import {
   Wallet,
   Repeat
 } from "lucide-react";
+import pisamPlusSlide1 from "@/assets/pisam-plus-slide-1.jpg";
+import pisamPlusSlide2 from "@/assets/pisam-plus-slide-2.jpg";
+import pisamPlusSlide3 from "@/assets/pisam-plus-slide-3.jpg";
+
+const heroSlides = [
+  pisamPlusSlide1,
+  pisamPlusSlide2,
+  pisamPlusSlide3
+];
 
 const pisamAdvantages = [
   "Carte d'accès aux soins",
@@ -133,6 +142,15 @@ const partners = [
 ];
 
 const PisamPlus = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <>
       <Helmet>
@@ -146,70 +164,70 @@ const PisamPlus = () => {
       <Header />
 
       <main className="min-h-screen">
-        {/* Hero Section */}
-        <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-accent via-accent/90 to-accent/80">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMwMDAwMDAiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-50" />
+        {/* Hero Section with Carousel */}
+        <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
+          {/* Background Slides */}
+          {heroSlides.map((slide, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ${
+                index === currentSlide ? "opacity-100" : "opacity-0"
+              }`}
+              style={{ backgroundImage: `url(${slide})` }}
+            />
+          ))}
           
+          {/* Overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/30 to-transparent" />
+          
+          {/* Slide indicators */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+            {heroSlides.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentSlide(index)}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  index === currentSlide 
+                    ? "bg-white w-8" 
+                    : "bg-white/50 hover:bg-white/70"
+                }`}
+                aria-label={`Slide ${index + 1}`}
+              />
+            ))}
+          </div>
+
           <div className="container mx-auto px-4 py-20 relative z-10">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="text-center lg:text-left">
-                <Badge className="mb-6 bg-primary text-primary-foreground text-sm px-4 py-1">
-                  Innovation Santé
-                </Badge>
-                <h1 className="font-proxima text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-                  Carte <span className="text-primary">PISAM</span><span className="text-secondary">+</span>
-                </h1>
-                <p className="text-xl md:text-2xl text-foreground/80 mb-4">
-                  Votre dossier médical + Carte VISA prépayée
-                </p>
-                <p className="text-lg text-muted-foreground mb-8 max-w-xl">
-                  Une carte d'identification patient couplée à une carte VISA prépayée. 
-                  Sécurisée, simple d'usage, économique et rechargeable.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                  <Button size="lg" className="text-lg px-8">
-                    <CreditCard className="h-5 w-5 mr-2" />
-                    Commander ma carte
-                  </Button>
-                  <Button size="lg" variant="outline" className="text-lg px-8">
-                    En savoir plus
-                  </Button>
-                </div>
-                <div className="mt-8 flex items-center justify-center lg:justify-start gap-4">
-                  <div className="text-center">
-                    <p className="text-3xl font-bold text-primary">10.000</p>
-                    <p className="text-sm text-muted-foreground">FCFA seulement</p>
-                  </div>
-                  <div className="h-12 w-px bg-border" />
-                  <div className="text-center">
-                    <p className="text-3xl font-bold text-secondary">3 ans</p>
-                    <p className="text-sm text-muted-foreground">de validité</p>
-                  </div>
-                </div>
+            <div className="max-w-2xl">
+              <Badge className="mb-6 bg-primary text-primary-foreground text-sm px-4 py-1">
+                Innovation Santé
+              </Badge>
+              <h1 className="font-proxima text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 drop-shadow-lg">
+                Carte <span className="text-secondary">PISAM</span><span className="text-accent">+</span>
+              </h1>
+              <p className="text-xl md:text-2xl text-white/90 mb-4 drop-shadow">
+                Votre dossier médical + Carte VISA prépayée
+              </p>
+              <p className="text-lg text-white/80 mb-8 max-w-xl drop-shadow">
+                Une carte d'identification patient couplée à une carte VISA prépayée. 
+                Sécurisée, simple d'usage, économique et rechargeable.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button size="lg" className="text-lg px-8">
+                  <CreditCard className="h-5 w-5 mr-2" />
+                  Commander ma carte
+                </Button>
+                <Button size="lg" variant="outline" className="text-lg px-8 bg-white/10 border-white text-white hover:bg-white hover:text-primary">
+                  En savoir plus
+                </Button>
               </div>
-              
-              <div className="flex justify-center">
-                <div className="relative">
-                  <div className="w-80 h-48 bg-gradient-to-br from-primary via-secondary to-primary rounded-2xl shadow-2xl transform rotate-6 absolute -right-4 -top-4 opacity-30" />
-                  <div className="w-80 h-48 bg-gradient-to-br from-primary to-secondary rounded-2xl shadow-2xl flex flex-col justify-between p-6 relative">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <p className="text-white/80 text-xs">CARTE PRÉPAYÉE</p>
-                        <p className="text-white font-bold text-lg">PISAM PLUS</p>
-                      </div>
-                      <div className="w-12 h-10 bg-yellow-400 rounded opacity-80" />
-                    </div>
-                    <div>
-                      <p className="text-white/90 font-mono text-lg tracking-wider">•••• •••• •••• ••••</p>
-                      <div className="flex justify-between items-end mt-2">
-                        <div>
-                          <p className="text-white/60 text-xs">TITULAIRE</p>
-                          <p className="text-white text-sm">VOTRE NOM</p>
-                        </div>
-                        <p className="text-white font-bold text-xl">VISA</p>
-                      </div>
-                    </div>
-                  </div>
+              <div className="mt-8 flex items-center gap-6">
+                <div className="text-center bg-white/10 backdrop-blur-sm rounded-lg px-6 py-3">
+                  <p className="text-3xl font-bold text-white">10.000</p>
+                  <p className="text-sm text-white/80">FCFA seulement</p>
+                </div>
+                <div className="text-center bg-white/10 backdrop-blur-sm rounded-lg px-6 py-3">
+                  <p className="text-3xl font-bold text-white">3 ans</p>
+                  <p className="text-sm text-white/80">de validité</p>
                 </div>
               </div>
             </div>
