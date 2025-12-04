@@ -51,7 +51,7 @@ const Header = () => {
       ]
     },
     { href: "/blog", label: "Actualité", isRoute: true },
-    { href: "#contact", label: "Contacts", isRoute: false },
+    { href: "/contact", label: "Contacts", isRoute: true },
   ];
 
   const toggleMobileSubmenu = (label: string) => {
