@@ -1,16 +1,7 @@
-import { CheckCircle2, Award, Users, Clock, Building2, Stethoscope, FlaskConical, Siren, ArrowRight } from "lucide-react";
+import { Award, Users, Clock, Building2, Stethoscope, FlaskConical, Siren, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import pisamAerialView from "@/assets/pisam-aerial-view.jpg";
-
-const features = [
-  "Plus de 150 médecins spécialistes qualifiés",
-  "Équipements médicaux de dernière génération",
-  "Plateau technique moderne et complet",
-  "Bloc opératoire aux normes internationales",
-  "Laboratoire d'analyses accrédité",
-  "Service d'urgences disponible 24h/24",
-];
 
 const stats = [
   { icon: Users, value: "+150", label: "Professionnels de santé" },
@@ -75,49 +66,21 @@ const AboutSection = () => {
           </div>
         </div>
 
-        {/* Details section */}
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
-          {/* Left - Description */}
-          <div>
-            <h3 className="text-2xl md:text-3xl font-serif font-bold text-foreground mb-6">
-              L'excellence médicale au cœur d'Abidjan
-            </h3>
-            <p className="text-muted-foreground mb-4 leading-relaxed">
-              Notre mission est d'offrir à chaque patient des soins personnalisés de qualité 
-              internationale, dans un environnement moderne et accueillant. Nous combinons 
-              expertise médicale, technologie de pointe et humanité pour garantir votre bien-être.
-            </p>
-            <p className="text-muted-foreground mb-8 leading-relaxed">
-              Fondée il y a plus de 30 ans, la PISAM est devenue une référence en matière de 
-              soins de santé en Côte d'Ivoire et dans la sous-région ouest-africaine.
-            </p>
-
-            {/* Features list */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {features.map((feature) => (
-                <div key={feature} className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-pisam-green flex-shrink-0 mt-0.5" />
-                  <span className="text-foreground text-sm">{feature}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right - Stats grid */}
-          <div className="grid grid-cols-2 gap-4">
-            {stats.map((stat) => (
-              <div
-                key={stat.label}
-                className="text-center p-6 bg-card rounded-2xl border border-border/50 shadow-sm hover:shadow-md transition-shadow"
-              >
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
-                  <stat.icon className="h-6 w-6 text-primary" />
-                </div>
-                <div className="text-2xl md:text-3xl font-bold text-primary mb-1">{stat.value}</div>
-                <div className="text-xs text-muted-foreground">{stat.label}</div>
+        {/* Stats row - full width */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {stats.map((stat, index) => (
+            <div
+              key={stat.label}
+              className="text-center p-8 bg-card rounded-2xl border border-border/50 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 animate-fade-in"
+              style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'both' }}
+            >
+              <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                <stat.icon className="h-7 w-7 text-primary" />
               </div>
-            ))}
-          </div>
+              <div className="text-3xl md:text-4xl font-bold text-primary mb-2">{stat.value}</div>
+              <div className="text-sm text-muted-foreground">{stat.label}</div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
