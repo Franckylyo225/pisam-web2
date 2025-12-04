@@ -71,11 +71,11 @@ const ServicesSection = () => {
         </div>
 
         {/* Services grid - Checkerboard pattern */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 mb-12 rounded-2xl overflow-hidden shadow-pisam-lg">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-12">
           {services.map((service, index) => (
             <div
               key={service.title}
-              className={`group relative p-8 lg:p-10 ${checkerboardColors[index]} transition-all duration-300 hover:brightness-110`}
+              className={`group relative p-8 lg:p-10 rounded-2xl ${checkerboardColors[index]} transition-all duration-300 hover:brightness-110 hover:-translate-y-1 shadow-lg`}
             >
               {/* Icon */}
               <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-white/30 transition-all duration-300">
