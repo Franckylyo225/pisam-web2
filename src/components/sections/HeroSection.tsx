@@ -89,7 +89,7 @@ const HeroSection = () => {
       </div>
 
       {/* Content - Centered */}
-      <div className="relative z-10 min-h-[90vh] flex items-center justify-center">
+      <div className="relative z-10 min-h-[90vh] flex items-center justify-center pt-20 md:pt-0">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center text-white">
             {slides.map((slide, index) => (
