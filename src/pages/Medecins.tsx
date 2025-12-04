@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { useState } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import medecinsHero from "@/assets/medecins-hero.png";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -102,7 +103,7 @@ const Medecins = () => {
           <div 
             className="absolute inset-0 bg-cover bg-center"
             style={{
-              backgroundImage: `linear-gradient(to right, hsl(var(--primary)/0.9), hsl(var(--secondary)/0.8)), url('/placeholder.svg')`
+              backgroundImage: `linear-gradient(to right, hsl(var(--primary)/0.85), hsl(var(--secondary)/0.75)), url(${medecinsHero})`
             }}
           />
           <div className="relative z-10 text-center text-white px-4">
