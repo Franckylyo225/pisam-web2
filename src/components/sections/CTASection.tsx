@@ -1,17 +1,21 @@
 import { Calendar, Phone, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import ctaBackground from "@/assets/cta-nurse-patient.png";
 
 const CTASection = () => {
   return (
     <section className="py-24 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 gradient-hero" />
-      
-      {/* Decorative elements */}
+      {/* Background image */}
       <div className="absolute inset-0">
-        <div className="absolute top-10 left-10 w-64 h-64 bg-background/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 right-10 w-96 h-96 bg-pisam-turquoise/10 rounded-full blur-3xl" />
+        <img
+          src={ctaBackground}
+          alt=""
+          className="w-full h-full object-cover"
+        />
       </div>
+      
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/80 to-secondary/70" />
 
       {/* Pattern */}
       <div className="absolute inset-0 opacity-5">
