@@ -1,5 +1,6 @@
-import { CheckCircle2, Award, Users, Clock, Building2 } from "lucide-react";
+import { CheckCircle2, Award, Users, Clock, Building2, Stethoscope, FlaskConical, Siren, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import pisamAerialView from "@/assets/pisam-aerial-view.jpg";
 
 const features = [
@@ -45,20 +46,31 @@ const AboutSection = () => {
               <p className="text-white/90 text-sm md:text-base mb-6 leading-relaxed">
                 La Polyclinique Internationale Sainte Anne-Marie (PISAM) est un établissement hospitalier pluridisciplinaire, leader dans le secteur privé de la santé en Côte d'Ivoire et dans la sous-région depuis plus de 30 ans.
               </p>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="bg-white rounded-lg px-4 py-3 text-center">
+              <div className="grid grid-cols-2 gap-3 mb-6">
+                <div className="bg-white rounded-lg px-4 py-3 flex items-center gap-2">
+                  <Building2 className="h-5 w-5 text-primary flex-shrink-0" />
                   <span className="text-primary text-sm font-medium">Plateau technique moderne</span>
                 </div>
-                <div className="bg-white rounded-lg px-4 py-3 text-center">
+                <div className="bg-white rounded-lg px-4 py-3 flex items-center gap-2">
+                  <Stethoscope className="h-5 w-5 text-primary flex-shrink-0" />
                   <span className="text-primary text-sm font-medium">Bloc opératoire aux normes</span>
                 </div>
-                <div className="bg-white rounded-lg px-4 py-3 text-center">
+                <div className="bg-white rounded-lg px-4 py-3 flex items-center gap-2">
+                  <FlaskConical className="h-5 w-5 text-primary flex-shrink-0" />
                   <span className="text-primary text-sm font-medium">Laboratoire accrédité</span>
                 </div>
-                <div className="bg-white rounded-lg px-4 py-3 text-center">
+                <div className="bg-white rounded-lg px-4 py-3 flex items-center gap-2">
+                  <Siren className="h-5 w-5 text-primary flex-shrink-0" />
                   <span className="text-primary text-sm font-medium">Urgences 24h/24</span>
                 </div>
               </div>
+              
+              <Link to="/pisam">
+                <Button variant="outline" className="bg-white text-primary hover:bg-white/90 border-white font-medium group">
+                  En savoir plus
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
