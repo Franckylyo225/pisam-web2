@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
+import { AuthProvider } from "@/hooks/useAuth";
 import Index from "./pages/Index";
 import Blog from "./pages/Blog";
 import Pisam from "./pages/Pisam";
@@ -16,6 +17,14 @@ import PlateauTechnique from "./pages/PlateauTechnique";
 import CertificationISO from "./pages/CertificationISO";
 import Pisam2 from "./pages/Pisam2";
 import Contact from "./pages/Contact";
+import Auth from "./pages/Auth";
+import AdminLayout from "./pages/admin/AdminLayout";
+import Dashboard from "./pages/admin/Dashboard";
+import DoctorsAdmin from "./pages/admin/DoctorsAdmin";
+import SpecialtiesAdmin from "./pages/admin/SpecialtiesAdmin";
+import ArticlesAdmin from "./pages/admin/ArticlesAdmin";
+import LeadershipAdmin from "./pages/admin/LeadershipAdmin";
+import AdminsAdmin from "./pages/admin/AdminsAdmin";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,28 +32,40 @@ const queryClient = new QueryClient();
 const App = () => (
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/pisam" element={<Pisam />} />
-            <Route path="/patients" element={<Patients />} />
-            <Route path="/medecins" element={<Medecins />} />
-            <Route path="/biocsam" element={<BioCSAM />} />
-            <Route path="/cisam" element={<CISAM />} />
-            <Route path="/pisam-plus" element={<PisamPlus />} />
-            <Route path="/plateau-technique" element={<PlateauTechnique />} />
-            <Route path="/certification-iso" element={<CertificationISO />} />
-            <Route path="/pisam-2" element={<Pisam2 />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/contact" element={<Contact />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
+      <AuthProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/pisam" element={<Pisam />} />
+              <Route path="/patients" element={<Patients />} />
+              <Route path="/medecins" element={<Medecins />} />
+              <Route path="/biocsam" element={<BioCSAM />} />
+              <Route path="/cisam" element={<CISAM />} />
+              <Route path="/pisam-plus" element={<PisamPlus />} />
+              <Route path="/plateau-technique" element={<PlateauTechnique />} />
+              <Route path="/certification-iso" element={<CertificationISO />} />
+              <Route path="/pisam-2" element={<Pisam2 />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/auth" element={<Auth />} />
+              
+              {/* Admin Routes */}
+              <Route path="/admin" element={<AdminLayout><Dashboard /></AdminLayout>} />
+              <Route path="/admin/doctors" element={<AdminLayout><DoctorsAdmin /></AdminLayout>} />
+              <Route path="/admin/specialties" element={<AdminLayout><SpecialtiesAdmin /></AdminLayout>} />
+              <Route path="/admin/articles" element={<AdminLayout><ArticlesAdmin /></AdminLayout>} />
+              <Route path="/admin/leadership" element={<AdminLayout><LeadershipAdmin /></AdminLayout>} />
+              <Route path="/admin/admins" element={<AdminLayout><AdminsAdmin /></AdminLayout>} />
+              
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </AuthProvider>
     </QueryClientProvider>
   </HelmetProvider>
 );
