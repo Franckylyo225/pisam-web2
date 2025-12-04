@@ -152,36 +152,12 @@ const HeroSection = () => {
               </Button>
             </div>
 
-            {/* Trust badges - hidden on mobile */}
+            {/* Trust badges - hidden */}
+            {/* 
             <div className="hidden md:flex flex-wrap gap-8 justify-center">
-              <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm px-5 py-3 rounded-xl">
-                <div className="w-10 h-10 rounded-full bg-pisam-gold/30 flex items-center justify-center">
-                  <span className="text-pisam-gold font-bold text-sm">ISO</span>
-                </div>
-                <div className="text-left">
-                  <div className="font-semibold text-sm">Certifié</div>
-                  <div className="text-xs text-white/70">ISO 9001</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm px-5 py-3 rounded-xl">
-                <div className="w-10 h-10 rounded-full bg-red-500/30 flex items-center justify-center">
-                  <span className="text-red-300 font-bold text-sm">24</span>
-                </div>
-                <div className="text-left">
-                  <div className="font-semibold text-sm">Urgences</div>
-                  <div className="text-xs text-white/70">24h/24 - 7j/7</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm px-5 py-3 rounded-xl">
-                <div className="w-10 h-10 rounded-full bg-pisam-turquoise/30 flex items-center justify-center">
-                  <span className="text-pisam-turquoise font-bold text-sm">50+</span>
-                </div>
-                <div className="text-left">
-                  <div className="font-semibold text-sm">Spécialités</div>
-                  <div className="text-xs text-white/70">Médicales</div>
-                </div>
-              </div>
+              ...
             </div>
+            */}
           </div>
         </div>
       </div>
