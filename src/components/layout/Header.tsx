@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Phone, Clock, MapPin, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,11 +11,22 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import logoPisam from "@/assets/logo-pisam.png";
+import { cn } from "@/lib/utils";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openMobileSubmenu, setOpenMobileSubmenu] = useState<string | null>(null);
+  const location = useLocation();
+
+  const isActiveLink = (href: string, submenu?: { href: string }[]) => {
+    if (href === "/" && location.pathname === "/") return true;
+    if (href !== "/" && location.pathname === href) return true;
+    if (submenu) {
+      return submenu.some(item => location.pathname === item.href);
+    }
+    return false;
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -106,7 +117,14 @@ const Header = () => {
                   <NavigationMenuItem key={link.label}>
                     {link.submenu ? (
                       <>
-                        <NavigationMenuTrigger className="bg-transparent text-foreground/80 hover:text-primary hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent">
+                        <NavigationMenuTrigger 
+                          className={cn(
+                            "bg-transparent hover:bg-primary/10 hover:text-primary focus:bg-transparent data-[state=open]:bg-primary/10 transition-all duration-200",
+                            isActiveLink(link.href, link.submenu) 
+                              ? "text-primary font-semibold border-b-2 border-primary rounded-none" 
+                              : "text-foreground/80"
+                          )}
+                        >
                           {link.label}
                         </NavigationMenuTrigger>
                         <NavigationMenuContent>
@@ -117,7 +135,10 @@ const Header = () => {
                                   <NavigationMenuLink asChild>
                                     <Link
                                       to={subitem.href}
-                                      className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                      className={cn(
+                                        "block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary/10 hover:text-primary focus:bg-accent focus:text-accent-foreground",
+                                        location.pathname === subitem.href && "bg-primary/10 text-primary font-medium"
+                                      )}
                                     >
                                       <span className="text-sm font-medium">{subitem.label}</span>
                                     </Link>
@@ -126,7 +147,7 @@ const Header = () => {
                                   <NavigationMenuLink asChild>
                                     <a
                                       href={subitem.href}
-                                      className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                      className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary/10 hover:text-primary focus:bg-accent focus:text-accent-foreground"
                                     >
                                       <span className="text-sm font-medium">{subitem.label}</span>
                                     </a>
@@ -142,14 +163,19 @@ const Header = () => {
                         {link.isRoute ? (
                           <Link
                             to={link.href}
-                            className="group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-foreground/80 transition-colors hover:text-primary focus:text-primary focus:outline-none"
+                            className={cn(
+                              "group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-all duration-200 hover:bg-primary/10 hover:text-primary focus:text-primary focus:outline-none",
+                              isActiveLink(link.href) 
+                                ? "text-primary font-semibold border-b-2 border-primary rounded-none" 
+                                : "text-foreground/80"
+                            )}
                           >
                             {link.label}
                           </Link>
                         ) : (
                           <a
                             href={link.href}
-                            className="group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-foreground/80 transition-colors hover:text-primary focus:text-primary focus:outline-none"
+                            className="group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-foreground/80 transition-all duration-200 hover:bg-primary/10 hover:text-primary focus:text-primary focus:outline-none"
                           >
                             {link.label}
                           </a>
@@ -197,7 +223,12 @@ const Header = () => {
                     <>
                       <button
                         onClick={() => toggleMobileSubmenu(link.label)}
-                        className="w-full flex items-center justify-between py-3 px-4 text-foreground/80 hover:text-primary hover:bg-muted rounded-lg font-medium transition-all"
+                        className={cn(
+                          "w-full flex items-center justify-between py-3 px-4 hover:text-primary hover:bg-primary/10 rounded-lg font-medium transition-all",
+                          isActiveLink(link.href, link.submenu) 
+                            ? "text-primary bg-primary/10 border-l-4 border-primary" 
+                            : "text-foreground/80"
+                        )}
                       >
                         {link.label}
                         <ChevronDown 
@@ -213,7 +244,12 @@ const Header = () => {
                               <Link
                                 key={subitem.href}
                                 to={subitem.href}
-                                className="py-2 px-4 text-sm text-foreground/70 hover:text-primary hover:bg-muted/50 rounded-lg transition-all"
+                                className={cn(
+                                  "py-2 px-4 text-sm hover:text-primary hover:bg-primary/10 rounded-lg transition-all",
+                                  location.pathname === subitem.href 
+                                    ? "text-primary bg-primary/10 font-medium" 
+                                    : "text-foreground/70"
+                                )}
                                 onClick={() => setIsMobileMenuOpen(false)}
                               >
                                 {subitem.label}
@@ -222,7 +258,7 @@ const Header = () => {
                               <a
                                 key={subitem.href}
                                 href={subitem.href}
-                                className="py-2 px-4 text-sm text-foreground/70 hover:text-primary hover:bg-muted/50 rounded-lg transition-all"
+                                className="py-2 px-4 text-sm text-foreground/70 hover:text-primary hover:bg-primary/10 rounded-lg transition-all"
                                 onClick={() => setIsMobileMenuOpen(false)}
                               >
                                 {subitem.label}
@@ -236,7 +272,12 @@ const Header = () => {
                     link.isRoute ? (
                       <Link
                         to={link.href}
-                        className="block py-3 px-4 text-foreground/80 hover:text-primary hover:bg-muted rounded-lg font-medium transition-all"
+                        className={cn(
+                          "block py-3 px-4 hover:text-primary hover:bg-primary/10 rounded-lg font-medium transition-all",
+                          isActiveLink(link.href) 
+                            ? "text-primary bg-primary/10 border-l-4 border-primary" 
+                            : "text-foreground/80"
+                        )}
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         {link.label}
@@ -244,7 +285,7 @@ const Header = () => {
                     ) : (
                       <a
                         href={link.href}
-                        className="block py-3 px-4 text-foreground/80 hover:text-primary hover:bg-muted rounded-lg font-medium transition-all"
+                        className="block py-3 px-4 text-foreground/80 hover:text-primary hover:bg-primary/10 rounded-lg font-medium transition-all"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         {link.label}
