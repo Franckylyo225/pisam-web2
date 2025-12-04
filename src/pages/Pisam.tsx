@@ -183,28 +183,29 @@ const Pisam = () => {
           {/* Mot du PDG Section */}
           <section className="py-20 bg-muted/30">
             <div className="container mx-auto px-4">
-              <div className="max-w-5xl mx-auto">
-                <div className="grid md:grid-cols-5 gap-8 items-center">
+              <div className="max-w-6xl mx-auto">
+                {/* Top section: Image + Intro */}
+                <div className="grid md:grid-cols-5 gap-10 items-start mb-12">
                   <div className="md:col-span-2">
-                    <div className="relative">
+                    <div className="relative sticky top-24">
                       <img 
                         src={pdgEricDjibo} 
                         alt="M. Eric Djibo - PDG de PISAM" 
                         className="rounded-2xl shadow-pisam w-full object-cover aspect-[3/4]"
                       />
-                      <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-background px-6 py-3 rounded-xl shadow-lg text-center">
+                      <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-background px-6 py-3 rounded-xl shadow-lg text-center whitespace-nowrap">
                         <p className="font-semibold text-foreground">M. ERIC DJIBO</p>
                         <p className="text-sm text-muted-foreground">Président Directeur Général</p>
                       </div>
                     </div>
                   </div>
                   <div className="md:col-span-3">
-                    <Quote className="h-12 w-12 text-primary/20 mb-4" />
+                    <Quote className="h-10 w-10 text-primary/30 mb-3" />
                     <h2 className="text-2xl md:text-3xl font-serif font-bold text-foreground mb-6">
                       Le mot du Président
                     </h2>
-                    <div className="space-y-4 text-muted-foreground">
-                      <p>
+                    <div className="space-y-4 text-muted-foreground leading-relaxed">
+                      <p className="text-lg">
                         Bienvenue sur le site internet de la PISAM qui a pour but de vous informer sur l'organisation, 
                         le fonctionnement et les activités de notre établissement. Nous continuerons de le mettre à jour, 
                         toujours pour rapprocher la PISAM de sa patientèle.
@@ -217,30 +218,38 @@ const Pisam = () => {
                         La PISAM, c'est aujourd'hui la plus grande polyclinique de la sous-région par sa capacité d'accueil 
                         et la taille de son plateau technique qui comprend entre autres :
                       </p>
-                      <ul className="space-y-2 ml-4">
-                        <li className="flex items-start gap-2">
-                          <span className="text-primary mt-1">•</span>
+                      <ul className="space-y-2 pl-1">
+                        <li className="flex items-start gap-3">
+                          <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 flex-shrink-0"></span>
                           <span>Un laboratoire de biologie médicale (BIOCSAM) ayant développé de nouvelles branches comme 
                           l'immuno-histochimie et l'anatomo-cytopathologie;</span>
                         </li>
-                        <li className="flex items-start gap-2">
-                          <span className="text-primary mt-1">•</span>
+                        <li className="flex items-start gap-3">
+                          <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 flex-shrink-0"></span>
                           <span>Un centre d'imagerie (CISAM) comprenant des appareils d'imagerie diagnostique de dernière 
                           génération (Scanner 64 barrettes, IRM 1,5T, Sénographe, etc).</span>
                         </li>
                       </ul>
-                      <p>
-                        La PISAM est aussi à ce jour, le seul établissement sanitaire certifié ISO 9001 – 2015 pour tous 
-                        ses processus; cette démarche qualité nous permettant de toujours vous donner le meilleur de nous-mêmes.
-                      </p>
-                      <p>
-                        Pour les années à venir, notre ambition est de moderniser sans cesse notre bel établissement en y 
-                        ajoutant toutes les spécialités médicales nécessaires pour assurer une prise en charge complète de 
-                        nos patients. Bien sûr, nous resterons toujours à votre écoute pour continuer à satisfaire au mieux 
-                        vos besoins parce que vous êtes au cœur de nos priorités et c'est ensemble que nous ferons de la PISAM 
-                        le fleuron de la santé en Côte d'Ivoire et en Afrique.
-                      </p>
                     </div>
+                  </div>
+                </div>
+
+                {/* Bottom section: Two columns */}
+                <div className="grid md:grid-cols-2 gap-8 md:gap-12 pt-8 border-t border-border">
+                  <div className="text-muted-foreground leading-relaxed">
+                    <p>
+                      La PISAM est aussi à ce jour, le seul établissement sanitaire certifié ISO 9001 – 2015 pour tous 
+                      ses processus; cette démarche qualité nous permettant de toujours vous donner le meilleur de nous-mêmes.
+                    </p>
+                  </div>
+                  <div className="text-muted-foreground leading-relaxed">
+                    <p>
+                      Pour les années à venir, notre ambition est de moderniser sans cesse notre bel établissement en y 
+                      ajoutant toutes les spécialités médicales nécessaires pour assurer une prise en charge complète de 
+                      nos patients. Bien sûr, nous resterons toujours à votre écoute pour continuer à satisfaire au mieux 
+                      vos besoins parce que vous êtes au cœur de nos priorités et c'est ensemble que nous ferons de la PISAM 
+                      le fleuron de la santé en Côte d'Ivoire et en Afrique.
+                    </p>
                   </div>
                 </div>
               </div>
