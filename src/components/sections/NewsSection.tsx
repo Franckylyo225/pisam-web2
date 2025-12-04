@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Calendar, Clock, ArrowUpRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const articles = [
   {
@@ -42,10 +43,12 @@ const NewsSection = () => {
               Nos dernières nouvelles
             </h2>
           </div>
-          <Button variant="outline" size="lg" className="group self-start md:self-auto">
-            Voir tout le blog
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Button>
+          <Link to="/blog">
+            <Button variant="outline" size="lg" className="group self-start md:self-auto">
+              Voir tout le blog
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Button>
+          </Link>
         </div>
 
         {/* Articles Grid */}
