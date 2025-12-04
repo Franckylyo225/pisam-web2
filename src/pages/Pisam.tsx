@@ -231,7 +231,7 @@ const Pisam = () => {
               >
                 <CarouselContent className="-ml-4">
                   {leaders.map((leader, index) => (
-                    <CarouselItem key={index} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
+                    <CarouselItem key={index} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/4">
                       <Card className="border-0 shadow-pisam overflow-hidden group">
                         <CardContent className="p-0">
                           <div className="relative overflow-hidden">
