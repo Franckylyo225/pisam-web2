@@ -11,6 +11,13 @@ const stats = [
   { icon: Clock, value: 30, label: "Années d'excellence", prefix: "+" },
 ];
 
+const statColors = [
+  "bg-primary",
+  "bg-pisam-turquoise", 
+  "bg-pisam-green",
+  "bg-pisam-gold",
+];
+
 const StatCard = ({ stat, index }: { stat: typeof stats[0]; index: number }) => {
   const { ref, displayValue, isVisible } = useCounterAnimation({
     end: stat.value,
@@ -21,16 +28,16 @@ const StatCard = ({ stat, index }: { stat: typeof stats[0]; index: number }) => 
   return (
     <div
       ref={ref}
-      className={`text-center p-8 bg-card rounded-2xl border border-border/50 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 ${
+      className={`text-center p-6 md:p-8 ${statColors[index]} rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:scale-105 ${
         isVisible ? 'animate-fade-in' : 'opacity-0'
       }`}
       style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'both' }}
     >
-      <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-        <stat.icon className="h-7 w-7 text-primary" />
+      <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center mx-auto mb-4">
+        <stat.icon className="h-8 w-8 text-white" />
       </div>
-      <div className="text-3xl md:text-4xl font-bold text-primary mb-2">{displayValue}</div>
-      <div className="text-sm text-muted-foreground">{stat.label}</div>
+      <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3">{displayValue}</div>
+      <div className="text-sm md:text-base text-white/90 font-medium">{stat.label}</div>
     </div>
   );
 };
@@ -141,8 +148,15 @@ const AboutSection = () => {
           </div>
         </div>
 
-        {/* Stats row - full width */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        {/* Stats section with title */}
+        <div className="text-center mb-10">
+          <h3 className="text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-foreground">
+            QUELQUES CHIFFRES CLÉS
+          </h3>
+          <div className="w-24 h-1 bg-gradient-to-r from-primary to-pisam-turquoise mx-auto mt-4 rounded-full"></div>
+        </div>
+        
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {stats.map((stat, index) => (
             <StatCard key={stat.label} stat={stat} index={index} />
           ))}
