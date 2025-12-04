@@ -140,8 +140,8 @@ const HeroSection = () => {
               </Button>
             </div>
 
-            {/* Trust badges */}
-            <div className="flex flex-wrap gap-8 justify-center">
+            {/* Trust badges - hidden on mobile */}
+            <div className="hidden md:flex flex-wrap gap-8 justify-center">
               <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm px-5 py-3 rounded-xl">
                 <div className="w-10 h-10 rounded-full bg-pisam-gold/30 flex items-center justify-center">
                   <span className="text-pisam-gold font-bold text-sm">ISO</span>
