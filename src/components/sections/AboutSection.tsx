@@ -151,7 +151,7 @@ const AboutSection = () => {
         {/* Stats section with title */}
         <div className="text-center mb-10">
           <h3 className="text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-foreground">
-            QUELQUES CHIFFRES CLÉS
+            Quelques chiffres clés
           </h3>
           <div className="w-24 h-1 bg-gradient-to-r from-primary to-pisam-turquoise mx-auto mt-4 rounded-full"></div>
         </div>
