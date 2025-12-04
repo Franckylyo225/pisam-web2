@@ -24,6 +24,7 @@ import {
   Quote
 } from "lucide-react";
 import pisamAerial from "@/assets/pisam-aerial-view.jpg";
+import pdgEricDjibo from "@/assets/pdg-eric-djibo.jpg";
 import doctorMale1 from "@/assets/doctor-male-1.jpg";
 import doctorMale2 from "@/assets/doctor-male-2.jpg";
 import doctorFemale1 from "@/assets/doctor-female-1.jpg";
@@ -187,12 +188,12 @@ const Pisam = () => {
                   <div className="md:col-span-2">
                     <div className="relative">
                       <img 
-                        src={doctorMale1} 
-                        alt="PDG de PISAM" 
+                        src={pdgEricDjibo} 
+                        alt="M. Eric Djibo - PDG de PISAM" 
                         className="rounded-2xl shadow-pisam w-full object-cover aspect-[3/4]"
                       />
                       <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-background px-6 py-3 rounded-xl shadow-lg text-center">
-                        <p className="font-semibold text-foreground">Dr. Jean-Baptiste Kouamé</p>
+                        <p className="font-semibold text-foreground">M. ERIC DJIBO</p>
                         <p className="text-sm text-muted-foreground">Président Directeur Général</p>
                       </div>
                     </div>
