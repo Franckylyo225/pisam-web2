@@ -80,13 +80,13 @@ const categories = [...new Set(doctors.map(d => d.category))];
 
 const Medecins = () => {
   const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
-  const filteredDoctors = selectedCategory 
-    ? doctors.filter(d => d.category === selectedCategory)
-    : [];
+  const filteredDoctors = selectedCategory === "all"
+    ? doctors
+    : doctors.filter(d => d.category === selectedCategory);
 
-  const currentSpecialtyInfo = selectedCategory ? specialtyDescriptions[selectedCategory] : null;
+  const currentSpecialtyInfo = selectedCategory && selectedCategory !== "all" ? specialtyDescriptions[selectedCategory] : null;
 
   return (
     <>
@@ -128,6 +128,9 @@ const Medecins = () => {
                   <SelectValue placeholder="Choisir une spécialité..." />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="all" className="text-base py-3 font-medium">
+                    Tous nos médecins
+                  </SelectItem>
                   {categories.map((category) => (
                     <SelectItem key={category} value={category} className="text-base py-3">
                       {category}
@@ -140,24 +143,25 @@ const Medecins = () => {
         </section>
 
         {/* Specialty Description & Doctors */}
-        {selectedCategory && currentSpecialtyInfo && (
-          <section className="py-16 bg-background">
-            <div className="container mx-auto px-4">
-              {/* Specialty Description */}
-              <div className="max-w-3xl mx-auto mb-12 text-center">
-                <div className="flex items-center justify-center gap-3 mb-4">
-                  <Stethoscope className="h-8 w-8 text-primary" />
-                  <h2 className="font-proxima text-3xl md:text-4xl font-bold text-foreground">
-                    {currentSpecialtyInfo.name}
-                  </h2>
-                </div>
+        <section className="py-16 bg-background">
+          <div className="container mx-auto px-4">
+            {/* Specialty Description */}
+            <div className="max-w-3xl mx-auto mb-12 text-center">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <Stethoscope className="h-8 w-8 text-primary" />
+                <h2 className="font-proxima text-3xl md:text-4xl font-bold text-foreground">
+                  {currentSpecialtyInfo ? currentSpecialtyInfo.name : "Tous nos médecins"}
+                </h2>
+              </div>
+              {currentSpecialtyInfo && (
                 <p className="text-muted-foreground text-lg leading-relaxed">
                   {currentSpecialtyInfo.description}
                 </p>
-                <Badge variant="secondary" className="mt-4">
-                  {filteredDoctors.length} médecin{filteredDoctors.length > 1 ? 's' : ''} disponible{filteredDoctors.length > 1 ? 's' : ''}
-                </Badge>
-              </div>
+              )}
+              <Badge variant="secondary" className="mt-4">
+                {filteredDoctors.length} médecin{filteredDoctors.length > 1 ? 's' : ''} disponible{filteredDoctors.length > 1 ? 's' : ''}
+              </Badge>
+            </div>
 
               {/* Doctors Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -200,19 +204,6 @@ const Medecins = () => {
               </div>
             </div>
           </section>
-        )}
-
-        {/* Empty State */}
-        {!selectedCategory && (
-          <section className="py-24 bg-background">
-            <div className="container mx-auto px-4 text-center">
-              <Stethoscope className="h-16 w-16 text-muted-foreground/30 mx-auto mb-4" />
-              <h3 className="text-xl font-medium text-muted-foreground">
-                Sélectionnez une spécialité pour voir les médecins disponibles
-              </h3>
-            </div>
-          </section>
-        )}
       </main>
 
       {/* Doctor Availability Modal */}
