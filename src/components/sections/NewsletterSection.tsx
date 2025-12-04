@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Mail, Send, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import newsletterAgent from "@/assets/newsletter-agent.png";
 
 const NewsletterSection = () => {
   const [email, setEmail] = useState("");
@@ -24,61 +25,72 @@ const NewsletterSection = () => {
   };
 
   return (
-    <section className="py-16 bg-gradient-to-br from-primary via-pisam-teal to-pisam-turquoise relative overflow-hidden">
-      {/* Pattern overlay */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_70%,rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[length:32px_32px]" />
-      </div>
+    <section className="relative overflow-visible bg-gradient-to-r from-pisam-teal/10 via-pisam-turquoise/5 to-pisam-green/10">
+      {/* Gradient bar at bottom */}
+      <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-primary via-pisam-teal to-pisam-turquoise" />
 
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-3xl mx-auto text-center">
-          {/* Icon */}
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-white/10 backdrop-blur-sm mb-6">
-            <Mail className="h-7 w-7 text-white" />
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col lg:flex-row items-end justify-between gap-8 lg:gap-16">
+          {/* Left side - Content and Form */}
+          <div className="flex-1 py-12 lg:py-16">
+            {/* Icon */}
+            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-4">
+              <Mail className="h-6 w-6 text-primary" />
+            </div>
+
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-foreground mb-3">
+              Restez informé de nos actualités
+            </h2>
+            <p className="text-muted-foreground mb-6 max-w-lg">
+              Inscrivez-vous à notre newsletter pour recevoir nos conseils santé, actualités et événements.
+            </p>
+
+            {/* Form */}
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md">
+              <div className="flex-1 relative">
+                <Input
+                  type="email"
+                  placeholder="Votre adresse email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="h-12 bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-primary rounded-xl"
+                  required
+                />
+              </div>
+              <Button 
+                type="submit" 
+                size="lg"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 font-semibold h-12 px-6 rounded-xl"
+                disabled={isSubmitted}
+              >
+                {isSubmitted ? (
+                  <>
+                    <CheckCircle className="h-5 w-5" />
+                    Inscrit !
+                  </>
+                ) : (
+                  <>
+                    <Send className="h-5 w-5" />
+                    S'inscrire
+                  </>
+                )}
+              </Button>
+            </form>
+
+            <p className="text-muted-foreground/60 text-xs mt-4">
+              En vous inscrivant, vous acceptez de recevoir nos communications. Désabonnement possible à tout moment.
+            </p>
           </div>
 
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-white mb-4">
-            Restez informé de nos actualités
-          </h2>
-          <p className="text-white/80 mb-8 max-w-xl mx-auto">
-            Inscrivez-vous à notre newsletter pour recevoir nos conseils santé, actualités et événements.
-          </p>
-
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <div className="flex-1 relative">
-              <Input
-                type="email"
-                placeholder="Votre adresse email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="h-12 bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:bg-white/20 rounded-xl"
-                required
-              />
-            </div>
-            <Button 
-              type="submit" 
-              size="lg"
-              className="bg-white text-primary hover:bg-white/90 font-semibold h-12 px-6 rounded-xl"
-              disabled={isSubmitted}
-            >
-              {isSubmitted ? (
-                <>
-                  <CheckCircle className="h-5 w-5" />
-                  Inscrit !
-                </>
-              ) : (
-                <>
-                  <Send className="h-5 w-5" />
-                  S'inscrire
-                </>
-              )}
-            </Button>
-          </form>
-
-          <p className="text-white/60 text-xs mt-4">
-            En vous inscrivant, vous acceptez de recevoir nos communications. Désabonnement possible à tout moment.
-          </p>
+          {/* Right side - Agent Image */}
+          <div className="hidden lg:block relative flex-shrink-0">
+            <img
+              src={newsletterAgent}
+              alt="Agent PISAM"
+              className="w-[320px] xl:w-[380px] h-auto object-contain -mt-16 relative z-10"
+              style={{ marginBottom: '-2px' }}
+            />
+          </div>
         </div>
       </div>
     </section>
