@@ -1,13 +1,9 @@
 import { 
-  Heart, 
+  HeartPulse, 
   Baby, 
-  Brain, 
-  Bone, 
-  Eye, 
   Stethoscope, 
-  Microscope,
-  Syringe,
-  Activity,
+  Bone, 
+  BrainCircuit, 
   Scan,
   ArrowRight
 } from "lucide-react";
@@ -15,70 +11,50 @@ import { Button } from "@/components/ui/button";
 
 const services = [
   {
-    icon: Heart,
+    icon: HeartPulse,
     title: "Cardiologie",
     description: "Diagnostic et traitement des maladies cardiovasculaires avec équipements de pointe.",
-    color: "bg-red-50 text-red-600 border-red-100",
   },
   {
     icon: Baby,
     title: "Pédiatrie & Néonatologie",
     description: "Soins spécialisés pour les nourrissons, enfants et adolescents.",
-    color: "bg-pink-50 text-pink-600 border-pink-100",
   },
   {
     icon: Stethoscope,
     title: "Gynécologie-Obstétrique",
     description: "Suivi de grossesse, accouchement et santé reproductive de la femme.",
-    color: "bg-purple-50 text-purple-600 border-purple-100",
-  },
-  {
-    icon: Brain,
-    title: "Neurologie",
-    description: "Prise en charge des troubles du système nerveux central et périphérique.",
-    color: "bg-indigo-50 text-indigo-600 border-indigo-100",
   },
   {
     icon: Bone,
     title: "Orthopédie & Traumatologie",
     description: "Chirurgie osseuse, articulaire et traitement des fractures.",
-    color: "bg-amber-50 text-amber-600 border-amber-100",
   },
   {
-    icon: Eye,
-    title: "Ophtalmologie",
-    description: "Soins complets de la vision, chirurgie de la cataracte et du glaucome.",
-    color: "bg-cyan-50 text-cyan-600 border-cyan-100",
+    icon: BrainCircuit,
+    title: "Neurologie",
+    description: "Prise en charge des troubles du système nerveux central et périphérique.",
   },
   {
     icon: Scan,
     title: "Imagerie Médicale",
     description: "Scanner, IRM, échographie et radiologie numérique de dernière génération.",
-    color: "bg-blue-50 text-blue-600 border-blue-100",
   },
-  {
-    icon: Microscope,
-    title: "Laboratoire d'Analyses",
-    description: "Analyses biologiques complètes avec résultats rapides et fiables.",
-    color: "bg-green-50 text-green-600 border-green-100",
-  },
-  {
-    icon: Syringe,
-    title: "Chirurgie Générale",
-    description: "Interventions chirurgicales programmées et d'urgence par des experts.",
-    color: "bg-teal-50 text-teal-600 border-teal-100",
-  },
-  {
-    icon: Activity,
-    title: "Urgences 24h/24",
-    description: "Service d'urgences médicales et chirurgicales disponible en permanence.",
-    color: "bg-orange-50 text-orange-600 border-orange-100",
-  },
+];
+
+// Checkerboard colors using brand palette
+const checkerboardColors = [
+  "bg-primary", // teal
+  "bg-pisam-turquoise", // turquoise
+  "bg-primary", // teal
+  "bg-pisam-turquoise", // turquoise
+  "bg-pisam-turquoise", // turquoise
+  "bg-primary", // teal
 ];
 
 const ServicesSection = () => {
   return (
-    <section id="services" className="py-24 bg-muted/30">
+    <section id="services" className="py-24 bg-background">
       <div className="container mx-auto px-4">
         {/* Section header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -94,25 +70,30 @@ const ServicesSection = () => {
           </p>
         </div>
 
-        {/* Services grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-12">
+        {/* Services grid - Checkerboard pattern */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 mb-12 rounded-2xl overflow-hidden shadow-pisam-lg">
           {services.map((service, index) => (
             <div
               key={service.title}
-              className={`group bg-card rounded-2xl p-6 shadow-pisam hover:shadow-pisam-lg transition-all duration-300 hover:-translate-y-1 border border-border/50 ${
-                index >= 4 ? 'hidden md:block' : ''
-              }`}
-              style={{ animationDelay: `${index * 0.1}s` }}
+              className={`group relative p-8 lg:p-10 ${checkerboardColors[index]} transition-all duration-300 hover:brightness-110`}
             >
-              <div className={`w-14 h-14 rounded-xl ${service.color} border flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                <service.icon className="h-7 w-7" />
+              {/* Icon */}
+              <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-white/30 transition-all duration-300">
+                <service.icon className="h-8 w-8 text-white" strokeWidth={1.5} />
               </div>
-              <h3 className="font-serif font-semibold text-lg text-foreground mb-2 group-hover:text-primary transition-colors">
+              
+              {/* Content */}
+              <h3 className="font-serif font-bold text-xl text-white mb-3">
                 {service.title}
               </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <p className="text-white/80 text-sm leading-relaxed">
                 {service.description}
               </p>
+
+              {/* Hover arrow */}
+              <div className="absolute bottom-6 right-6 w-10 h-10 rounded-full bg-white/0 group-hover:bg-white/20 flex items-center justify-center transition-all duration-300 opacity-0 group-hover:opacity-100">
+                <ArrowRight className="h-5 w-5 text-white" />
+              </div>
             </div>
           ))}
         </div>
