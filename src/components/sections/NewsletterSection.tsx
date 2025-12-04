@@ -33,8 +33,8 @@ const NewsletterSection = () => {
         <div className="flex flex-col lg:flex-row items-end justify-between gap-8 lg:gap-16">
           {/* Left side - Content and Form */}
           <div className="flex-1 py-12 lg:py-16">
-            {/* Glassmorphism card */}
-            <div className="backdrop-blur-md bg-white/40 dark:bg-white/10 border border-white/50 dark:border-white/20 rounded-2xl p-6 md:p-8 shadow-xl">
+            {/* Content */}
+            <div>
               {/* Icon */}
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-pisam-green/20 mb-4">
                 <Mail className="h-6 w-6 text-pisam-green" />
@@ -55,7 +55,7 @@ const NewsletterSection = () => {
                     placeholder="Votre adresse email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="h-12 bg-white/70 dark:bg-white/10 border-white/50 text-foreground placeholder:text-muted-foreground focus:border-pisam-green rounded-xl backdrop-blur-sm"
+                    className="h-12 bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-pisam-green rounded-xl"
                     required
                   />
                 </div>
