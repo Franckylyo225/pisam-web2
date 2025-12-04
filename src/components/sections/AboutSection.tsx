@@ -45,19 +45,19 @@ const AboutSection = () => {
               <p className="text-white/90 text-sm md:text-base mb-6 leading-relaxed">
                 La Polyclinique Internationale Sainte Anne-Marie (PISAM) est un établissement hospitalier pluridisciplinaire, leader dans le secteur privé de la santé en Côte d'Ivoire et dans la sous-région depuis plus de 30 ans.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3">
-                <Button 
-                  variant="outline" 
-                  className="bg-white text-primary hover:bg-white/90 border-white font-medium"
-                >
-                  Traitement multi-spécialités
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="bg-transparent text-white border-white hover:bg-white/10 font-medium"
-                >
-                  Service médical 24h/24
-                </Button>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-white rounded-lg px-4 py-3 text-center">
+                  <span className="text-primary text-sm font-medium">Plateau technique moderne</span>
+                </div>
+                <div className="bg-white rounded-lg px-4 py-3 text-center">
+                  <span className="text-primary text-sm font-medium">Bloc opératoire aux normes</span>
+                </div>
+                <div className="bg-white rounded-lg px-4 py-3 text-center">
+                  <span className="text-primary text-sm font-medium">Laboratoire accrédité</span>
+                </div>
+                <div className="bg-white rounded-lg px-4 py-3 text-center">
+                  <span className="text-primary text-sm font-medium">Urgences 24h/24</span>
+                </div>
               </div>
             </div>
           </div>
