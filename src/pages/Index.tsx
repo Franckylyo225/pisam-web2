@@ -7,7 +7,6 @@ import AboutSection from "@/components/sections/AboutSection";
 import VideoSection from "@/components/sections/VideoSection";
 import Pisam2Section from "@/components/sections/Pisam2Section";
 import PisamPlusSection from "@/components/sections/PisamPlusSection";
-import HealthCheckCTA from "@/components/sections/HealthCheckCTA";
 import TeamSection from "@/components/sections/TeamSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import ContactSection from "@/components/sections/ContactSection";
@@ -35,7 +34,6 @@ const Index = () => {
           <VideoSection />
           <Pisam2Section />
           <PisamPlusSection />
-          <HealthCheckCTA />
           <TeamSection />
           <TestimonialsSection />
           <CTASection />
