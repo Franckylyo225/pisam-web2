@@ -7,6 +7,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { AuthProvider } from "@/hooks/useAuth";
 import Index from "./pages/Index";
 import Blog from "./pages/Blog";
+import ArticleDetail from "./pages/ArticleDetail";
 import Pisam from "./pages/Pisam";
 import Patients from "./pages/Patients";
 import Medecins from "./pages/Medecins";
@@ -50,6 +51,7 @@ const App = () => (
               <Route path="/certification-iso" element={<CertificationISO />} />
               <Route path="/pisam-2" element={<Pisam2 />} />
               <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<ArticleDetail />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/auth" element={<Auth />} />
               
