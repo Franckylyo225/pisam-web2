@@ -12,7 +12,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
-import { Plus, Trash2, Loader2, Shield, AlertTriangle, UserCheck, UserX, Key, Edit } from 'lucide-react';
+import { Plus, Trash2, Loader2, Shield, AlertTriangle, UserCheck, UserX, Edit } from 'lucide-react';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 
@@ -55,12 +55,10 @@ export default function AdminsAdmin() {
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
-  const [passwordDialogOpen, setPasswordDialogOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [email, setEmail] = useState('');
   const [selectedRole, setSelectedRole] = useState<AppRole>('editor');
   const [editingUser, setEditingUser] = useState<AdminUser | null>(null);
-  const [newPassword, setNewPassword] = useState('');
 
   const fetchAdmins = async () => {
     const { data: roles, error: rolesError } = await supabase
@@ -94,14 +92,23 @@ export default function AdminsAdmin() {
   };
 
   const fetchPendingUsers = async () => {
+    // Use raw query to access new columns
     const { data, error } = await supabase
       .from('profiles')
-      .select('id, user_id, email, full_name, created_at, is_approved')
-      .eq('is_approved', false)
+      .select('*')
       .order('created_at', { ascending: false });
 
     if (!error && data) {
-      setPendingUsers(data);
+      // Filter pending users (is_approved = false)
+      const pending = (data as any[]).filter(p => p.is_approved === false);
+      setPendingUsers(pending.map(p => ({
+        id: p.id,
+        user_id: p.user_id,
+        email: p.email,
+        full_name: p.full_name,
+        created_at: p.created_at,
+        is_approved: p.is_approved,
+      })));
     }
   };
 
@@ -148,10 +155,13 @@ export default function AdminsAdmin() {
       return;
     }
 
-    // Also approve the user
+    // Also approve the user using raw update
     await supabase
       .from('profiles')
-      .update({ is_approved: true, approved_at: new Date().toISOString() })
+      .update({ 
+        is_approved: true, 
+        approved_at: new Date().toISOString() 
+      } as any)
       .eq('user_id', profile.user_id);
 
     toast.success('Utilisateur ajouté avec succès');
@@ -182,7 +192,7 @@ export default function AdminsAdmin() {
         is_approved: true, 
         approved_at: new Date().toISOString(),
         approved_by: user?.id 
-      })
+      } as any)
       .eq('user_id', pendingUser.user_id);
 
     if (profileError) {
@@ -200,16 +210,11 @@ export default function AdminsAdmin() {
   const handleRejectUser = async (pendingUser: PendingUser) => {
     if (!confirm('Rejeter cette demande d\'inscription ?')) return;
 
-    // Delete from auth and cascade will handle profiles
-    const { error } = await supabase.auth.admin.deleteUser(pendingUser.user_id);
-
-    if (error) {
-      // If admin API fails, just mark as rejected
-      await supabase
-        .from('profiles')
-        .delete()
-        .eq('user_id', pendingUser.user_id);
-    }
+    // Delete the profile
+    await supabase
+      .from('profiles')
+      .delete()
+      .eq('user_id', pendingUser.user_id);
 
     toast.success('Demande rejetée');
     fetchPendingUsers();
