@@ -43,14 +43,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUserRole(null);
     }
 
-    // Check approval status
+    // Check approval status - cast to any to handle new columns
     const { data: profileData } = await supabase
       .from('profiles')
-      .select('is_approved')
+      .select('*')
       .eq('user_id', userId)
       .maybeSingle();
     
-    setIsApproved(profileData?.is_approved ?? false);
+    setIsApproved((profileData as any)?.is_approved ?? false);
   };
 
   useEffect(() => {
