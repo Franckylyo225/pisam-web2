@@ -24,7 +24,11 @@ export type Database = {
           id: string
           image_url: string | null
           is_published: boolean | null
+          keywords: string[] | null
+          meta_description: string | null
+          meta_title: string | null
           published_at: string | null
+          reading_time: number | null
           slug: string
           title: string
           updated_at: string
@@ -38,7 +42,11 @@ export type Database = {
           id?: string
           image_url?: string | null
           is_published?: boolean | null
+          keywords?: string[] | null
+          meta_description?: string | null
+          meta_title?: string | null
           published_at?: string | null
+          reading_time?: number | null
           slug: string
           title: string
           updated_at?: string
@@ -52,7 +60,11 @@ export type Database = {
           id?: string
           image_url?: string | null
           is_published?: boolean | null
+          keywords?: string[] | null
+          meta_description?: string | null
+          meta_title?: string | null
           published_at?: string | null
+          reading_time?: number | null
           slug?: string
           title?: string
           updated_at?: string

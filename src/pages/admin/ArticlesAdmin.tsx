@@ -9,10 +9,15 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
-import { Plus, Pencil, Trash2, Loader2, Eye, EyeOff } from 'lucide-react';
+import { Plus, Pencil, Trash2, Loader2, Eye, EyeOff, FileText } from 'lucide-react';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
+import { RichTextEditor } from '@/components/admin/RichTextEditor';
+import { SEOScoreCard } from '@/components/admin/SEOScoreCard';
+import { ImageUploader } from '@/components/admin/ImageUploader';
+import { KeywordsInput } from '@/components/admin/KeywordsInput';
 
 interface Article {
   id: string;
@@ -25,6 +30,10 @@ interface Article {
   is_published: boolean;
   published_at: string | null;
   created_at: string;
+  meta_title?: string | null;
+  meta_description?: string | null;
+  keywords?: string[] | null;
+  reading_time?: number | null;
 }
 
 const CATEGORIES = ['Actualités', 'Santé', 'Innovation', 'Événements', 'Conseils'];
@@ -44,11 +53,14 @@ export default function ArticlesAdmin() {
     image_url: '',
     category: '',
     is_published: false,
+    meta_title: '',
+    meta_description: '',
+    keywords: [] as string[],
   });
 
   const fetchData = async () => {
     const { data } = await supabase.from('articles').select('*').order('created_at', { ascending: false });
-    if (data) setArticles(data);
+    if (data) setArticles(data as Article[]);
     setLoading(false);
   };
 
@@ -65,8 +77,25 @@ export default function ArticlesAdmin() {
       .replace(/(^-|-$)/g, '');
   };
 
+  const calculateReadingTime = (content: string) => {
+    const plainText = content.replace(/<[^>]*>/g, '').trim();
+    const wordCount = plainText.split(/\s+/).filter(Boolean).length;
+    return Math.max(1, Math.ceil(wordCount / 200));
+  };
+
   const resetForm = () => {
-    setFormData({ title: '', slug: '', excerpt: '', content: '', image_url: '', category: '', is_published: false });
+    setFormData({ 
+      title: '', 
+      slug: '', 
+      excerpt: '', 
+      content: '', 
+      image_url: '', 
+      category: '', 
+      is_published: false,
+      meta_title: '',
+      meta_description: '',
+      keywords: [],
+    });
     setEditingArticle(null);
   };
 
@@ -80,6 +109,9 @@ export default function ArticlesAdmin() {
       image_url: article.image_url || '',
       category: article.category || '',
       is_published: article.is_published,
+      meta_title: article.meta_title || '',
+      meta_description: article.meta_description || '',
+      keywords: article.keywords || [],
     });
     setDialogOpen(true);
   };
@@ -89,6 +121,8 @@ export default function ArticlesAdmin() {
     setSaving(true);
 
     const slug = formData.slug || generateSlug(formData.title);
+    const readingTime = calculateReadingTime(formData.content);
+
     const data = {
       title: formData.title,
       slug,
@@ -98,14 +132,18 @@ export default function ArticlesAdmin() {
       category: formData.category || null,
       is_published: formData.is_published,
       published_at: formData.is_published ? new Date().toISOString() : null,
+      meta_title: formData.meta_title || null,
+      meta_description: formData.meta_description || null,
+      keywords: formData.keywords.length > 0 ? formData.keywords : null,
+      reading_time: readingTime,
     };
 
     let error;
     if (editingArticle) {
-      const res = await supabase.from('articles').update(data).eq('id', editingArticle.id);
+      const res = await supabase.from('articles').update(data as any).eq('id', editingArticle.id);
       error = res.error;
     } else {
-      const res = await supabase.from('articles').insert(data);
+      const res = await supabase.from('articles').insert(data as any);
       error = res.error;
     }
 
@@ -168,101 +206,186 @@ export default function ArticlesAdmin() {
           <DialogTrigger asChild>
             <Button><Plus className="h-4 w-4 mr-2" />Nouvel article</Button>
           </DialogTrigger>
-          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+          <DialogContent className="max-w-6xl max-h-[95vh] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle>{editingArticle ? 'Modifier l\'article' : 'Nouvel article'}</DialogTitle>
+              <DialogTitle className="flex items-center gap-2">
+                <FileText className="h-5 w-5" />
+                {editingArticle ? 'Modifier l\'article' : 'Nouvel article'}
+              </DialogTitle>
             </DialogHeader>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="title">Titre *</Label>
-                <Input
-                  id="title"
-                  value={formData.title}
-                  onChange={(e) => {
-                    setFormData(prev => ({ 
-                      ...prev, 
-                      title: e.target.value,
-                      slug: prev.slug || generateSlug(e.target.value)
-                    }));
-                  }}
-                  required
-                />
-              </div>
+            <form onSubmit={handleSubmit}>
+              <div className="grid lg:grid-cols-3 gap-6">
+                {/* Main content - 2 columns */}
+                <div className="lg:col-span-2 space-y-6">
+                  <Tabs defaultValue="content">
+                    <TabsList className="mb-4">
+                      <TabsTrigger value="content">Contenu</TabsTrigger>
+                      <TabsTrigger value="seo">SEO</TabsTrigger>
+                    </TabsList>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="slug">Slug (URL)</Label>
-                  <Input
-                    id="slug"
-                    value={formData.slug}
-                    onChange={(e) => setFormData(prev => ({ ...prev, slug: e.target.value }))}
-                    placeholder="mon-article"
+                    <TabsContent value="content" className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="title">Titre de l'article *</Label>
+                        <Input
+                          id="title"
+                          value={formData.title}
+                          onChange={(e) => {
+                            setFormData(prev => ({ 
+                              ...prev, 
+                              title: e.target.value,
+                              slug: prev.slug || generateSlug(e.target.value),
+                              meta_title: prev.meta_title || e.target.value.slice(0, 60),
+                            }));
+                          }}
+                          placeholder="Titre accrocheur pour votre article"
+                          required
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="excerpt">Extrait / Résumé</Label>
+                        <Textarea
+                          id="excerpt"
+                          value={formData.excerpt}
+                          onChange={(e) => {
+                            setFormData(prev => ({ 
+                              ...prev, 
+                              excerpt: e.target.value,
+                              meta_description: prev.meta_description || e.target.value.slice(0, 160),
+                            }));
+                          }}
+                          rows={2}
+                          placeholder="Court résumé qui apparaîtra dans les aperçus..."
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label>Contenu de l'article</Label>
+                        <RichTextEditor
+                          content={formData.content}
+                          onChange={(content) => setFormData(prev => ({ ...prev, content }))}
+                          placeholder="Rédigez votre article ici..."
+                        />
+                      </div>
+                    </TabsContent>
+
+                    <TabsContent value="seo" className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="meta_title">
+                          Titre SEO (Meta Title)
+                          <span className="text-xs text-muted-foreground ml-2">
+                            {formData.meta_title.length}/60
+                          </span>
+                        </Label>
+                        <Input
+                          id="meta_title"
+                          value={formData.meta_title}
+                          onChange={(e) => setFormData(prev => ({ ...prev, meta_title: e.target.value }))}
+                          placeholder="Titre optimisé pour les moteurs de recherche"
+                          maxLength={70}
+                        />
+                        <p className="text-xs text-muted-foreground">
+                          Idéalement entre 30 et 60 caractères
+                        </p>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="meta_description">
+                          Description SEO (Meta Description)
+                          <span className="text-xs text-muted-foreground ml-2">
+                            {formData.meta_description.length}/160
+                          </span>
+                        </Label>
+                        <Textarea
+                          id="meta_description"
+                          value={formData.meta_description}
+                          onChange={(e) => setFormData(prev => ({ ...prev, meta_description: e.target.value }))}
+                          placeholder="Description qui apparaîtra dans les résultats de recherche"
+                          rows={3}
+                          maxLength={170}
+                        />
+                        <p className="text-xs text-muted-foreground">
+                          Idéalement entre 120 et 160 caractères
+                        </p>
+                      </div>
+
+                      <KeywordsInput
+                        value={formData.keywords}
+                        onChange={(keywords) => setFormData(prev => ({ ...prev, keywords }))}
+                      />
+
+                      <div className="space-y-2">
+                        <Label htmlFor="slug">URL de l'article (slug)</Label>
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm text-muted-foreground">/blog/</span>
+                          <Input
+                            id="slug"
+                            value={formData.slug}
+                            onChange={(e) => setFormData(prev => ({ ...prev, slug: e.target.value }))}
+                            placeholder="mon-article"
+                          />
+                        </div>
+                      </div>
+                    </TabsContent>
+                  </Tabs>
+                </div>
+
+                {/* Sidebar - 1 column */}
+                <div className="space-y-4">
+                  <Card>
+                    <CardContent className="pt-4 space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="category">Catégorie</Label>
+                        <Select
+                          value={formData.category}
+                          onValueChange={(value) => setFormData(prev => ({ ...prev, category: value }))}
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="Sélectionner..." />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {CATEGORIES.map(cat => (
+                              <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <ImageUploader
+                        value={formData.image_url}
+                        onChange={(url) => setFormData(prev => ({ ...prev, image_url: url }))}
+                      />
+
+                      <div className="flex items-center justify-between pt-2 border-t">
+                        <Label htmlFor="publish">Publier maintenant</Label>
+                        <Switch
+                          id="publish"
+                          checked={formData.is_published}
+                          onCheckedChange={(checked) => setFormData(prev => ({ ...prev, is_published: checked }))}
+                        />
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <SEOScoreCard
+                    title={formData.title}
+                    metaTitle={formData.meta_title}
+                    metaDescription={formData.meta_description}
+                    content={formData.content}
+                    keywords={formData.keywords}
+                    imageUrl={formData.image_url}
                   />
+
+                  <div className="flex gap-2">
+                    <Button type="button" variant="outline" onClick={() => setDialogOpen(false)} className="flex-1">
+                      Annuler
+                    </Button>
+                    <Button type="submit" disabled={saving} className="flex-1">
+                      {saving && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
+                      {editingArticle ? 'Modifier' : 'Créer'}
+                    </Button>
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="category">Catégorie</Label>
-                  <Select
-                    value={formData.category}
-                    onValueChange={(value) => setFormData(prev => ({ ...prev, category: value }))}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Sélectionner..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {CATEGORIES.map(cat => (
-                        <SelectItem key={cat} value={cat}>{cat}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="image_url">Image URL</Label>
-                <Input
-                  id="image_url"
-                  value={formData.image_url}
-                  onChange={(e) => setFormData(prev => ({ ...prev, image_url: e.target.value }))}
-                  placeholder="https://..."
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="excerpt">Extrait</Label>
-                <Textarea
-                  id="excerpt"
-                  value={formData.excerpt}
-                  onChange={(e) => setFormData(prev => ({ ...prev, excerpt: e.target.value }))}
-                  rows={2}
-                  placeholder="Résumé court de l'article..."
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="content">Contenu</Label>
-                <Textarea
-                  id="content"
-                  value={formData.content}
-                  onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
-                  rows={10}
-                  placeholder="Contenu complet de l'article..."
-                />
-              </div>
-
-              <div className="flex items-center gap-2">
-                <Switch
-                  checked={formData.is_published}
-                  onCheckedChange={(checked) => setFormData(prev => ({ ...prev, is_published: checked }))}
-                />
-                <Label>Publier immédiatement</Label>
-              </div>
-
-              <div className="flex justify-end gap-2">
-                <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>Annuler</Button>
-                <Button type="submit" disabled={saving}>
-                  {saving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
-                  {editingArticle ? 'Modifier' : 'Créer'}
-                </Button>
               </div>
             </form>
           </DialogContent>
@@ -274,7 +397,7 @@ export default function ArticlesAdmin() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Titre</TableHead>
+                <TableHead>Article</TableHead>
                 <TableHead>Catégorie</TableHead>
                 <TableHead>Date</TableHead>
                 <TableHead>Statut</TableHead>
@@ -291,7 +414,23 @@ export default function ArticlesAdmin() {
               ) : (
                 articles.map((article) => (
                   <TableRow key={article.id}>
-                    <TableCell className="font-medium max-w-xs truncate">{article.title}</TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-3">
+                        {article.image_url && (
+                          <img 
+                            src={article.image_url} 
+                            alt="" 
+                            className="w-12 h-12 object-cover rounded"
+                          />
+                        )}
+                        <div>
+                          <p className="font-medium line-clamp-1">{article.title}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {article.reading_time || 1} min de lecture
+                          </p>
+                        </div>
+                      </div>
+                    </TableCell>
                     <TableCell>{article.category || '-'}</TableCell>
                     <TableCell className="text-sm text-muted-foreground">
                       {format(new Date(article.created_at), 'dd MMM yyyy', { locale: fr })}
