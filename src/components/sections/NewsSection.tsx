@@ -81,27 +81,9 @@ const NewsSection = () => {
               key={article.id}
               className="group bg-card rounded-2xl overflow-hidden shadow-sm border border-border/50 hover:shadow-pisam-lg transition-all duration-300"
             >
-              {/* Image */}
-              {article.image_url && (
-                <div className="relative aspect-[16/10] overflow-hidden">
-                  <img
-                    src={article.image_url}
-                    alt={article.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  {article.category && (
-                    <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1 bg-primary text-primary-foreground text-xs font-medium rounded-full">
-                        {article.category}
-                      </span>
-                    </div>
-                  )}
-                </div>
-              )}
-
               {/* Content */}
               <div className="p-6">
-                {!article.image_url && article.category && (
+                {article.category && (
                   <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full mb-4">
                     {article.category}
                   </span>
