@@ -7,35 +7,65 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
-import { Plus, Trash2, Loader2, Shield, AlertTriangle } from 'lucide-react';
+import { Plus, Trash2, Loader2, Shield, AlertTriangle, UserCheck, UserX, Key, Edit } from 'lucide-react';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
+
+type AppRole = 'super_admin' | 'admin' | 'editor';
 
 interface AdminUser {
   id: string;
   user_id: string;
-  role: string;
+  role: AppRole;
   created_at: string;
   email?: string;
   full_name?: string | null;
 }
 
+interface PendingUser {
+  id: string;
+  user_id: string;
+  email: string;
+  full_name: string | null;
+  created_at: string;
+  is_approved: boolean;
+}
+
+const roleLabels: Record<AppRole, string> = {
+  super_admin: 'Super Admin',
+  admin: 'Administrateur',
+  editor: 'Rédacteur',
+};
+
+const roleBadgeColors: Record<AppRole, string> = {
+  super_admin: 'bg-red-500',
+  admin: 'bg-blue-500',
+  editor: 'bg-green-500',
+};
+
 export default function AdminsAdmin() {
-  const { user, isAdmin } = useAuth();
+  const { user, isSuperAdmin, isAdmin } = useAuth();
   const [admins, setAdmins] = useState<AdminUser[]>([]);
+  const [pendingUsers, setPendingUsers] = useState<PendingUser[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [passwordDialogOpen, setPasswordDialogOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [email, setEmail] = useState('');
+  const [selectedRole, setSelectedRole] = useState<AppRole>('editor');
+  const [editingUser, setEditingUser] = useState<AdminUser | null>(null);
+  const [newPassword, setNewPassword] = useState('');
 
   const fetchAdmins = async () => {
-    // First get admin roles
     const { data: roles, error: rolesError } = await supabase
       .from('user_roles')
       .select('id, user_id, role, created_at')
-      .eq('role', 'admin')
       .order('created_at');
 
     if (rolesError || !roles) {
@@ -43,18 +73,17 @@ export default function AdminsAdmin() {
       return;
     }
 
-    // Then get profiles for those users
     const userIds = roles.map(r => r.user_id);
     const { data: profiles } = await supabase
       .from('profiles')
       .select('user_id, email, full_name')
       .in('user_id', userIds);
 
-    // Combine data
     const adminsWithProfiles = roles.map(role => {
       const profile = profiles?.find(p => p.user_id === role.user_id);
       return {
         ...role,
+        role: role.role as AppRole,
         email: profile?.email,
         full_name: profile?.full_name,
       };
@@ -64,15 +93,27 @@ export default function AdminsAdmin() {
     setLoading(false);
   };
 
+  const fetchPendingUsers = async () => {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('id, user_id, email, full_name, created_at, is_approved')
+      .eq('is_approved', false)
+      .order('created_at', { ascending: false });
+
+    if (!error && data) {
+      setPendingUsers(data);
+    }
+  };
+
   useEffect(() => {
     fetchAdmins();
+    fetchPendingUsers();
   }, []);
 
   const handleAddAdmin = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
 
-    // Find user by email
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('user_id')
@@ -85,45 +126,124 @@ export default function AdminsAdmin() {
       return;
     }
 
-    // Check if already admin
     const { data: existingRole } = await supabase
       .from('user_roles')
       .select('id')
       .eq('user_id', profile.user_id)
-      .eq('role', 'admin')
       .maybeSingle();
 
     if (existingRole) {
-      toast.error('Cet utilisateur est déjà administrateur');
+      toast.error('Cet utilisateur a déjà un rôle assigné');
       setSaving(false);
       return;
     }
 
-    // Add admin role
     const { error } = await supabase
       .from('user_roles')
-      .insert({ user_id: profile.user_id, role: 'admin' });
-
-    setSaving(false);
+      .insert({ user_id: profile.user_id, role: selectedRole });
 
     if (error) {
       toast.error('Erreur lors de l\'ajout');
+      setSaving(false);
       return;
     }
 
-    toast.success('Administrateur ajouté');
+    // Also approve the user
+    await supabase
+      .from('profiles')
+      .update({ is_approved: true, approved_at: new Date().toISOString() })
+      .eq('user_id', profile.user_id);
+
+    toast.success('Utilisateur ajouté avec succès');
     setDialogOpen(false);
     setEmail('');
+    setSelectedRole('editor');
+    setSaving(false);
+    fetchAdmins();
+    fetchPendingUsers();
+  };
+
+  const handleApproveUser = async (pendingUser: PendingUser, role: AppRole) => {
+    setSaving(true);
+
+    const { error: roleError } = await supabase
+      .from('user_roles')
+      .insert({ user_id: pendingUser.user_id, role });
+
+    if (roleError) {
+      toast.error('Erreur lors de l\'attribution du rôle');
+      setSaving(false);
+      return;
+    }
+
+    const { error: profileError } = await supabase
+      .from('profiles')
+      .update({ 
+        is_approved: true, 
+        approved_at: new Date().toISOString(),
+        approved_by: user?.id 
+      })
+      .eq('user_id', pendingUser.user_id);
+
+    if (profileError) {
+      toast.error('Erreur lors de l\'approbation');
+      setSaving(false);
+      return;
+    }
+
+    toast.success('Utilisateur approuvé');
+    setSaving(false);
+    fetchAdmins();
+    fetchPendingUsers();
+  };
+
+  const handleRejectUser = async (pendingUser: PendingUser) => {
+    if (!confirm('Rejeter cette demande d\'inscription ?')) return;
+
+    // Delete from auth and cascade will handle profiles
+    const { error } = await supabase.auth.admin.deleteUser(pendingUser.user_id);
+
+    if (error) {
+      // If admin API fails, just mark as rejected
+      await supabase
+        .from('profiles')
+        .delete()
+        .eq('user_id', pendingUser.user_id);
+    }
+
+    toast.success('Demande rejetée');
+    fetchPendingUsers();
+  };
+
+  const handleUpdateRole = async () => {
+    if (!editingUser) return;
+    setSaving(true);
+
+    const { error } = await supabase
+      .from('user_roles')
+      .update({ role: selectedRole })
+      .eq('id', editingUser.id);
+
+    if (error) {
+      toast.error('Erreur lors de la mise à jour');
+      setSaving(false);
+      return;
+    }
+
+    toast.success('Rôle mis à jour');
+    setEditDialogOpen(false);
+    setEditingUser(null);
+    setSaving(false);
     fetchAdmins();
   };
 
   const handleRemoveAdmin = async (roleId: string, adminUserId: string) => {
     if (adminUserId === user?.id) {
-      toast.error('Vous ne pouvez pas retirer vos propres droits admin');
+      toast.error('Vous ne pouvez pas retirer vos propres droits');
       return;
     }
 
-    if (!confirm('Retirer les droits administrateur ?')) return;
+    if (!confirm('Retirer ce rôle ?')) return;
 
     const { error } = await supabase
       .from('user_roles')
@@ -135,8 +255,14 @@ export default function AdminsAdmin() {
       return;
     }
 
-    toast.success('Droits administrateur retirés');
+    toast.success('Rôle retiré');
     fetchAdmins();
+  };
+
+  const openEditDialog = (adminUser: AdminUser) => {
+    setEditingUser(adminUser);
+    setSelectedRole(adminUser.role);
+    setEditDialogOpen(true);
   };
 
   if (!isAdmin) {
@@ -158,101 +284,253 @@ export default function AdminsAdmin() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Administrateurs</h1>
-          <p className="text-muted-foreground">Gérer les accès administrateur</p>
+          <h1 className="text-3xl font-bold">Gestion des utilisateurs</h1>
+          <p className="text-muted-foreground">Gérer les accès et les rôles</p>
         </div>
-        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-          <DialogTrigger asChild>
-            <Button><Plus className="h-4 w-4 mr-2" />Ajouter un admin</Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Ajouter un administrateur</DialogTitle>
-            </DialogHeader>
-            <form onSubmit={handleAddAdmin} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email">Email de l'utilisateur</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@pisam.ci"
-                  required
-                />
-                <p className="text-xs text-muted-foreground">
-                  L'utilisateur doit avoir un compte existant
-                </p>
-              </div>
-              <div className="flex justify-end gap-2">
-                <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>Annuler</Button>
-                <Button type="submit" disabled={saving}>
-                  {saving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
-                  Ajouter
-                </Button>
-              </div>
-            </form>
-          </DialogContent>
-        </Dialog>
+        {isSuperAdmin && (
+          <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+            <DialogTrigger asChild>
+              <Button><Plus className="h-4 w-4 mr-2" />Ajouter un utilisateur</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Ajouter un utilisateur</DialogTitle>
+              </DialogHeader>
+              <form onSubmit={handleAddAdmin} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email de l'utilisateur</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="utilisateur@pisam.ci"
+                    required
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    L'utilisateur doit avoir un compte existant
+                  </p>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="role">Rôle</Label>
+                  <Select value={selectedRole} onValueChange={(v) => setSelectedRole(v as AppRole)}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="editor">Rédacteur</SelectItem>
+                      <SelectItem value="admin">Administrateur</SelectItem>
+                      <SelectItem value="super_admin">Super Admin</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="flex justify-end gap-2">
+                  <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>Annuler</Button>
+                  <Button type="submit" disabled={saving}>
+                    {saving && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
+                    Ajouter
+                  </Button>
+                </div>
+              </form>
+            </DialogContent>
+          </Dialog>
+        )}
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Shield className="h-5 w-5" />
-            Liste des administrateurs
-          </CardTitle>
-          <CardDescription>
-            Les administrateurs ont un accès complet au tableau de bord
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Utilisateur</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Ajouté le</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {admins.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={4} className="text-center py-8 text-muted-foreground">
-                    Aucun administrateur
-                  </TableCell>
-                </TableRow>
-              ) : (
-                admins.map((admin) => (
-                  <TableRow key={admin.id}>
-                    <TableCell className="font-medium">
-                      {admin.full_name || 'Sans nom'}
-                      {admin.user_id === user?.id && (
-                        <span className="ml-2 text-xs text-muted-foreground">(vous)</span>
-                      )}
-                    </TableCell>
-                    <TableCell>{admin.email || '-'}</TableCell>
-                    <TableCell className="text-sm text-muted-foreground">
-                      {format(new Date(admin.created_at), 'dd MMM yyyy', { locale: fr })}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <Button 
-                        variant="ghost" 
-                        size="icon" 
-                        onClick={() => handleRemoveAdmin(admin.id, admin.user_id)}
-                        disabled={admin.user_id === user?.id}
-                      >
-                        <Trash2 className="h-4 w-4 text-destructive" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))
+      <Tabs defaultValue="users">
+        <TabsList>
+          <TabsTrigger value="users">Utilisateurs actifs</TabsTrigger>
+          {isSuperAdmin && (
+            <TabsTrigger value="pending">
+              En attente
+              {pendingUsers.length > 0 && (
+                <Badge variant="destructive" className="ml-2">{pendingUsers.length}</Badge>
               )}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+            </TabsTrigger>
+          )}
+        </TabsList>
+
+        <TabsContent value="users" className="mt-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Shield className="h-5 w-5" />
+                Liste des utilisateurs
+              </CardTitle>
+              <CardDescription>
+                Utilisateurs ayant accès au tableau de bord
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-0">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Utilisateur</TableHead>
+                    <TableHead>Email</TableHead>
+                    <TableHead>Rôle</TableHead>
+                    <TableHead>Ajouté le</TableHead>
+                    {isSuperAdmin && <TableHead className="text-right">Actions</TableHead>}
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {admins.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                        Aucun utilisateur
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    admins.map((admin) => (
+                      <TableRow key={admin.id}>
+                        <TableCell className="font-medium">
+                          {admin.full_name || 'Sans nom'}
+                          {admin.user_id === user?.id && (
+                            <span className="ml-2 text-xs text-muted-foreground">(vous)</span>
+                          )}
+                        </TableCell>
+                        <TableCell>{admin.email || '-'}</TableCell>
+                        <TableCell>
+                          <Badge className={roleBadgeColors[admin.role]}>
+                            {roleLabels[admin.role]}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="text-sm text-muted-foreground">
+                          {format(new Date(admin.created_at), 'dd MMM yyyy', { locale: fr })}
+                        </TableCell>
+                        {isSuperAdmin && (
+                          <TableCell className="text-right space-x-1">
+                            <Button 
+                              variant="ghost" 
+                              size="icon"
+                              onClick={() => openEditDialog(admin)}
+                              disabled={admin.user_id === user?.id}
+                            >
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            <Button 
+                              variant="ghost" 
+                              size="icon" 
+                              onClick={() => handleRemoveAdmin(admin.id, admin.user_id)}
+                              disabled={admin.user_id === user?.id}
+                            >
+                              <Trash2 className="h-4 w-4 text-destructive" />
+                            </Button>
+                          </TableCell>
+                        )}
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {isSuperAdmin && (
+          <TabsContent value="pending" className="mt-4">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <UserCheck className="h-5 w-5" />
+                  Demandes en attente
+                </CardTitle>
+                <CardDescription>
+                  Utilisateurs en attente de validation
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="p-0">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Nom</TableHead>
+                      <TableHead>Email</TableHead>
+                      <TableHead>Date d'inscription</TableHead>
+                      <TableHead className="text-right">Actions</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {pendingUsers.length === 0 ? (
+                      <TableRow>
+                        <TableCell colSpan={4} className="text-center py-8 text-muted-foreground">
+                          Aucune demande en attente
+                        </TableCell>
+                      </TableRow>
+                    ) : (
+                      pendingUsers.map((pendingUser) => (
+                        <TableRow key={pendingUser.id}>
+                          <TableCell className="font-medium">
+                            {pendingUser.full_name || 'Sans nom'}
+                          </TableCell>
+                          <TableCell>{pendingUser.email}</TableCell>
+                          <TableCell className="text-sm text-muted-foreground">
+                            {format(new Date(pendingUser.created_at), 'dd MMM yyyy HH:mm', { locale: fr })}
+                          </TableCell>
+                          <TableCell className="text-right">
+                            <div className="flex justify-end gap-2">
+                              <Select onValueChange={(role) => handleApproveUser(pendingUser, role as AppRole)}>
+                                <SelectTrigger className="w-[140px]">
+                                  <SelectValue placeholder="Approuver..." />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="editor">Rédacteur</SelectItem>
+                                  <SelectItem value="admin">Admin</SelectItem>
+                                  <SelectItem value="super_admin">Super Admin</SelectItem>
+                                </SelectContent>
+                              </Select>
+                              <Button 
+                                variant="ghost" 
+                                size="icon"
+                                onClick={() => handleRejectUser(pendingUser)}
+                              >
+                                <UserX className="h-4 w-4 text-destructive" />
+                              </Button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    )}
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        )}
+      </Tabs>
+
+      {/* Edit Role Dialog */}
+      <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Modifier le rôle</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label>Utilisateur</Label>
+              <p className="text-sm text-muted-foreground">{editingUser?.email}</p>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="editRole">Nouveau rôle</Label>
+              <Select value={selectedRole} onValueChange={(v) => setSelectedRole(v as AppRole)}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="editor">Rédacteur</SelectItem>
+                  <SelectItem value="admin">Administrateur</SelectItem>
+                  <SelectItem value="super_admin">Super Admin</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={() => setEditDialogOpen(false)}>Annuler</Button>
+              <Button onClick={handleUpdateRole} disabled={saving}>
+                {saving && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
+                Enregistrer
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
