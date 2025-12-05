@@ -1,121 +1,62 @@
 import { Helmet } from "react-helmet-async";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock, ArrowUpRight, Search } from "lucide-react";
+import { Calendar, Clock, ArrowUpRight, Search, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { supabase } from "@/integrations/supabase/client";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
+import { Link } from "react-router-dom";
+
+interface Article {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  image_url: string | null;
+  category: string | null;
+  published_at: string | null;
+  reading_time: number | null;
+}
 
 const categories = [
   { id: "all", label: "Tous" },
-  { id: "innovation", label: "Innovation" },
-  { id: "evenement", label: "Événement" },
-  { id: "actualite", label: "Actualité" },
-  { id: "sante", label: "Santé" },
-  { id: "prevention", label: "Prévention" },
-];
-
-const allArticles = [
-  {
-    id: 1,
-    title: "Nouvelle unité de cardiologie interventionnelle à la PISAM",
-    excerpt: "La PISAM inaugure son nouveau service de cardiologie interventionnelle équipé des dernières technologies pour une prise en charge optimale des patients cardiaques.",
-    category: "innovation",
-    categoryLabel: "Innovation",
-    date: "28 Nov 2024",
-    readTime: "4 min",
-    image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=600&h=400&fit=crop",
-  },
-  {
-    id: 2,
-    title: "Campagne de dépistage gratuit du diabète",
-    excerpt: "Dans le cadre de la Journée Mondiale du Diabète, la PISAM organise une campagne de dépistage gratuit pour sensibiliser la population aux risques de cette maladie.",
-    category: "evenement",
-    categoryLabel: "Événement",
-    date: "14 Nov 2024",
-    readTime: "3 min",
-    image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&h=400&fit=crop",
-  },
-  {
-    id: 3,
-    title: "La PISAM certifiée ISO 9001 pour la qualité de ses services",
-    excerpt: "Notre établissement obtient la certification ISO 9001, reconnaissant l'excellence de notre système de management de la qualité et notre engagement envers les patients.",
-    category: "actualite",
-    categoryLabel: "Actualité",
-    date: "05 Nov 2024",
-    readTime: "5 min",
-    image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=600&h=400&fit=crop",
-  },
-  {
-    id: 4,
-    title: "Nouveau scanner haute définition pour des diagnostics précis",
-    excerpt: "La PISAM s'équipe d'un scanner de dernière génération permettant des examens plus rapides et des images d'une qualité exceptionnelle.",
-    category: "innovation",
-    categoryLabel: "Innovation",
-    date: "25 Oct 2024",
-    readTime: "4 min",
-    image: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?w=600&h=400&fit=crop",
-  },
-  {
-    id: 5,
-    title: "Journée portes ouvertes à la maternité PISAM",
-    excerpt: "Venez découvrir notre maternité rénovée et rencontrer notre équipe de gynécologues-obstétriciens lors de notre journée portes ouvertes.",
-    category: "evenement",
-    categoryLabel: "Événement",
-    date: "18 Oct 2024",
-    readTime: "3 min",
-    image: "https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?w=600&h=400&fit=crop",
-  },
-  {
-    id: 6,
-    title: "Conseils pour renforcer votre système immunitaire",
-    excerpt: "Nos médecins partagent leurs recommandations pour maintenir un système immunitaire fort, particulièrement pendant la saison des pluies.",
-    category: "sante",
-    categoryLabel: "Santé",
-    date: "10 Oct 2024",
-    readTime: "6 min",
-    image: "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?w=600&h=400&fit=crop",
-  },
-  {
-    id: 7,
-    title: "L'importance du dépistage précoce du cancer",
-    excerpt: "Le dépistage précoce peut sauver des vies. Découvrez les examens recommandés selon votre âge et vos facteurs de risque.",
-    category: "prevention",
-    categoryLabel: "Prévention",
-    date: "01 Oct 2024",
-    readTime: "7 min",
-    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&h=400&fit=crop",
-  },
-  {
-    id: 8,
-    title: "Partenariat avec l'Université de médecine d'Abidjan",
-    excerpt: "La PISAM signe un accord de partenariat avec l'Université de médecine pour la formation des futurs professionnels de santé.",
-    category: "actualite",
-    categoryLabel: "Actualité",
-    date: "22 Sep 2024",
-    readTime: "4 min",
-    image: "https://images.unsplash.com/photo-1562774053-701939374585?w=600&h=400&fit=crop",
-  },
-  {
-    id: 9,
-    title: "Vaccination antigrippale : protégez-vous et vos proches",
-    excerpt: "La campagne de vaccination contre la grippe est lancée. Venez vous faire vacciner dans notre centre de vaccination.",
-    category: "prevention",
-    categoryLabel: "Prévention",
-    date: "15 Sep 2024",
-    readTime: "3 min",
-    image: "https://images.unsplash.com/photo-1615631648086-325025c9e51e?w=600&h=400&fit=crop",
-  },
+  { id: "Actualités", label: "Actualités" },
+  { id: "Santé", label: "Santé" },
+  { id: "Innovation", label: "Innovation" },
+  { id: "Événements", label: "Événements" },
+  { id: "Conseils", label: "Conseils" },
 ];
 
 const Blog = () => {
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredArticles = allArticles.filter((article) => {
+  useEffect(() => {
+    const fetchArticles = async () => {
+      const { data } = await supabase
+        .from('articles')
+        .select('id, title, slug, excerpt, image_url, category, published_at, reading_time')
+        .eq('is_published', true)
+        .order('published_at', { ascending: false });
+
+      if (data) {
+        setArticles(data as Article[]);
+      }
+      setLoading(false);
+    };
+
+    fetchArticles();
+  }, []);
+
+  const filteredArticles = articles.filter((article) => {
     const matchesCategory = activeCategory === "all" || article.category === activeCategory;
     const matchesSearch = article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         article.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
+                         (article.excerpt?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false);
     return matchesCategory && matchesSearch;
   });
 
@@ -183,7 +124,11 @@ const Blog = () => {
           {/* Articles Grid */}
           <section className="py-16">
             <div className="container mx-auto px-4">
-              {filteredArticles.length === 0 ? (
+              {loading ? (
+                <div className="flex justify-center py-16">
+                  <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                </div>
+              ) : filteredArticles.length === 0 ? (
                 <div className="text-center py-16">
                   <p className="text-muted-foreground text-lg">
                     Aucun article trouvé pour cette recherche.
@@ -201,51 +146,65 @@ const Blog = () => {
                         className="group bg-card rounded-2xl overflow-hidden shadow-sm border border-border/50 hover:shadow-pisam-lg transition-all duration-300"
                       >
                         {/* Image */}
-                        <div className="relative aspect-[16/10] overflow-hidden">
-                          <img
-                            src={article.image}
-                            alt={article.title}
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                          />
-                          <div className="absolute top-4 left-4">
-                            <span className="px-3 py-1 bg-primary text-primary-foreground text-xs font-medium rounded-full">
-                              {article.categoryLabel}
-                            </span>
+                        {article.image_url && (
+                          <div className="relative aspect-[16/10] overflow-hidden">
+                            <img
+                              src={article.image_url}
+                              alt={article.title}
+                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            />
+                            {article.category && (
+                              <div className="absolute top-4 left-4">
+                                <span className="px-3 py-1 bg-primary text-primary-foreground text-xs font-medium rounded-full">
+                                  {article.category}
+                                </span>
+                              </div>
+                            )}
                           </div>
-                        </div>
+                        )}
 
                         {/* Content */}
                         <div className="p-6">
+                          {!article.image_url && article.category && (
+                            <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full mb-4">
+                              {article.category}
+                            </span>
+                          )}
+
                           {/* Title */}
                           <h2 className="text-lg font-bold text-foreground mb-3 line-clamp-2 group-hover:text-primary transition-colors">
                             {article.title}
                           </h2>
 
                           {/* Excerpt */}
-                          <p className="text-muted-foreground text-sm line-clamp-2 mb-4">
-                            {article.excerpt}
-                          </p>
+                          {article.excerpt && (
+                            <p className="text-muted-foreground text-sm line-clamp-2 mb-4">
+                              {article.excerpt}
+                            </p>
+                          )}
 
                           {/* Meta */}
                           <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
-                            <div className="flex items-center gap-1">
-                              <Calendar className="h-4 w-4" />
-                              <span>{article.date}</span>
-                            </div>
+                            {article.published_at && (
+                              <div className="flex items-center gap-1">
+                                <Calendar className="h-4 w-4" />
+                                <span>{format(new Date(article.published_at), 'dd MMM yyyy', { locale: fr })}</span>
+                              </div>
+                            )}
                             <div className="flex items-center gap-1">
                               <Clock className="h-4 w-4" />
-                              <span>{article.readTime}</span>
+                              <span>{article.reading_time || 3} min</span>
                             </div>
                           </div>
 
                           {/* Read more link */}
-                          <a
-                            href="#"
+                          <Link
+                            to={`/blog/${article.slug}`}
                             className="inline-flex items-center gap-2 text-primary font-medium text-sm group/link"
                           >
                             Lire l'article
                             <ArrowUpRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
-                          </a>
+                          </Link>
                         </div>
                       </article>
                     ))}
