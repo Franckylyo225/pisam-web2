@@ -1,9 +1,7 @@
 import { Phone, Mail, MapPin, Clock, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
 const ContactSection = () => {
-  return (
-    <section id="contact" className="py-24 bg-muted/30">
+  return <section id="contact" className="py-24 bg-muted/30">
       <div className="container mx-auto px-4">
         {/* Emergency banner */}
         <div className="bg-destructive/10 border border-destructive/20 rounded-2xl p-6 mb-16 flex flex-col md:flex-row items-center justify-between gap-6">
@@ -18,7 +16,7 @@ const ContactSection = () => {
           </div>
           <Button variant="emergency" size="lg">
             <Phone className="h-5 w-5" />
-            +225 07 07 07 07 07
+            +225 27 22 44 53 53
           </Button>
         </div>
 
@@ -80,8 +78,6 @@ const ContactSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default ContactSection;
