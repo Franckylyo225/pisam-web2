@@ -14,9 +14,11 @@ const ContactSection = () => {
               <p className="text-muted-foreground">Équipe médicale disponible en permanence pour toute urgence</p>
             </div>
           </div>
-          <Button variant="emergency" size="lg">
-            <Phone className="h-5 w-5" />
-            +225 27 22 44 53 53
+          <Button variant="emergency" size="lg" asChild>
+            <a href="tel:+22527224453 53">
+              <Phone className="h-5 w-5" />
+              +225 27 22 44 53 53
+            </a>
           </Button>
         </div>
 
