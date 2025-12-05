@@ -25,6 +25,7 @@ import SpecialtiesAdmin from "./pages/admin/SpecialtiesAdmin";
 import ArticlesAdmin from "./pages/admin/ArticlesAdmin";
 import LeadershipAdmin from "./pages/admin/LeadershipAdmin";
 import AdminsAdmin from "./pages/admin/AdminsAdmin";
+import MessagesAdmin from "./pages/admin/MessagesAdmin";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -54,6 +55,7 @@ const App = () => (
               
               {/* Admin Routes */}
               <Route path="/admin" element={<AdminLayout><Dashboard /></AdminLayout>} />
+              <Route path="/admin/messages" element={<AdminLayout><MessagesAdmin /></AdminLayout>} />
               <Route path="/admin/doctors" element={<AdminLayout><DoctorsAdmin /></AdminLayout>} />
               <Route path="/admin/specialties" element={<AdminLayout><SpecialtiesAdmin /></AdminLayout>} />
               <Route path="/admin/articles" element={<AdminLayout><ArticlesAdmin /></AdminLayout>} />

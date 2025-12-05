@@ -23,12 +23,14 @@ import {
   LogOut,
   Shield,
   Loader2,
-  Home
+  Home,
+  Mail
 } from 'lucide-react';
 import logoImage from '@/assets/logo-pisam.png';
 
 const menuItems = [
   { title: 'Tableau de bord', url: '/admin', icon: LayoutDashboard },
+  { title: 'Messages', url: '/admin/messages', icon: Mail },
   { title: 'Médecins', url: '/admin/doctors', icon: Stethoscope },
   { title: 'Spécialités', url: '/admin/specialties', icon: Users },
   { title: 'Articles', url: '/admin/articles', icon: FileText },
