@@ -1,5 +1,5 @@
 import { Monitor, Building, Lightbulb, Award, Users, Sparkles } from "lucide-react";
-import labScientist from "@/assets/pisam2-lab-scientist.jpg";
+import labScientist from "@/assets/pisam2-sih.jpg";
 
 const features = [
   {

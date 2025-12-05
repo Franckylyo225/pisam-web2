@@ -2,10 +2,10 @@ import { Helmet } from "react-helmet-async";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Monitor, Building2, Cpu, GraduationCap, CheckCircle, Sparkles } from "lucide-react";
-import digitalSystemImg from "@/assets/pisam-digital-system.jpg";
-import renovationImg from "@/assets/pisam-renovation.jpg";
-import operatingRoomImg from "@/assets/pisam-operating-room.jpg";
-import staffTrainingImg from "@/assets/pisam-staff-training.jpg";
+import digitalSystemImg from "@/assets/pisam2-sih.jpg";
+import renovationImg from "@/assets/pisam2-renovation.jpg";
+import operatingRoomImg from "@/assets/pisam2-plateau.jpg";
+import staffTrainingImg from "@/assets/pisam2-formation.jpg";
 
 const Pisam2 = () => {
   const innovations = [
