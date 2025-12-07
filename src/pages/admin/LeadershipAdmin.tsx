@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Switch } from '@/components/ui/switch';
 import { toast } from 'sonner';
 import { Plus, Pencil, Trash2, Loader2, GripVertical, Facebook, Linkedin, Twitter } from 'lucide-react';
+import { ImageUploader } from '@/components/admin/ImageUploader';
 
 interface LeadershipMember {
   id: string;
@@ -166,15 +167,11 @@ export default function LeadershipAdmin() {
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="image_url">Photo URL</Label>
-                <Input
-                  id="image_url"
-                  value={formData.image_url}
-                  onChange={(e) => setFormData(prev => ({ ...prev, image_url: e.target.value }))}
-                  placeholder="https://..."
-                />
-              </div>
+              <ImageUploader
+                value={formData.image_url}
+                onChange={(url) => setFormData(prev => ({ ...prev, image_url: url }))}
+                bucket="article-images"
+              />
 
               <div className="space-y-2">
                 <Label htmlFor="bio">Biographie</Label>
