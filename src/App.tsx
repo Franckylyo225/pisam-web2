@@ -22,7 +22,6 @@ import Auth from "./pages/Auth";
 import AdminLayout from "./pages/admin/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
 import DoctorsAdmin from "./pages/admin/DoctorsAdmin";
-import SpecialtiesAdmin from "./pages/admin/SpecialtiesAdmin";
 import ArticlesAdmin from "./pages/admin/ArticlesAdmin";
 import LeadershipAdmin from "./pages/admin/LeadershipAdmin";
 import AdminsAdmin from "./pages/admin/AdminsAdmin";
@@ -59,7 +58,6 @@ const App = () => (
               <Route path="/admin" element={<AdminLayout><Dashboard /></AdminLayout>} />
               <Route path="/admin/messages" element={<AdminLayout><MessagesAdmin /></AdminLayout>} />
               <Route path="/admin/doctors" element={<AdminLayout><DoctorsAdmin /></AdminLayout>} />
-              <Route path="/admin/specialties" element={<AdminLayout><SpecialtiesAdmin /></AdminLayout>} />
               <Route path="/admin/articles" element={<AdminLayout><ArticlesAdmin /></AdminLayout>} />
               <Route path="/admin/leadership" element={<AdminLayout><LeadershipAdmin /></AdminLayout>} />
               <Route path="/admin/admins" element={<AdminLayout><AdminsAdmin /></AdminLayout>} />

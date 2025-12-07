@@ -32,7 +32,6 @@ const menuItems = [
   { title: 'Tableau de bord', url: '/admin', icon: LayoutDashboard },
   { title: 'Messages', url: '/admin/messages', icon: Mail },
   { title: 'Médecins', url: '/admin/doctors', icon: Stethoscope },
-  { title: 'Spécialités', url: '/admin/specialties', icon: Users },
   { title: 'Articles', url: '/admin/articles', icon: FileText },
   { title: 'Équipe dirigeante', url: '/admin/leadership', icon: UserCog },
   { title: 'Administrateurs', url: '/admin/admins', icon: Shield },
