@@ -24,7 +24,8 @@ import {
   Shield,
   Loader2,
   Home,
-  Mail
+  Mail,
+  Palette
 } from 'lucide-react';
 import logoImage from '@/assets/logo-pisam.png';
 
@@ -34,6 +35,7 @@ const menuItems = [
   { title: 'Médecins', url: '/admin/doctors', icon: Stethoscope },
   { title: 'Articles', url: '/admin/articles', icon: FileText },
   { title: 'Équipe dirigeante', url: '/admin/leadership', icon: UserCog },
+  { title: 'CMS', url: '/admin/cms', icon: Palette },
   { title: 'Administrateurs', url: '/admin/admins', icon: Shield },
 ];
 
