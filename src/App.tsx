@@ -26,6 +26,7 @@ import ArticlesAdmin from "./pages/admin/ArticlesAdmin";
 import LeadershipAdmin from "./pages/admin/LeadershipAdmin";
 import AdminsAdmin from "./pages/admin/AdminsAdmin";
 import MessagesAdmin from "./pages/admin/MessagesAdmin";
+import CMSAdmin from "./pages/admin/CMSAdmin";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -60,6 +61,7 @@ const App = () => (
               <Route path="/admin/doctors" element={<AdminLayout><DoctorsAdmin /></AdminLayout>} />
               <Route path="/admin/articles" element={<AdminLayout><ArticlesAdmin /></AdminLayout>} />
               <Route path="/admin/leadership" element={<AdminLayout><LeadershipAdmin /></AdminLayout>} />
+              <Route path="/admin/cms" element={<AdminLayout><CMSAdmin /></AdminLayout>} />
               <Route path="/admin/admins" element={<AdminLayout><AdminsAdmin /></AdminLayout>} />
               
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
