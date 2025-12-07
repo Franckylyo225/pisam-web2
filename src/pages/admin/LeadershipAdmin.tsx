@@ -141,7 +141,7 @@ export default function LeadershipAdmin() {
           <DialogTrigger asChild>
             <Button><Plus className="h-4 w-4 mr-2" />Ajouter un membre</Button>
           </DialogTrigger>
-          <DialogContent className="max-w-lg">
+          <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>{editingMember ? 'Modifier le membre' : 'Ajouter un membre'}</DialogTitle>
             </DialogHeader>
