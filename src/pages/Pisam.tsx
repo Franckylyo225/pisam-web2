@@ -21,42 +21,29 @@ import {
   Shield, 
   Sparkles,
   CheckCircle2,
-  Quote
+  Quote,
+  Facebook,
+  Linkedin,
+  Twitter
 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import pisamAerial from "@/assets/pisam-aerial-view.jpg";
 import pdgEricDjibo from "@/assets/pdg-eric-djibo.jpg";
 import doctorMale1 from "@/assets/doctor-male-1.jpg";
-import doctorMale2 from "@/assets/doctor-male-2.jpg";
-import doctorFemale1 from "@/assets/doctor-female-1.jpg";
-import doctorFemale2 from "@/assets/doctor-female-2.jpg";
 
-const leaders = [
-  {
-    name: "Dr. Jean-Baptiste Kouamé",
-    role: "Président Directeur Général",
-    image: doctorMale1,
-  },
-  {
-    name: "Dr. Marie-Claire Diallo",
-    role: "Directrice Médicale",
-    image: doctorFemale1,
-  },
-  {
-    name: "M. Patrick Assi",
-    role: "Directeur Administratif et Financier",
-    image: doctorMale2,
-  },
-  {
-    name: "Dr. Aminata Koné",
-    role: "Directrice des Soins Infirmiers",
-    image: doctorFemale2,
-  },
-  {
-    name: "Dr. Emmanuel Yao",
-    role: "Directeur Technique",
-    image: doctorMale1,
-  },
-];
+interface LeadershipMember {
+  id: string;
+  name: string;
+  position: string;
+  bio: string | null;
+  image_url: string | null;
+  display_order: number;
+  is_active: boolean;
+  facebook_url: string | null;
+  linkedin_url: string | null;
+  twitter_url: string | null;
+}
 
 const values = [
   {
@@ -95,6 +82,19 @@ const Pisam = () => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
+
+  const { data: leaders = [] } = useQuery({
+    queryKey: ['leadership-team'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('leadership_team')
+        .select('*')
+        .eq('is_active', true)
+        .order('display_order');
+      if (error) throw error;
+      return data as LeadershipMember[];
+    },
+  });
 
   useEffect(() => {
     if (!api) return;
@@ -288,13 +288,13 @@ const Pisam = () => {
                   className="w-full"
                 >
                   <CarouselContent className="-ml-4">
-                    {leaders.map((leader, index) => (
-                      <CarouselItem key={index} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/4">
+                    {leaders.map((leader) => (
+                      <CarouselItem key={leader.id} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/4">
                         <Card className="border-0 shadow-pisam overflow-hidden group">
                           <CardContent className="p-0">
                             <div className="relative overflow-hidden">
                               <img 
-                                src={leader.image} 
+                                src={leader.image_url || doctorMale1} 
                                 alt={leader.name}
                                 className="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-105"
                               />
@@ -302,7 +302,26 @@ const Pisam = () => {
                             </div>
                             <div className="p-5 text-center bg-background">
                               <h3 className="font-semibold text-foreground text-lg">{leader.name}</h3>
-                              <p className="text-sm text-primary">{leader.role}</p>
+                              <p className="text-sm text-primary">{leader.position}</p>
+                              {(leader.facebook_url || leader.linkedin_url || leader.twitter_url) && (
+                                <div className="flex justify-center gap-3 mt-3">
+                                  {leader.facebook_url && (
+                                    <a href={leader.facebook_url} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+                                      <Facebook className="h-4 w-4" />
+                                    </a>
+                                  )}
+                                  {leader.linkedin_url && (
+                                    <a href={leader.linkedin_url} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+                                      <Linkedin className="h-4 w-4" />
+                                    </a>
+                                  )}
+                                  {leader.twitter_url && (
+                                    <a href={leader.twitter_url} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+                                      <Twitter className="h-4 w-4" />
+                                    </a>
+                                  )}
+                                </div>
+                              )}
                             </div>
                           </CardContent>
                         </Card>
