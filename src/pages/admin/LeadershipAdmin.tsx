@@ -9,7 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Switch } from '@/components/ui/switch';
 import { toast } from 'sonner';
-import { Plus, Pencil, Trash2, Loader2, GripVertical } from 'lucide-react';
+import { Plus, Pencil, Trash2, Loader2, GripVertical, Facebook, Linkedin, Twitter } from 'lucide-react';
 
 interface LeadershipMember {
   id: string;
@@ -19,6 +19,9 @@ interface LeadershipMember {
   image_url: string | null;
   display_order: number;
   is_active: boolean;
+  facebook_url: string | null;
+  linkedin_url: string | null;
+  twitter_url: string | null;
 }
 
 export default function LeadershipAdmin() {
@@ -35,6 +38,9 @@ export default function LeadershipAdmin() {
     image_url: '',
     display_order: 0,
     is_active: true,
+    facebook_url: '',
+    linkedin_url: '',
+    twitter_url: '',
   });
 
   const fetchData = async () => {
@@ -48,7 +54,7 @@ export default function LeadershipAdmin() {
   }, []);
 
   const resetForm = () => {
-    setFormData({ name: '', position: '', bio: '', image_url: '', display_order: members.length, is_active: true });
+    setFormData({ name: '', position: '', bio: '', image_url: '', display_order: members.length, is_active: true, facebook_url: '', linkedin_url: '', twitter_url: '' });
     setEditingMember(null);
   };
 
@@ -61,6 +67,9 @@ export default function LeadershipAdmin() {
       image_url: member.image_url || '',
       display_order: member.display_order,
       is_active: member.is_active,
+      facebook_url: member.facebook_url || '',
+      linkedin_url: member.linkedin_url || '',
+      twitter_url: member.twitter_url || '',
     });
     setDialogOpen(true);
   };
@@ -76,6 +85,9 @@ export default function LeadershipAdmin() {
       image_url: formData.image_url || null,
       display_order: formData.display_order,
       is_active: formData.is_active,
+      facebook_url: formData.facebook_url || null,
+      linkedin_url: formData.linkedin_url || null,
+      twitter_url: formData.twitter_url || null,
     };
 
     let error;
@@ -170,8 +182,44 @@ export default function LeadershipAdmin() {
                   id="bio"
                   value={formData.bio}
                   onChange={(e) => setFormData(prev => ({ ...prev, bio: e.target.value }))}
-                  rows={4}
+                  rows={3}
                 />
+              </div>
+
+              <div className="grid grid-cols-3 gap-3">
+                <div className="space-y-2">
+                  <Label htmlFor="facebook_url" className="flex items-center gap-1">
+                    <Facebook className="h-3 w-3" /> Facebook
+                  </Label>
+                  <Input
+                    id="facebook_url"
+                    value={formData.facebook_url}
+                    onChange={(e) => setFormData(prev => ({ ...prev, facebook_url: e.target.value }))}
+                    placeholder="https://facebook.com/..."
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="linkedin_url" className="flex items-center gap-1">
+                    <Linkedin className="h-3 w-3" /> LinkedIn
+                  </Label>
+                  <Input
+                    id="linkedin_url"
+                    value={formData.linkedin_url}
+                    onChange={(e) => setFormData(prev => ({ ...prev, linkedin_url: e.target.value }))}
+                    placeholder="https://linkedin.com/in/..."
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="twitter_url" className="flex items-center gap-1">
+                    <Twitter className="h-3 w-3" /> Twitter
+                  </Label>
+                  <Input
+                    id="twitter_url"
+                    value={formData.twitter_url}
+                    onChange={(e) => setFormData(prev => ({ ...prev, twitter_url: e.target.value }))}
+                    placeholder="https://twitter.com/..."
+                  />
+                </div>
               </div>
 
               <div className="space-y-2">

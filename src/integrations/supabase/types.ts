@@ -221,33 +221,42 @@ export type Database = {
           bio: string | null
           created_at: string
           display_order: number | null
+          facebook_url: string | null
           id: string
           image_url: string | null
           is_active: boolean | null
+          linkedin_url: string | null
           name: string
           position: string
+          twitter_url: string | null
           updated_at: string
         }
         Insert: {
           bio?: string | null
           created_at?: string
           display_order?: number | null
+          facebook_url?: string | null
           id?: string
           image_url?: string | null
           is_active?: boolean | null
+          linkedin_url?: string | null
           name: string
           position: string
+          twitter_url?: string | null
           updated_at?: string
         }
         Update: {
           bio?: string | null
           created_at?: string
           display_order?: number | null
+          facebook_url?: string | null
           id?: string
           image_url?: string | null
           is_active?: boolean | null
+          linkedin_url?: string | null
           name?: string
           position?: string
+          twitter_url?: string | null
           updated_at?: string
         }
         Relationships: []
