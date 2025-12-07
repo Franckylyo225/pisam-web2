@@ -291,7 +291,7 @@ const Pisam = () => {
                     {leaders.map((leader) => (
                       <CarouselItem key={leader.id} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/4">
                         <Card className="border-0 shadow-pisam overflow-hidden group">
-                          <CardContent className="p-0">
+                        <CardContent className="p-0">
                             <div className="relative overflow-hidden">
                               <img 
                                 src={leader.image_url || doctorMale1} 
@@ -299,29 +299,45 @@ const Pisam = () => {
                                 className="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-105"
                               />
                               <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                            </div>
-                            <div className="p-5 text-center bg-background">
-                              <h3 className="font-semibold text-foreground text-lg">{leader.name}</h3>
-                              <p className="text-sm text-primary">{leader.position}</p>
+                              {/* Social media icons overlay on hover */}
                               {(leader.facebook_url || leader.linkedin_url || leader.twitter_url) && (
-                                <div className="flex justify-center gap-3 mt-3">
+                                <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-3 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-4 group-hover:translate-y-0">
                                   {leader.facebook_url && (
-                                    <a href={leader.facebook_url} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
-                                      <Facebook className="h-4 w-4" />
+                                    <a 
+                                      href={leader.facebook_url} 
+                                      target="_blank" 
+                                      rel="noopener noreferrer" 
+                                      className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center text-primary hover:bg-white hover:scale-110 transition-all duration-200 shadow-lg"
+                                    >
+                                      <Facebook className="h-5 w-5" />
                                     </a>
                                   )}
                                   {leader.linkedin_url && (
-                                    <a href={leader.linkedin_url} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
-                                      <Linkedin className="h-4 w-4" />
+                                    <a 
+                                      href={leader.linkedin_url} 
+                                      target="_blank" 
+                                      rel="noopener noreferrer" 
+                                      className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center text-primary hover:bg-white hover:scale-110 transition-all duration-200 shadow-lg"
+                                    >
+                                      <Linkedin className="h-5 w-5" />
                                     </a>
                                   )}
                                   {leader.twitter_url && (
-                                    <a href={leader.twitter_url} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
-                                      <Twitter className="h-4 w-4" />
+                                    <a 
+                                      href={leader.twitter_url} 
+                                      target="_blank" 
+                                      rel="noopener noreferrer" 
+                                      className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center text-primary hover:bg-white hover:scale-110 transition-all duration-200 shadow-lg"
+                                    >
+                                      <Twitter className="h-5 w-5" />
                                     </a>
                                   )}
                                 </div>
                               )}
+                            </div>
+                            <div className="p-5 text-center bg-background">
+                              <h3 className="font-semibold text-foreground text-lg">{leader.name}</h3>
+                              <p className="text-sm text-primary">{leader.position}</p>
                             </div>
                           </CardContent>
                         </Card>
