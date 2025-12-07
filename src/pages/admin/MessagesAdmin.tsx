@@ -8,8 +8,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
-import { Trash2, Loader2, Mail, AlertTriangle, Eye, Archive, MailOpen, RefreshCw } from 'lucide-react';
+import { Trash2, Loader2, Mail, AlertTriangle, Eye, Archive, MailOpen, RefreshCw, Reply, Send } from 'lucide-react';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 
@@ -31,6 +33,8 @@ export default function MessagesAdmin() {
   const [loading, setLoading] = useState(true);
   const [selectedMessage, setSelectedMessage] = useState<ContactMessage | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [replyMode, setReplyMode] = useState(false);
+  const [replyContent, setReplyContent] = useState('');
 
   const fetchMessages = async () => {
     setLoading(true);
@@ -39,7 +43,12 @@ export default function MessagesAdmin() {
       .select('*')
       .order('created_at', { ascending: false });
 
-    if (!error && data) {
+    if (error) {
+      console.error('Error fetching messages:', error);
+      toast.error('Erreur lors du chargement des messages');
+    }
+    
+    if (data) {
       setMessages(data as ContactMessage[]);
     }
     setLoading(false);
@@ -52,6 +61,8 @@ export default function MessagesAdmin() {
   const openMessage = async (message: ContactMessage) => {
     setSelectedMessage(message);
     setDialogOpen(true);
+    setReplyMode(false);
+    setReplyContent('');
     
     if (!message.is_read) {
       await supabase
@@ -79,6 +90,11 @@ export default function MessagesAdmin() {
     setMessages(prev => prev.map(m => 
       m.id === message.id ? { ...m, is_archived: !m.is_archived } : m
     ));
+    
+    if (selectedMessage?.id === message.id) {
+      setSelectedMessage(prev => prev ? { ...prev, is_archived: !prev.is_archived } : null);
+    }
+    
     toast.success(message.is_archived ? 'Message restauré' : 'Message archivé');
   };
 
@@ -98,6 +114,28 @@ export default function MessagesAdmin() {
     setMessages(prev => prev.filter(m => m.id !== id));
     setDialogOpen(false);
     toast.success('Message supprimé');
+  };
+
+  const handleReply = () => {
+    if (!selectedMessage) return;
+    
+    // Generate default reply content
+    const defaultReply = `Bonjour ${selectedMessage.name},\n\nMerci pour votre message concernant "${selectedMessage.subject}".\n\n\n\nCordialement,\nL'équipe PISAM`;
+    setReplyContent(defaultReply);
+    setReplyMode(true);
+  };
+
+  const sendReply = () => {
+    if (!selectedMessage || !replyContent.trim()) return;
+    
+    // Open mailto link with pre-filled content
+    const subject = encodeURIComponent(`Re: ${selectedMessage.subject}`);
+    const body = encodeURIComponent(replyContent);
+    window.open(`mailto:${selectedMessage.email}?subject=${subject}&body=${body}`, '_blank');
+    
+    toast.success('Client email ouvert pour envoyer la réponse');
+    setReplyMode(false);
+    setReplyContent('');
   };
 
   const unreadMessages = messages.filter(m => !m.is_read && !m.is_archived);
@@ -251,8 +289,14 @@ export default function MessagesAdmin() {
       </Tabs>
 
       {/* Message Detail Dialog */}
-      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-w-2xl">
+      <Dialog open={dialogOpen} onOpenChange={(open) => {
+        setDialogOpen(open);
+        if (!open) {
+          setReplyMode(false);
+          setReplyContent('');
+        }
+      }}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{selectedMessage?.subject}</DialogTitle>
           </DialogHeader>
@@ -284,29 +328,66 @@ export default function MessagesAdmin() {
                   </p>
                 </div>
               </div>
+              
               <div className="border-t pt-4">
                 <p className="text-muted-foreground text-sm mb-2">Message</p>
-                <p className="whitespace-pre-wrap">{selectedMessage.message}</p>
+                <div className="bg-muted/50 p-4 rounded-lg">
+                  <p className="whitespace-pre-wrap">{selectedMessage.message}</p>
+                </div>
               </div>
-              <div className="flex justify-end gap-2 pt-4 border-t">
-                <Button variant="outline" onClick={() => toggleArchive(selectedMessage)}>
-                  {selectedMessage.is_archived ? (
-                    <>
-                      <RefreshCw className="h-4 w-4 mr-2" />
-                      Restaurer
-                    </>
-                  ) : (
-                    <>
-                      <Archive className="h-4 w-4 mr-2" />
-                      Archiver
-                    </>
-                  )}
-                </Button>
-                <Button variant="destructive" onClick={() => deleteMessage(selectedMessage.id)}>
-                  <Trash2 className="h-4 w-4 mr-2" />
-                  Supprimer
-                </Button>
-              </div>
+
+              {/* Reply Section */}
+              {replyMode ? (
+                <div className="border-t pt-4 space-y-3">
+                  <Label htmlFor="reply" className="flex items-center gap-2">
+                    <Reply className="h-4 w-4" />
+                    Répondre à {selectedMessage.name}
+                  </Label>
+                  <Textarea
+                    id="reply"
+                    value={replyContent}
+                    onChange={(e) => setReplyContent(e.target.value)}
+                    rows={8}
+                    placeholder="Votre réponse..."
+                    className="resize-none"
+                  />
+                  <div className="flex gap-2 justify-end">
+                    <Button variant="outline" onClick={() => setReplyMode(false)}>
+                      Annuler
+                    </Button>
+                    <Button onClick={sendReply} disabled={!replyContent.trim()}>
+                      <Send className="h-4 w-4 mr-2" />
+                      Envoyer
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex justify-between gap-2 pt-4 border-t">
+                  <Button onClick={handleReply} className="bg-primary">
+                    <Reply className="h-4 w-4 mr-2" />
+                    Répondre
+                  </Button>
+                  <div className="flex gap-2">
+                    <Button variant="outline" onClick={() => toggleArchive(selectedMessage)}>
+                      {selectedMessage.is_archived ? (
+                        <>
+                          <RefreshCw className="h-4 w-4 mr-2" />
+                          Restaurer
+                        </>
+                      ) : (
+                        <>
+                          <Archive className="h-4 w-4 mr-2" />
+                          Archiver
+                        </>
+                      )}
+                    </Button>
+                    <Button variant="destructive" onClick={() => deleteMessage(selectedMessage.id)}>
+                      <Trash2 className="h-4 w-4 mr-2" />
+                      Supprimer
+                    </Button>
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </DialogContent>
