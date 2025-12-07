@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import AdminLayout from './AdminLayout';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { HeroSlidesManager } from '@/components/admin/HeroSlidesManager';
@@ -9,8 +8,7 @@ export default function CMSAdmin() {
   const [activeTab, setActiveTab] = useState('slides');
 
   return (
-    <AdminLayout>
-      <div className="space-y-6">
+    <div className="space-y-6">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Gestion du contenu (CMS)</h1>
           <p className="text-muted-foreground">
@@ -101,6 +99,5 @@ export default function CMSAdmin() {
           </TabsContent>
         </Tabs>
       </div>
-    </AdminLayout>
   );
 }
