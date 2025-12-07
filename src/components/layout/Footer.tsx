@@ -84,7 +84,7 @@ const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-pisam-turquoise mt-0.5 flex-shrink-0" />
                 <span className="text-background/70">​<br />
-                  Abidjan, Côte d'Ivoire
+                  ​01 BP 1463 Abidjan 01
                 </span>
               </li>
               <li className="flex items-center gap-3">
