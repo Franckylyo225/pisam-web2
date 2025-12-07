@@ -97,7 +97,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-pisam-turquoise flex-shrink-0" />
-                <span className="text-background/70">contact@pisam.ci</span>
+                <span className="text-background/70">info@pisam.ci </span>
               </li>
               <li className="flex items-start gap-3">
                 <Clock className="h-5 w-5 text-pisam-turquoise mt-0.5 flex-shrink-0" />
