@@ -168,6 +168,54 @@ export type Database = {
           },
         ]
       }
+      hero_slides: {
+        Row: {
+          created_at: string
+          description: string | null
+          display_order: number | null
+          id: string
+          image_url: string | null
+          is_active: boolean | null
+          primary_button_link: string | null
+          primary_button_text: string | null
+          secondary_button_link: string | null
+          secondary_button_text: string | null
+          subtitle: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          display_order?: number | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          primary_button_link?: string | null
+          primary_button_text?: string | null
+          secondary_button_link?: string | null
+          secondary_button_text?: string | null
+          subtitle?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          display_order?: number | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          primary_button_link?: string | null
+          primary_button_text?: string | null
+          secondary_button_link?: string | null
+          secondary_button_text?: string | null
+          subtitle?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       leadership_team: {
         Row: {
           bio: string | null
