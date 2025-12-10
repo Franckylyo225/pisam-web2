@@ -24,6 +24,7 @@ interface HeroSlide {
   secondary_button_link: string | null;
   display_order: number;
   is_active: boolean;
+  overlay_opacity: number | null;
   created_at: string;
   updated_at: string;
 }
@@ -38,6 +39,7 @@ interface SlideFormData {
   secondary_button_text: string;
   secondary_button_link: string;
   is_active: boolean;
+  overlay_opacity: number;
 }
 
 const defaultFormData: SlideFormData = {
@@ -50,6 +52,7 @@ const defaultFormData: SlideFormData = {
   secondary_button_text: '',
   secondary_button_link: '',
   is_active: true,
+  overlay_opacity: 0.6,
 };
 
 export function HeroSlidesManager() {
@@ -158,6 +161,7 @@ export function HeroSlidesManager() {
       secondary_button_text: slide.secondary_button_text || '',
       secondary_button_link: slide.secondary_button_link || '',
       is_active: slide.is_active,
+      overlay_opacity: slide.overlay_opacity ?? 0.6,
     });
     setIsDialogOpen(true);
   };
@@ -299,6 +303,23 @@ export function HeroSlidesManager() {
                     placeholder="Ex: /contact"
                   />
                 </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="overlay_opacity">Opacité du masque : {Math.round(formData.overlay_opacity * 100)}%</Label>
+                <input
+                  type="range"
+                  id="overlay_opacity"
+                  min="0"
+                  max="1"
+                  step="0.05"
+                  value={formData.overlay_opacity}
+                  onChange={(e) => setFormData({ ...formData, overlay_opacity: parseFloat(e.target.value) })}
+                  className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
+                />
+                <p className="text-xs text-muted-foreground">
+                  0% = pas de masque, 100% = masque opaque
+                </p>
               </div>
 
               <div className="flex items-center space-x-2">

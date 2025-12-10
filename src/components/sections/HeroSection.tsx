@@ -24,6 +24,7 @@ interface HeroSlide {
   secondary_button_link: string | null;
   display_order: number;
   is_active: boolean;
+  overlay_opacity: number | null;
 }
 
 // Fallback slides when database is empty
@@ -40,6 +41,7 @@ const fallbackSlides = [
     secondary_button_link: "#",
     display_order: 0,
     is_active: true,
+    overlay_opacity: 0.6,
   },
   {
     id: 'fallback-2',
@@ -53,6 +55,7 @@ const fallbackSlides = [
     secondary_button_link: "#",
     display_order: 1,
     is_active: true,
+    overlay_opacity: 0.6,
   },
   {
     id: 'fallback-3',
@@ -66,6 +69,7 @@ const fallbackSlides = [
     secondary_button_link: "#",
     display_order: 2,
     is_active: true,
+    overlay_opacity: 0.6,
   },
 ];
 
@@ -142,17 +146,28 @@ const HeroSection = () => {
       {/* Carousel */}
       <div className="absolute inset-0" ref={emblaRef}>
         <div className="flex h-full">
-          {slides.map((slide, index) => (
-            <div key={slide.id} className="relative flex-[0_0_100%] min-w-0 h-full">
-              {/* Background Image */}
-              <div
-                className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                style={{ backgroundImage: `url(${getImageUrl(slide.image_url)})` }}
-              />
-              {/* Blue Filter Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-pisam-teal/85 via-pisam-teal/75 to-pisam-turquoise/70" />
-            </div>
-          ))}
+          {slides.map((slide, index) => {
+            const opacity = slide.overlay_opacity ?? 0.6;
+            return (
+              <div key={slide.id} className="relative flex-[0_0_100%] min-w-0 h-full">
+                {/* Background Image */}
+                <div
+                  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                  style={{ backgroundImage: `url(${getImageUrl(slide.image_url)})` }}
+                />
+                {/* Blue Filter Overlay - Dynamic opacity */}
+                <div 
+                  className="absolute inset-0"
+                  style={{
+                    background: `linear-gradient(to bottom right, 
+                      rgba(26, 107, 138, ${opacity + 0.25}) 0%, 
+                      rgba(26, 107, 138, ${opacity + 0.15}) 50%, 
+                      rgba(45, 185, 185, ${opacity + 0.1}) 100%)`
+                  }}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
 
