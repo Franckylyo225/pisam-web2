@@ -197,7 +197,7 @@ const HeroSection = () => {
 
                   {/* Description */}
                   {slide.description && (
-                    <p className="text-base md:text-lg text-white/85 mb-10 max-w-2xl mx-auto leading-relaxed font-light">
+                    <p className="text-base md:text-lg text-white/90 mb-10 max-w-2xl mx-auto leading-relaxed font-medium">
                       {slide.description}
                     </p>
                   )}
