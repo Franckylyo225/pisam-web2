@@ -176,6 +176,7 @@ export type Database = {
           id: string
           image_url: string | null
           is_active: boolean | null
+          overlay_opacity: number | null
           primary_button_link: string | null
           primary_button_text: string | null
           secondary_button_link: string | null
@@ -191,6 +192,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           is_active?: boolean | null
+          overlay_opacity?: number | null
           primary_button_link?: string | null
           primary_button_text?: string | null
           secondary_button_link?: string | null
@@ -206,6 +208,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           is_active?: boolean | null
+          overlay_opacity?: number | null
           primary_button_link?: string | null
           primary_button_text?: string | null
           secondary_button_link?: string | null
