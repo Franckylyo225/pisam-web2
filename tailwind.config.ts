@@ -55,6 +55,7 @@ export default {
         pisam: {
           teal: "hsl(var(--pisam-teal))",
           turquoise: "hsl(var(--pisam-turquoise))",
+          "turquoise-light": "hsl(var(--pisam-turquoise-light))",
           green: "hsl(var(--pisam-green))",
           gold: "hsl(var(--pisam-gold))",
           cream: "hsl(var(--pisam-cream))",
