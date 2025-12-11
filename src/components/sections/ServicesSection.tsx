@@ -45,9 +45,9 @@ const services = [
 // Checkerboard colors using brand palette
 const checkerboardColors = [
   "bg-primary", // teal
-  "bg-pisam-turquoise", // turquoise
+  "bg-pisam-turquoise-light", // turquoise light - Pédiatrie
   "bg-pisam-green", // green
-  "bg-pisam-turquoise", // turquoise
+  "bg-pisam-turquoise-light", // turquoise light - Orthopédie
   "bg-pisam-green", // green
   "bg-primary", // teal
 ];
