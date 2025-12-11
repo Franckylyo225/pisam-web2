@@ -13,7 +13,7 @@ const stats = [
 
 const statColors = [
   "bg-primary",
-  "bg-pisam-turquoise", 
+  "bg-pisam-turquoise-light", 
   "bg-pisam-green",
   "bg-pisam-gold",
 ];
