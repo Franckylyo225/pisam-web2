@@ -18,6 +18,7 @@ import PlateauTechnique from "./pages/PlateauTechnique";
 import CertificationISO from "./pages/CertificationISO";
 import Pisam2 from "./pages/Pisam2";
 import Contact from "./pages/Contact";
+import MentionsLegales from "./pages/MentionsLegales";
 import Auth from "./pages/Auth";
 import AdminLayout from "./pages/admin/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
@@ -53,6 +54,7 @@ const App = () => (
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<ArticleDetail />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/mentions-legales" element={<MentionsLegales />} />
               <Route path="/auth" element={<Auth />} />
               
               {/* Admin Routes */}

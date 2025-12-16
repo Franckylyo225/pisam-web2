@@ -119,9 +119,9 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-background/60">
             <p>© 2025 PISAM - Polyclinique Internationale Sainte Anne-Marie. Tous droits réservés.</p>
             <div className="flex items-center gap-6">
-              <a href="#" className="hover:text-background transition-colors">
+              <Link to="/mentions-legales" className="hover:text-background transition-colors">
                 Mentions légales
-              </a>
+              </Link>
               <a href="#" className="hover:text-background transition-colors">
                 Politique de confidentialité
               </a>
