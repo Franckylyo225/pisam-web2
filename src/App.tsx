@@ -19,6 +19,7 @@ import CertificationISO from "./pages/CertificationISO";
 import Pisam2 from "./pages/Pisam2";
 import Contact from "./pages/Contact";
 import MentionsLegales from "./pages/MentionsLegales";
+import PolitiqueConfidentialite from "./pages/PolitiqueConfidentialite";
 import Auth from "./pages/Auth";
 import AdminLayout from "./pages/admin/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
@@ -55,6 +56,7 @@ const App = () => (
               <Route path="/blog/:slug" element={<ArticleDetail />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/mentions-legales" element={<MentionsLegales />} />
+              <Route path="/politique-confidentialite" element={<PolitiqueConfidentialite />} />
               <Route path="/auth" element={<Auth />} />
               
               {/* Admin Routes */}

@@ -122,9 +122,9 @@ const Footer = () => {
               <Link to="/mentions-legales" className="hover:text-background transition-colors">
                 Mentions légales
               </Link>
-              <a href="#" className="hover:text-background transition-colors">
+              <Link to="/politique-confidentialite" className="hover:text-background transition-colors">
                 Politique de confidentialité
-              </a>
+              </Link>
               <span className="text-background/40">|</span>
               <a href="https://nwc-agency.com/" target="_blank" rel="noopener noreferrer" className="hover:text-background transition-colors">
                 Powered by #NWC
