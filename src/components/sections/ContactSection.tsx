@@ -40,8 +40,10 @@ const ContactSection = () => {
             </div>
             <h3 className="font-semibold text-foreground mb-2">Adresse</h3>
             <p className="text-muted-foreground text-sm">
-              Boulevard Latrille, Cocody<br />
-              Abidjan, Côte d'Ivoire
+              Abidjan, Cocody, Rue Cannebière,
+Av. Joseph Blohorn,
+            <br />
+              Côte d'Ivoire
             </p>
           </div>
 
