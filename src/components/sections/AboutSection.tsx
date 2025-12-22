@@ -1,4 +1,4 @@
-import { Award, Users, Clock, Building2, Stethoscope, FlaskConical, Siren, ArrowRight } from "lucide-react";
+import { Award, Users, Clock, Building2, Plane, BadgeCheck, Siren, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useCounterAnimation } from "@/hooks/use-counter-animation";
@@ -79,12 +79,12 @@ const AboutSection = () => {
                 <span className="text-white text-sm">Plateau technique moderne</span>
               </div>
               <div className="flex items-center gap-2">
-                <Stethoscope className="h-5 w-5 text-white/80 flex-shrink-0" />
-                <span className="text-white text-sm">Bloc opératoire aux normes</span>
+                <Plane className="h-5 w-5 text-white/80 flex-shrink-0" />
+                <span className="text-white text-sm">Héliport certifié</span>
               </div>
               <div className="flex items-center gap-2">
-                <FlaskConical className="h-5 w-5 text-white/80 flex-shrink-0" />
-                <span className="text-white text-sm">Laboratoire accrédité</span>
+                <BadgeCheck className="h-5 w-5 text-white/80 flex-shrink-0" />
+                <span className="text-white text-sm">Etablissement Certifié ISO 9001</span>
               </div>
               <div className="flex items-center gap-2">
                 <Siren className="h-5 w-5 text-white/80 flex-shrink-0" />
@@ -126,12 +126,12 @@ const AboutSection = () => {
                   <span className="text-white text-sm">Plateau technique moderne</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Stethoscope className="h-5 w-5 text-white/80 flex-shrink-0" />
-                  <span className="text-white text-sm">Bloc opératoire aux normes</span>
+                  <Plane className="h-5 w-5 text-white/80 flex-shrink-0" />
+                  <span className="text-white text-sm">Héliport certifié</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <FlaskConical className="h-5 w-5 text-white/80 flex-shrink-0" />
-                  <span className="text-white text-sm">Laboratoire accrédité</span>
+                  <BadgeCheck className="h-5 w-5 text-white/80 flex-shrink-0" />
+                  <span className="text-white text-sm">Etablissement Certifié ISO 9001</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Siren className="h-5 w-5 text-white/80 flex-shrink-0" />
