@@ -5,7 +5,7 @@ import { useCounterAnimation } from "@/hooks/use-counter-animation";
 import pisamAerialView from "@/assets/pisam-aerial-view.jpg";
 const stats = [{
   icon: Users,
-  value: 150,
+  value: 200,
   label: "Professionnels de santé",
   prefix: "+"
 }, {
