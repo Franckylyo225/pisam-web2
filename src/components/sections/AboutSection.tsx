@@ -4,24 +4,24 @@ import { Link } from "react-router-dom";
 import { useCounterAnimation } from "@/hooks/use-counter-animation";
 import pisamAerialView from "@/assets/pisam-aerial-view.jpg";
 const stats = [{
+  icon: Clock,
+  value: 40,
+  label: "Années d'excellence",
+  prefix: "+"
+}, {
+  icon: Award,
+  value: 40,
+  label: "Spécialités médicales",
+  prefix: "+"
+}, {
   icon: Users,
   value: 200,
   label: "Professionnels de santé",
   prefix: "+"
 }, {
-  icon: Award,
-  value: 50,
-  label: "Spécialités médicales et chirurgicales",
-  prefix: "+"
-}, {
   icon: Building2,
-  value: 300,
+  value: 150,
   label: "Lits d'hospitalisation",
-  prefix: "+"
-}, {
-  icon: Clock,
-  value: 30,
-  label: "Années d'excellence",
   prefix: "+"
 }];
 const statColors = ["bg-primary", "bg-pisam-turquoise-light", "bg-pisam-green", "bg-pisam-gold"];
