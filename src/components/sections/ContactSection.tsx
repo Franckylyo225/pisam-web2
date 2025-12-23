@@ -15,9 +15,9 @@ const ContactSection = () => {
             </div>
           </div>
           <Button variant="emergency" size="lg" asChild>
-            <a href="tel:+22527224453 53">
+            <a href="tel:+22527224831 12">
               <Phone className="h-5 w-5" />
-              +225 27 22 44 53 53
+              +225 27 22 48 31 12
             </a>
           </Button>
         </div>
@@ -53,8 +53,8 @@ Av. Joseph Blohorn,
             </div>
             <h3 className="font-semibold text-foreground mb-2">Téléphone</h3>
             <p className="text-muted-foreground text-sm">
-              Standard: +225 27 22 44 53 53<br />
-              Urgences: +225 07 07 07 07 07
+              Standard: +225 27 22 55 00 00<br />
+              Urgences: +225 27 22 48 31 12
             </p>
           </div>
 
@@ -64,8 +64,8 @@ Av. Joseph Blohorn,
             </div>
             <h3 className="font-semibold text-foreground mb-2">Email</h3>
             <p className="text-muted-foreground text-sm">
-              contact@pisam.ci<br />
-              rdv@pisam.ci
+              info@groupepisam.com<br />
+              bilandesante@pisam.ci
             </p>
           </div>
 
