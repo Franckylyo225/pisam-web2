@@ -24,8 +24,7 @@ const Footer = () => {
           <div className="lg:col-span-1">
             <img src={logoPisam} alt="PISAM" className="h-16 w-auto mb-6 brightness-0 invert" />
             <p className="text-background/70 mb-6 leading-relaxed">
-              Polyclinique Internationale Sainte Anne-Marie. Excellence médicale 
-              au service de votre santé depuis plus de 30 ans.
+              Polyclinique Internationale Sainte Anne-Marie. Excellence médicale au service de votre santé depuis plus de 40 ans.
             </p>
             <div className="flex gap-4">
               <a href="#" className="w-10 h-10 rounded-full bg-background/10 flex items-center justify-center hover:bg-primary transition-colors duration-300" aria-label="Facebook">
