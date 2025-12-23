@@ -3,11 +3,12 @@ import {
   Baby, 
   Stethoscope, 
   Bone, 
-  BrainCircuit, 
+  Stethoscope as GastroIcon, 
   Scan,
   ArrowRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const services = [
   {
@@ -31,9 +32,9 @@ const services = [
     description: "Chirurgie osseuse, articulaire et traitement des fractures.",
   },
   {
-    icon: BrainCircuit,
-    title: "Neurologie",
-    description: "Prise en charge des troubles du système nerveux central et périphérique.",
+    icon: GastroIcon,
+    title: "Gastro-entérologie",
+    description: "Diagnostic et traitement des maladies de l'appareil digestif.",
   },
   {
     icon: Scan,
@@ -100,9 +101,11 @@ const ServicesSection = () => {
 
         {/* CTA */}
         <div className="text-center">
-          <Button variant="default" size="lg" className="group">
-            Voir tous nos services
-            <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+          <Button variant="default" size="lg" className="group" asChild>
+            <Link to="/medecins">
+              Tout parcourir
+              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </Link>
           </Button>
         </div>
       </div>
