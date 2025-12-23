@@ -69,7 +69,7 @@ const Header = () => {
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
               <Phone className="h-4 w-4" />
-              <span>+225 27 22 44 53 53</span>
+              <span>+225 27 22 55 00 00</span>
             </div>
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4" />
@@ -182,7 +182,7 @@ const Header = () => {
             {/* CTA Buttons */}
             <div className="hidden lg:flex items-center gap-3">
               <Button variant="emergency" size="sm" asChild>
-                <a href="tel:+22527224453 53">
+                <a href="tel:+22527224831 12">
                   <Phone className="h-4 w-4" />
                   Urgences
                 </a>
@@ -290,9 +290,9 @@ const Header = () => {
               ))}
               <div className="flex flex-col gap-2 mt-4 pt-4 border-t border-border">
                 <Button variant="emergency" className="w-full" asChild>
-                  <a href="tel:+22527224453 53">
+                  <a href="tel:+22527224831 12">
                     <Phone className="h-4 w-4" />
-                    Urgences 24h/24
+                    +225 27 22 48 31 12
                   </a>
                 </Button>
                 <Button variant="default" className="w-full">
