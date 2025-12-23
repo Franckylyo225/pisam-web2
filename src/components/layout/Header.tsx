@@ -182,7 +182,7 @@ const Header = () => {
             {/* CTA Buttons */}
             <div className="hidden lg:flex items-center gap-3">
               <Button variant="emergency" size="sm" asChild>
-                <a href="tel:+22527224453 53">
+                <a href="tel:+22527224831 12">
                   <Phone className="h-4 w-4" />
                   Urgences
                 </a>
@@ -290,7 +290,7 @@ const Header = () => {
               ))}
               <div className="flex flex-col gap-2 mt-4 pt-4 border-t border-border">
                 <Button variant="emergency" className="w-full" asChild>
-                  <a href="tel:+22527224453 53">
+                  <a href="tel:+22527224831 12">
                     <Phone className="h-4 w-4" />
                     Urgences 24h/24
                   </a>
