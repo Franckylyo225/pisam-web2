@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight, CreditCard, Users } from "lucide-react";
-import pisamPlusImage from "@/assets/hero-slide-pisam-plus.jpg";
+import pisamPlusImage from "@/assets/pisam-plus-card.png";
 
 const PisamPlusSection = () => {
   return (
@@ -9,30 +9,20 @@ const PisamPlusSection = () => {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left - Card Image */}
           <div className="relative">
-            <div className="relative bg-gradient-to-br from-muted to-muted/50 rounded-3xl p-8 md:p-12 overflow-hidden">
-              {/* Decorative crosses */}
-              <div className="absolute top-6 left-6 text-pisam-green text-3xl font-bold">+</div>
-              <div className="absolute bottom-20 left-12 text-primary text-2xl font-bold">+</div>
-              <div className="absolute top-1/3 right-8 text-pisam-gold/50 text-xl">+</div>
-              
-              {/* Title */}
-              <div className="text-center mb-8">
-                <h3 className="text-2xl md:text-3xl font-bold text-primary">
-                  LA CARTE <span className="text-pisam-teal">PISAM</span>
-                  <span className="text-pisam-green align-super text-lg ml-1">Plus</span>
-                </h3>
-                <p className="text-muted-foreground mt-2">Santé, technologie et paix d'esprit.</p>
-              </div>
-
-              {/* Card image */}
-              <div className="relative aspect-[16/10] rounded-2xl overflow-hidden shadow-pisam-lg">
+            <div className="relative overflow-hidden">
+              {/* Card image - full width without container */}
+              <div className="relative rounded-2xl overflow-hidden shadow-pisam-lg">
                 <img
                   src={pisamPlusImage}
                   alt="Carte PISAM Plus"
-                  className="w-full h-full object-cover"
+                  className="w-full h-auto object-contain"
                 />
               </div>
             </div>
+
+            {/* Decorative blur elements */}
+            <div className="absolute -top-8 -right-8 w-32 h-32 bg-pisam-green/10 rounded-full blur-3xl" />
+            <div className="absolute -bottom-8 -left-8 w-40 h-40 bg-primary/10 rounded-full blur-3xl" />
 
             {/* Decorative blur elements */}
             <div className="absolute -top-8 -right-8 w-32 h-32 bg-pisam-green/10 rounded-full blur-3xl" />
