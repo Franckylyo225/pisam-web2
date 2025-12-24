@@ -55,21 +55,21 @@
 
 @layer base {
   :root {
-    /* Primary - Deep Teal Blue from PISAM logo */
-    --primary: 195 67% 32%;
+    /* Primary - Bleu foncé #185782 */
+    --primary: 203 70% 30%;
     --primary-foreground: 0 0% 100%;
     
-    /* Secondary - Turquoise/Cyan */
-    --secondary: 180 61% 45%;
+    /* Secondary - Turquoise #06849f */
+    --secondary: 191 94% 33%;
     --secondary-foreground: 0 0% 100%;
     
-    /* Accent - Medical Green */
-    --accent: 90 54% 51%;
+    /* Accent - Vert #55b94d */
+    --accent: 116 43% 51%;
     --accent-foreground: 0 0% 100%;
     
     /* Muted - Light backgrounds */
-    --muted: 195 30% 96%;
-    --muted-foreground: 195 25% 35%;
+    --muted: 203 30% 96%;
+    --muted-foreground: 203 25% 35%;
     
     /* Background & Foreground */
     --background: 0 0% 100%;
@@ -84,9 +84,9 @@
     --popover-foreground: 210 30% 15%;
     
     /* Border */
-    --border: 195 20% 90%;
-    --input: 195 20% 90%;
-    --ring: 195 67% 32%;
+    --border: 203 20% 90%;
+    --input: 203 20% 90%;
+    --ring: 203 70% 30%;
     
     /* Destructive */
     --destructive: 0 84% 60%;
@@ -96,33 +96,33 @@
     --radius: 0.75rem;
     
     /* Custom PISAM colors */
-    --pisam-teal: 195 67% 32%;
-    --pisam-turquoise: 180 61% 45%;
-    --pisam-turquoise-light: 188 64% 53%;
-    --pisam-green: 90 54% 51%;
-    --pisam-gold: 40 30% 69%;
-    --pisam-cream: 40 30% 97%;
+    --pisam-teal: 203 70% 30%;
+    --pisam-turquoise: 191 94% 33%;
+    --pisam-turquoise-light: 189 63% 53%;
+    --pisam-green: 116 43% 51%;
+    --pisam-gold: 44 19% 61%;
+    --pisam-cream: 44 19% 97%;
     
     /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(195 67% 32%) 0%, hsl(180 61% 40%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(180 61% 45%) 0%, hsl(90 54% 51%) 100%);
-    --gradient-soft: linear-gradient(180deg, hsl(195 30% 98%) 0%, hsl(0 0% 100%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(203 70% 30%) 0%, hsl(191 94% 33%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(191 94% 33%) 0%, hsl(116 43% 51%) 100%);
+    --gradient-soft: linear-gradient(180deg, hsl(203 30% 98%) 0%, hsl(0 0% 100%) 100%);
     
     /* Shadows */
-    --shadow-sm: 0 2px 8px -2px hsl(195 67% 32% / 0.1);
-    --shadow-md: 0 8px 24px -8px hsl(195 67% 32% / 0.15);
-    --shadow-lg: 0 16px 48px -12px hsl(195 67% 32% / 0.2);
-    --shadow-glow: 0 0 40px hsl(180 61% 45% / 0.3);
+    --shadow-sm: 0 2px 8px -2px hsl(203 70% 30% / 0.1);
+    --shadow-md: 0 8px 24px -8px hsl(203 70% 30% / 0.15);
+    --shadow-lg: 0 16px 48px -12px hsl(203 70% 30% / 0.2);
+    --shadow-glow: 0 0 40px hsl(191 94% 33% / 0.3);
     
     /* Sidebar */
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 195 67% 32%;
+    --sidebar-primary: 203 70% 30%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 195 30% 96%;
-    --sidebar-accent-foreground: 195 67% 32%;
-    --sidebar-border: 195 20% 90%;
-    --sidebar-ring: 195 67% 32%;
+    --sidebar-accent: 203 30% 96%;
+    --sidebar-accent-foreground: 203 70% 30%;
+    --sidebar-border: 203 20% 90%;
+    --sidebar-ring: 203 70% 30%;
   }
 
   .dark {
@@ -132,19 +132,19 @@
     --card-foreground: 0 0% 95%;
     --popover: 210 30% 12%;
     --popover-foreground: 0 0% 95%;
-    --primary: 180 61% 50%;
+    --primary: 189 63% 53%;
     --primary-foreground: 210 30% 8%;
-    --secondary: 195 40% 20%;
+    --secondary: 191 94% 40%;
     --secondary-foreground: 0 0% 95%;
     --muted: 210 25% 18%;
     --muted-foreground: 210 15% 65%;
-    --accent: 90 54% 45%;
+    --accent: 116 43% 45%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 100%;
     --border: 210 25% 20%;
     --input: 210 25% 20%;
-    --ring: 180 61% 50%;
+    --ring: 189 63% 53%;
   }
 }
 
