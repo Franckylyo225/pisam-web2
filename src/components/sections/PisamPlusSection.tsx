@@ -69,10 +69,13 @@ const PisamPlusSection = () => {
             <Button 
               size="lg" 
               className="bg-pisam-green hover:bg-pisam-green/90 text-white font-semibold group"
+              asChild
             >
-              <CreditCard className="h-5 w-5" />
-              Commander ma Carte
-              <ArrowUpRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <a href="https://macartepisam.com" target="_blank" rel="noopener noreferrer">
+                <CreditCard className="h-5 w-5" />
+                Commander ma Carte
+                <ArrowUpRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
             </Button>
           </div>
         </div>
