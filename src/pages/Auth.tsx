@@ -104,48 +104,42 @@ export default function Auth() {
 
     setIsLoading(true);
 
-    // Vérifier d'abord si le compte existe et est approuvé
-    const { data: profile, error: profileError } = await supabase
-      .from('profiles')
-      .select('is_approved')
-      .eq('email', loginEmail.toLowerCase().trim())
-      .maybeSingle();
+    try {
+      // Utiliser l'edge function sécurisée pour vérifier l'éligibilité
+      const { data, error } = await supabase.functions.invoke('check-login-eligibility', {
+        body: { 
+          email: loginEmail.toLowerCase().trim(), 
+          password: loginPassword 
+        }
+      });
 
-    if (profileError) {
-      setIsLoading(false);
-      toast.error('Erreur lors de la vérification du compte');
-      return;
-    }
-
-    // Si aucun profil trouvé, le compte n'existe pas
-    if (!profile) {
-      setIsLoading(false);
-      toast.error('Aucun compte associé à cet email');
-      return;
-    }
-
-    // Si le compte existe mais n'est pas approuvé
-    if (!profile.is_approved) {
-      setIsLoading(false);
-      toast.error('Votre compte est en attente d\'approbation par un administrateur');
-      return;
-    }
-
-    // Le compte est approuvé, procéder à l'authentification
-    const { error } = await signIn(loginEmail, loginPassword);
-    setIsLoading(false);
-
-    if (error) {
-      if (error.message.includes('Invalid login credentials')) {
-        toast.error('Mot de passe incorrect');
-      } else {
+      if (error) {
+        setIsLoading(false);
         toast.error('Erreur de connexion');
+        return;
       }
+
+      if (!data.canLogin) {
+        setIsLoading(false);
+        toast.error(data.message);
+        return;
+      }
+
+      // L'edge function a retourné une session valide, on l'utilise
+      if (data.session) {
+        await supabase.auth.setSession({
+          access_token: data.session.access_token,
+          refresh_token: data.session.refresh_token,
+        });
+        toast.success('Connexion réussie');
+      }
+    } catch (err) {
+      setIsLoading(false);
+      toast.error('Erreur de connexion');
       return;
     }
 
-    toast.success('Connexion réussie');
-    // Navigation will be handled by useEffect based on approval status
+    setIsLoading(false);
   };
 
   const handleSignup = async (e: React.FormEvent) => {
