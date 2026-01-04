@@ -40,15 +40,20 @@ const menuItems = [
 ];
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
-  const { user, isAdmin, isLoading, signOut } = useAuth();
+  const { user, isAdmin, isApproved, isSuperAdmin, isLoading, signOut } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    if (!isLoading && !user) {
-      navigate('/auth');
+    if (!isLoading) {
+      if (!user) {
+        navigate('/auth');
+      } else if (!isApproved && !isSuperAdmin) {
+        // User is logged in but not approved - redirect to auth page to show pending screen
+        navigate('/auth');
+      }
     }
-  }, [user, isLoading, navigate]);
+  }, [user, isApproved, isSuperAdmin, isLoading, navigate]);
 
   if (isLoading) {
     return (
@@ -58,7 +63,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     );
   }
 
-  if (!user) {
+  if (!user || (!isApproved && !isSuperAdmin)) {
     return null;
   }
 
