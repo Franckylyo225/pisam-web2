@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -102,12 +103,41 @@ export default function Auth() {
     }
 
     setIsLoading(true);
+
+    // Vérifier d'abord si le compte existe et est approuvé
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('is_approved')
+      .eq('email', loginEmail.toLowerCase().trim())
+      .maybeSingle();
+
+    if (profileError) {
+      setIsLoading(false);
+      toast.error('Erreur lors de la vérification du compte');
+      return;
+    }
+
+    // Si aucun profil trouvé, le compte n'existe pas
+    if (!profile) {
+      setIsLoading(false);
+      toast.error('Aucun compte associé à cet email');
+      return;
+    }
+
+    // Si le compte existe mais n'est pas approuvé
+    if (!profile.is_approved) {
+      setIsLoading(false);
+      toast.error('Votre compte est en attente d\'approbation par un administrateur');
+      return;
+    }
+
+    // Le compte est approuvé, procéder à l'authentification
     const { error } = await signIn(loginEmail, loginPassword);
     setIsLoading(false);
 
     if (error) {
       if (error.message.includes('Invalid login credentials')) {
-        toast.error('Email ou mot de passe incorrect');
+        toast.error('Mot de passe incorrect');
       } else {
         toast.error('Erreur de connexion');
       }
