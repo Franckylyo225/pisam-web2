@@ -79,6 +79,54 @@ export type Database = {
           },
         ]
       }
+      ceo_message: {
+        Row: {
+          bottom_left_content: string | null
+          bottom_right_content: string | null
+          created_at: string
+          highlight_items: Json | null
+          id: string
+          image_url: string | null
+          intro_paragraph: string | null
+          is_active: boolean | null
+          main_content: string | null
+          name: string
+          position: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          bottom_left_content?: string | null
+          bottom_right_content?: string | null
+          created_at?: string
+          highlight_items?: Json | null
+          id?: string
+          image_url?: string | null
+          intro_paragraph?: string | null
+          is_active?: boolean | null
+          main_content?: string | null
+          name?: string
+          position?: string
+          title?: string
+          updated_at?: string
+        }
+        Update: {
+          bottom_left_content?: string | null
+          bottom_right_content?: string | null
+          created_at?: string
+          highlight_items?: Json | null
+          id?: string
+          image_url?: string | null
+          intro_paragraph?: string | null
+          is_active?: boolean | null
+          main_content?: string | null
+          name?: string
+          position?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       contact_messages: {
         Row: {
           created_at: string
