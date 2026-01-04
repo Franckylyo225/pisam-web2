@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
-import { Loader2, Mail, Lock, User } from 'lucide-react';
+import { Loader2, Mail, Lock, User, Clock, CheckCircle } from 'lucide-react';
 import { z } from 'zod';
 import logoImage from '@/assets/logo-pisam.png';
 
@@ -24,8 +24,9 @@ const signupSchema = z.object({
 
 export default function Auth() {
   const navigate = useNavigate();
-  const { signIn, signUp, user } = useAuth();
+  const { signIn, signUp, signOut, user, isApproved, isSuperAdmin, isLoading: authLoading } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  const [justSignedUp, setJustSignedUp] = useState(false);
   
   // Login state
   const [loginEmail, setLoginEmail] = useState('');
@@ -36,10 +37,59 @@ export default function Auth() {
   const [signupPassword, setSignupPassword] = useState('');
   const [signupFullName, setSignupFullName] = useState('');
 
-  // Redirect if already logged in
-  if (user) {
-    navigate('/admin');
-    return null;
+  // Redirect approved users or super admins to dashboard
+  useEffect(() => {
+    if (!authLoading && user && (isApproved || isSuperAdmin)) {
+      navigate('/admin');
+    }
+  }, [user, isApproved, isSuperAdmin, authLoading, navigate]);
+
+  // Show pending approval screen for non-approved users
+  if (user && !authLoading && !isApproved && !isSuperAdmin) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-pisam-turquoise/5 p-4">
+        <Card className="w-full max-w-md shadow-xl">
+          <CardHeader className="text-center space-y-4">
+            <div className="flex justify-center">
+              <img src={logoImage} alt="PISAM" className="h-16 object-contain" />
+            </div>
+            <div className="flex justify-center">
+              <div className="h-16 w-16 rounded-full bg-amber-100 flex items-center justify-center">
+                <Clock className="h-8 w-8 text-amber-600" />
+              </div>
+            </div>
+            <CardTitle className="text-2xl font-bold text-primary">En attente d'approbation</CardTitle>
+            <CardDescription className="text-base">
+              Votre compte a été créé avec succès. Un super administrateur doit valider votre inscription avant que vous puissiez accéder au tableau de bord.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="bg-muted/50 rounded-lg p-4 text-sm text-muted-foreground">
+              <p className="font-medium text-foreground mb-2">Prochaines étapes :</p>
+              <ul className="space-y-2">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="h-4 w-4 mt-0.5 text-green-500" />
+                  <span>Compte créé</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Clock className="h-4 w-4 mt-0.5 text-amber-500" />
+                  <span>En attente de validation par un super admin</span>
+                </li>
+              </ul>
+            </div>
+            <Button 
+              variant="outline" 
+              className="w-full" 
+              onClick={async () => {
+                await signOut();
+              }}
+            >
+              Se déconnecter
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
   }
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -65,7 +115,7 @@ export default function Auth() {
     }
 
     toast.success('Connexion réussie');
-    navigate('/admin');
+    // Navigation will be handled by useEffect based on approval status
   };
 
   const handleSignup = async (e: React.FormEvent) => {
@@ -94,8 +144,8 @@ export default function Auth() {
       return;
     }
 
-    toast.success('Compte créé avec succès');
-    navigate('/admin');
+    setJustSignedUp(true);
+    toast.success('Compte créé ! En attente d\'approbation.');
   };
 
   return (
