@@ -1,4 +1,6 @@
 import { Helmet } from "react-helmet-async";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -7,37 +9,6 @@ import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carouse
 import Autoplay from "embla-carousel-autoplay";
 import { Shield, FileText, ClipboardList, LogOut, Users } from "lucide-react";
 import contactHero from "@/assets/contact-hero.jpg";
-const insuranceLogos = [{
-  name: "NSIA Assurances",
-  color: "bg-blue-600"
-}, {
-  name: "Allianz",
-  color: "bg-blue-800"
-}, {
-  name: "AXA",
-  color: "bg-red-600"
-}, {
-  name: "SUNU Assurances",
-  color: "bg-green-600"
-}, {
-  name: "Saham Assurance",
-  color: "bg-orange-500"
-}, {
-  name: "Atlantique Assurances",
-  color: "bg-teal-600"
-}, {
-  name: "COLINA",
-  color: "bg-purple-600"
-}, {
-  name: "Prudential Belife",
-  color: "bg-indigo-600"
-}, {
-  name: "SONAR",
-  color: "bg-amber-600"
-}, {
-  name: "GAC",
-  color: "bg-emerald-600"
-}];
 const charteArticles = [{
   title: "Article 1 : Droit à l'information",
   content: "Le patient a le droit d'être informé sur son état de santé, les traitements proposés, leurs alternatives et leurs risques. Cette information doit être claire, compréhensible et adaptée à chaque patient. Le médecin doit répondre à toutes les questions du patient concernant sa santé."
@@ -73,6 +44,20 @@ const charteArticles = [{
   content: "Le patient est informé des conditions financières de sa prise en charge. Il s'engage à s'acquitter des frais restant à sa charge après intervention de son organisme d'assurance maladie et de sa mutuelle ou assurance complémentaire."
 }];
 const Patients = () => {
+  const { data: insurancePartners } = useQuery({
+    queryKey: ['insurance-partners'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('insurance_partners')
+        .select('*')
+        .eq('is_active', true)
+        .order('display_order', { ascending: true });
+      
+      if (error) throw error;
+      return data;
+    },
+  });
+
   return <>
       <Helmet>
         <title>Patients | PISAM - Polyclinique Internationale Sainte Anne-Marie</title>
@@ -115,23 +100,41 @@ const Patients = () => {
               </p>
             </div>
 
-            <Carousel opts={{
-            align: "start",
-            loop: true
-          }} plugins={[Autoplay({
-            delay: 2000,
-            stopOnInteraction: false
-          })]} className="w-full">
-              <CarouselContent className="-ml-4">
-                {insuranceLogos.map((insurance, index) => <CarouselItem key={index} className="pl-4 basis-1/2 md:basis-1/4 lg:basis-1/6">
-                    <div className="p-4">
-                      <div className={`${insurance.color} h-20 rounded-xl flex items-center justify-center text-white font-bold text-sm text-center p-2 shadow-md hover:shadow-lg transition-shadow`}>
-                        {insurance.name}
+            {insurancePartners && insurancePartners.length > 0 ? (
+              <Carousel opts={{
+                align: "start",
+                loop: true
+              }} plugins={[Autoplay({
+                delay: 2000,
+                stopOnInteraction: false
+              })]} className="w-full">
+                <CarouselContent className="-ml-4">
+                  {insurancePartners.map((insurance) => (
+                    <CarouselItem key={insurance.id} className="pl-4 basis-1/2 md:basis-1/4 lg:basis-1/6">
+                      <div className="p-4">
+                        <div className="bg-white h-20 rounded-xl flex items-center justify-center shadow-md hover:shadow-lg transition-shadow overflow-hidden p-3">
+                          {insurance.logo_url ? (
+                            <img 
+                              src={insurance.logo_url} 
+                              alt={insurance.name}
+                              className="max-w-full max-h-full object-contain"
+                            />
+                          ) : (
+                            <span className="font-bold text-sm text-center text-primary">
+                              {insurance.name}
+                            </span>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  </CarouselItem>)}
-              </CarouselContent>
-            </Carousel>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
+            ) : (
+              <p className="text-center text-muted-foreground py-8">
+                Aucune assurance partenaire configurée pour le moment
+              </p>
+            )}
           </div>
         </section>
 
