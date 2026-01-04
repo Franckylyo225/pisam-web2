@@ -10,6 +10,23 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { ImageUploader } from './ImageUploader';
 import { toast } from 'sonner';
 import { Plus, Pencil, Trash2, GripVertical, ExternalLink, Loader2 } from 'lucide-react';
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  rectSortingStrategy,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 interface InsurancePartner {
   id: string;
@@ -27,6 +44,103 @@ interface InsuranceFormData {
   is_active: boolean;
 }
 
+interface SortablePartnerCardProps {
+  partner: InsurancePartner;
+  onEdit: (partner: InsurancePartner) => void;
+  onDelete: (partner: InsurancePartner) => void;
+  onToggleActive: (id: string, is_active: boolean) => void;
+}
+
+function SortablePartnerCard({ partner, onEdit, onDelete, onToggleActive }: SortablePartnerCardProps) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: partner.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+    zIndex: isDragging ? 1000 : 1,
+  };
+
+  return (
+    <Card
+      ref={setNodeRef}
+      style={style}
+      className={`relative ${!partner.is_active ? 'opacity-60' : ''} ${isDragging ? 'shadow-lg' : ''}`}
+    >
+      <CardContent className="p-4">
+        <div className="flex items-start gap-3">
+          <div
+            className="flex-shrink-0 cursor-grab active:cursor-grabbing touch-none"
+            {...attributes}
+            {...listeners}
+          >
+            <GripVertical className="h-5 w-5 text-muted-foreground" />
+          </div>
+          
+          <div className="flex-1 min-w-0">
+            <div className="w-full h-16 bg-muted rounded-lg mb-3 flex items-center justify-center overflow-hidden">
+              {partner.logo_url ? (
+                <img 
+                  src={partner.logo_url} 
+                  alt={partner.name}
+                  className="max-w-full max-h-full object-contain p-2"
+                />
+              ) : (
+                <span className="text-xs text-muted-foreground">Pas de logo</span>
+              )}
+            </div>
+            
+            <h4 className="font-medium text-sm truncate">{partner.name}</h4>
+            
+            {partner.website_url && (
+              <a 
+                href={partner.website_url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-xs text-primary hover:underline flex items-center gap-1 mt-1"
+              >
+                <ExternalLink className="h-3 w-3" />
+                Site web
+              </a>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <Switch
+              checked={partner.is_active}
+              onCheckedChange={(checked) => onToggleActive(partner.id, checked)}
+              className="scale-75"
+            />
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8"
+              onClick={() => onEdit(partner)}
+            >
+              <Pencil className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 text-destructive hover:text-destructive"
+              onClick={() => onDelete(partner)}
+            >
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
 export function InsurancePartnersManager() {
   const queryClient = useQueryClient();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -37,6 +151,13 @@ export function InsurancePartnersManager() {
     website_url: '',
     is_active: true,
   });
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
   const { data: partners, isLoading } = useQuery({
     queryKey: ['insurance-partners-admin'],
@@ -118,6 +239,28 @@ export function InsurancePartnersManager() {
     },
   });
 
+  const reorderMutation = useMutation({
+    mutationFn: async (reorderedPartners: { id: string; display_order: number }[]) => {
+      const updates = reorderedPartners.map(({ id, display_order }) =>
+        supabase
+          .from('insurance_partners')
+          .update({ display_order })
+          .eq('id', id)
+      );
+      const results = await Promise.all(updates);
+      const errors = results.filter((r) => r.error);
+      if (errors.length > 0) throw errors[0].error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['insurance-partners-admin'] });
+      queryClient.invalidateQueries({ queryKey: ['insurance-partners'] });
+      toast.success('Ordre mis à jour');
+    },
+    onError: (error) => {
+      toast.error('Erreur lors de la réorganisation: ' + error.message);
+    },
+  });
+
   const toggleActiveMutation = useMutation({
     mutationFn: async ({ id, is_active }: { id: string; is_active: boolean }) => {
       const { error } = await supabase
@@ -134,6 +277,25 @@ export function InsurancePartnersManager() {
       toast.error('Erreur: ' + error.message);
     },
   });
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id && partners) {
+      const oldIndex = partners.findIndex((p) => p.id === active.id);
+      const newIndex = partners.findIndex((p) => p.id === over.id);
+
+      const reordered = arrayMove(partners, oldIndex, newIndex);
+      const updates = reordered.map((p, index) => ({
+        id: p.id,
+        display_order: index,
+      }));
+
+      // Optimistic update
+      queryClient.setQueryData(['insurance-partners-admin'], reordered);
+      reorderMutation.mutate(updates);
+    }
+  };
 
   const resetForm = () => {
     setFormData({ name: '', logo_url: '', website_url: '', is_active: true });
@@ -184,7 +346,7 @@ export function InsurancePartnersManager() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <p className="text-sm text-muted-foreground">
-          {partners?.length || 0} partenaire(s) configuré(s)
+          {partners?.length || 0} partenaire(s) configuré(s) • Glissez-déposez pour réorganiser
         </p>
         <Dialog open={isDialogOpen} onOpenChange={(open) => { if (!open) resetForm(); else setIsDialogOpen(true); }}>
           <DialogTrigger asChild>
@@ -258,71 +420,25 @@ export function InsurancePartnersManager() {
       </div>
 
       {partners && partners.length > 0 ? (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {partners.map((partner) => (
-            <Card key={partner.id} className={`relative ${!partner.is_active ? 'opacity-60' : ''}`}>
-              <CardContent className="p-4">
-                <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0 cursor-grab">
-                    <GripVertical className="h-5 w-5 text-muted-foreground" />
-                  </div>
-                  
-                  <div className="flex-1 min-w-0">
-                    <div className="w-full h-16 bg-muted rounded-lg mb-3 flex items-center justify-center overflow-hidden">
-                      {partner.logo_url ? (
-                        <img 
-                          src={partner.logo_url} 
-                          alt={partner.name}
-                          className="max-w-full max-h-full object-contain p-2"
-                        />
-                      ) : (
-                        <span className="text-xs text-muted-foreground">Pas de logo</span>
-                      )}
-                    </div>
-                    
-                    <h4 className="font-medium text-sm truncate">{partner.name}</h4>
-                    
-                    {partner.website_url && (
-                      <a 
-                        href={partner.website_url} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="text-xs text-primary hover:underline flex items-center gap-1 mt-1"
-                      >
-                        <ExternalLink className="h-3 w-3" />
-                        Site web
-                      </a>
-                    )}
-                  </div>
-
-                  <div className="flex flex-col gap-1">
-                    <Switch
-                      checked={partner.is_active}
-                      onCheckedChange={(checked) => toggleActiveMutation.mutate({ id: partner.id, is_active: checked })}
-                      className="scale-75"
-                    />
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-8 w-8"
-                      onClick={() => handleEdit(partner)}
-                    >
-                      <Pencil className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-8 w-8 text-destructive hover:text-destructive"
-                      onClick={() => handleDelete(partner)}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext items={partners.map((p) => p.id)} strategy={rectSortingStrategy}>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {partners.map((partner) => (
+                <SortablePartnerCard
+                  key={partner.id}
+                  partner={partner}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                  onToggleActive={(id, is_active) => toggleActiveMutation.mutate({ id, is_active })}
+                />
+              ))}
+            </div>
+          </SortableContext>
+        </DndContext>
       ) : (
         <div className="text-center py-12 bg-muted/30 rounded-lg">
           <p className="text-muted-foreground mb-4">
