@@ -45,6 +45,19 @@ interface LeadershipMember {
   twitter_url: string | null;
 }
 
+interface CEOMessage {
+  id: string;
+  name: string;
+  position: string;
+  image_url: string | null;
+  title: string;
+  intro_paragraph: string | null;
+  main_content: string | null;
+  highlight_items: string[];
+  bottom_left_content: string | null;
+  bottom_right_content: string | null;
+}
+
 const values = [
   {
     icon: Heart,
@@ -96,6 +109,20 @@ const Pisam = () => {
     },
   });
 
+  const { data: ceoMessage } = useQuery({
+    queryKey: ['ceo-message'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('ceo_message')
+        .select('*')
+        .eq('is_active', true)
+        .limit(1)
+        .single();
+      if (error && error.code !== 'PGRST116') throw error;
+      return data as CEOMessage | null;
+    },
+  });
+
   useEffect(() => {
     if (!api) return;
 
@@ -106,6 +133,10 @@ const Pisam = () => {
       setCurrent(api.selectedScrollSnap());
     });
   }, [api]);
+
+  const highlightItems = ceoMessage?.highlight_items && Array.isArray(ceoMessage.highlight_items) 
+    ? ceoMessage.highlight_items 
+    : [];
 
   return (
     <>
@@ -189,69 +220,59 @@ const Pisam = () => {
                   <div className="md:col-span-2">
                     <div className="relative sticky top-24">
                       <img 
-                        src={pdgEricDjibo} 
-                        alt="M. Eric Djibo - PDG de PISAM" 
+                        src={ceoMessage?.image_url || pdgEricDjibo} 
+                        alt={`${ceoMessage?.name || 'M. Eric Djibo'} - PDG de PISAM`}
                         className="rounded-2xl shadow-pisam w-full object-cover aspect-[3/4]"
                       />
                       <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-background px-6 py-3 rounded-xl shadow-lg text-center whitespace-nowrap">
-                        <p className="font-semibold text-foreground">M. ERIC DJIBO</p>
-                        <p className="text-sm text-muted-foreground">Président Directeur Général</p>
+                        <p className="font-semibold text-foreground">{ceoMessage?.name || 'M. ERIC DJIBO'}</p>
+                        <p className="text-sm text-muted-foreground">{ceoMessage?.position || 'Président Directeur Général'}</p>
                       </div>
                     </div>
                   </div>
                   <div className="md:col-span-3">
                     <Quote className="h-10 w-10 text-primary/30 mb-3" />
                     <h2 className="text-2xl md:text-3xl font-serif font-bold text-foreground mb-6">
-                      Le mot du Président
+                      {ceoMessage?.title || 'Le mot du Président'}
                     </h2>
                     <div className="space-y-4 text-muted-foreground leading-relaxed">
-                      <p className="text-lg">
-                        Bienvenue sur le site internet de la PISAM qui a pour but de vous informer sur l'organisation, 
-                        le fonctionnement et les activités de notre établissement. Nous continuerons de le mettre à jour, 
-                        toujours pour rapprocher la PISAM de sa patientèle.
-                      </p>
-                      <p>
-                        Depuis sa création en 1985, la PISAM s'est engagée dans une dynamique d'amélioration continue 
-                        de la qualité des soins et de ses prestations faisant d'elle le leader dans le domaine privé de la santé.
-                      </p>
-                      <p>
-                        La PISAM, c'est aujourd'hui la plus grande polyclinique de la sous-région par sa capacité d'accueil 
-                        et la taille de son plateau technique qui comprend entre autres :
-                      </p>
-                      <ul className="space-y-2 pl-1">
-                        <li className="flex items-start gap-3">
-                          <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 flex-shrink-0"></span>
-                          <span>Un laboratoire de biologie médicale (BIOCSAM) ayant développé de nouvelles branches comme 
-                          l'immuno-histochimie et l'anatomo-cytopathologie;</span>
-                        </li>
-                        <li className="flex items-start gap-3">
-                          <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 flex-shrink-0"></span>
-                          <span>Un centre d'imagerie (CISAM) comprenant des appareils d'imagerie diagnostique de dernière 
-                          génération (Scanner 64 barrettes, IRM 1,5T, Sénographe, etc).</span>
-                        </li>
-                      </ul>
+                      {ceoMessage?.intro_paragraph && (
+                        <p className="text-lg">{ceoMessage.intro_paragraph}</p>
+                      )}
+                      {ceoMessage?.main_content && (
+                        ceoMessage.main_content.split('\n\n').map((paragraph, index) => (
+                          <p key={index}>{paragraph}</p>
+                        ))
+                      )}
+                      {highlightItems.length > 0 && (
+                        <ul className="space-y-2 pl-1">
+                          {highlightItems.map((item, index) => (
+                            <li key={index} className="flex items-start gap-3">
+                              <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 flex-shrink-0"></span>
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                     </div>
                   </div>
                 </div>
 
                 {/* Bottom section: Two columns */}
-                <div className="grid md:grid-cols-2 gap-8 md:gap-12 pt-8 border-t border-border">
-                  <div className="text-muted-foreground leading-relaxed">
-                    <p>
-                      La PISAM est aussi à ce jour, le seul établissement sanitaire certifié ISO 9001 – 2015 pour tous 
-                      ses processus; cette démarche qualité nous permettant de toujours vous donner le meilleur de nous-mêmes.
-                    </p>
+                {(ceoMessage?.bottom_left_content || ceoMessage?.bottom_right_content) && (
+                  <div className="grid md:grid-cols-2 gap-8 md:gap-12 pt-8 border-t border-border">
+                    {ceoMessage?.bottom_left_content && (
+                      <div className="text-muted-foreground leading-relaxed">
+                        <p>{ceoMessage.bottom_left_content}</p>
+                      </div>
+                    )}
+                    {ceoMessage?.bottom_right_content && (
+                      <div className="text-muted-foreground leading-relaxed">
+                        <p>{ceoMessage.bottom_right_content}</p>
+                      </div>
+                    )}
                   </div>
-                  <div className="text-muted-foreground leading-relaxed">
-                    <p>
-                      Pour les années à venir, notre ambition est de moderniser sans cesse notre bel établissement en y 
-                      ajoutant toutes les spécialités médicales nécessaires pour assurer une prise en charge complète de 
-                      nos patients. Bien sûr, nous resterons toujours à votre écoute pour continuer à satisfaire au mieux 
-                      vos besoins parce que vous êtes au cœur de nos priorités et c'est ensemble que nous ferons de la PISAM 
-                      le fleuron de la santé en Côte d'Ivoire et en Afrique.
-                    </p>
-                  </div>
-                </div>
+                )}
               </div>
             </div>
           </section>

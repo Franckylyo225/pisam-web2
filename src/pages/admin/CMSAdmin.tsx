@@ -3,6 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { HeroSlidesManager } from '@/components/admin/HeroSlidesManager';
 import { InsurancePartnersManager } from '@/components/admin/InsurancePartnersManager';
+import { CEOMessageManager } from '@/components/admin/CEOMessageManager';
 import { Images, User, Building2, Settings } from 'lucide-react';
 
 export default function CMSAdmin() {
@@ -60,9 +61,7 @@ export default function CMSAdmin() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground text-center py-8">
-                  Fonctionnalité en cours de développement...
-                </p>
+                <CEOMessageManager />
               </CardContent>
             </Card>
           </TabsContent>
