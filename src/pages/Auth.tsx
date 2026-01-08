@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -8,10 +8,9 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
-import { Loader2, Mail, Lock, User, Clock, CheckCircle } from 'lucide-react';
+import { Loader2, Mail, Lock, User, Clock, CheckCircle, ArrowLeft } from 'lucide-react';
 import { z } from 'zod';
 import logoImage from '@/assets/logo-pisam.png';
-
 const loginSchema = z.object({
   email: z.string().email('Email invalide'),
   password: z.string().min(6, 'Mot de passe: 6 caractères minimum'),
@@ -28,6 +27,9 @@ export default function Auth() {
   const { signIn, signUp, signOut, user, isApproved, isSuperAdmin, isLoading: authLoading } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [justSignedUp, setJustSignedUp] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
+  const [forgotPasswordSent, setForgotPasswordSent] = useState(false);
   
   // Login state
   const [loginEmail, setLoginEmail] = useState('');
@@ -172,6 +174,126 @@ export default function Auth() {
     toast.success('Compte créé ! En attente d\'approbation.');
   };
 
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    const emailValidation = z.string().email('Email invalide').safeParse(forgotPasswordEmail);
+    if (!emailValidation.success) {
+      toast.error('Email invalide');
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(
+        forgotPasswordEmail.toLowerCase().trim(),
+        {
+          redirectTo: `${window.location.origin}/reset-password`,
+        }
+      );
+
+      if (error) {
+        // Ne pas révéler si l'email existe ou non
+        toast.success('Si un compte existe avec cet email, vous recevrez un lien de réinitialisation.');
+        setForgotPasswordSent(true);
+      } else {
+        toast.success('Si un compte existe avec cet email, vous recevrez un lien de réinitialisation.');
+        setForgotPasswordSent(true);
+      }
+    } catch {
+      toast.success('Si un compte existe avec cet email, vous recevrez un lien de réinitialisation.');
+      setForgotPasswordSent(true);
+    }
+
+    setIsLoading(false);
+  };
+
+  // Affichage du formulaire de mot de passe oublié
+  if (showForgotPassword) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-pisam-turquoise/5 p-4">
+        <Card className="w-full max-w-md shadow-xl">
+          <CardHeader className="text-center space-y-4">
+            <div className="flex justify-center">
+              <img src={logoImage} alt="PISAM" className="h-16 object-contain" />
+            </div>
+            <CardTitle className="text-2xl font-bold text-primary">Mot de passe oublié</CardTitle>
+            <CardDescription>
+              {forgotPasswordSent 
+                ? 'Vérifiez votre boîte mail'
+                : 'Entrez votre email pour recevoir un lien de réinitialisation'
+              }
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {forgotPasswordSent ? (
+              <div className="space-y-4">
+                <div className="flex justify-center">
+                  <div className="h-16 w-16 rounded-full bg-green-100 flex items-center justify-center">
+                    <CheckCircle className="h-8 w-8 text-green-600" />
+                  </div>
+                </div>
+                <p className="text-center text-sm text-muted-foreground">
+                  Si un compte existe avec cet email, vous recevrez un lien de réinitialisation dans quelques minutes.
+                </p>
+                <Button 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={() => {
+                    setShowForgotPassword(false);
+                    setForgotPasswordSent(false);
+                    setForgotPasswordEmail('');
+                  }}
+                >
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  Retour à la connexion
+                </Button>
+              </div>
+            ) : (
+              <form onSubmit={handleForgotPassword} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="forgot-email">Email</Label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      id="forgot-email"
+                      type="email"
+                      placeholder="admin@pisam.ci"
+                      value={forgotPasswordEmail}
+                      onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                      className="pl-10"
+                      required
+                    />
+                  </div>
+                </div>
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Envoi...
+                    </>
+                  ) : (
+                    'Envoyer le lien'
+                  )}
+                </Button>
+                <Button 
+                  type="button"
+                  variant="ghost" 
+                  className="w-full"
+                  onClick={() => setShowForgotPassword(false)}
+                >
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  Retour à la connexion
+                </Button>
+              </form>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-pisam-turquoise/5 p-4">
       <Card className="w-full max-w-md shadow-xl">
@@ -220,6 +342,15 @@ export default function Auth() {
                       required
                     />
                   </div>
+                </div>
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    onClick={() => setShowForgotPassword(true)}
+                    className="text-sm text-primary hover:underline"
+                  >
+                    Mot de passe oublié ?
+                  </button>
                 </div>
                 <Button type="submit" className="w-full" disabled={isLoading}>
                   {isLoading ? (
