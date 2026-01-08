@@ -17,7 +17,7 @@ import {
   Phone,
   Calendar,
 } from "lucide-react";
-import heroImage from "@/assets/pisam-aerial-view.jpg";
+import heroImage from "@/assets/imagerie-hero.jpg";
 
 const services = [
   {
@@ -149,7 +149,7 @@ const PlateauTechnique = () => {
         <div className="absolute inset-0">
           <img
             src={heroImage}
-            alt="Vue aérienne de la PISAM"
+            alt="Scanner GE - Imagerie médicale PISAM"
             className="w-full h-full object-cover"
           />
         </div>
