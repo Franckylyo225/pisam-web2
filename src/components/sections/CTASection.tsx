@@ -1,5 +1,6 @@
 import { Calendar, Phone, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import ctaBackground from "@/assets/cta-nurse-patient.png";
 
 const CTASection = () => {
@@ -40,10 +41,12 @@ const CTASection = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button variant="hero-outline" size="xl" className="group min-w-64">
-              <Calendar className="h-5 w-5" />
-              Prendre Rendez-vous en ligne
-              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+            <Button variant="hero-outline" size="xl" className="group min-w-64" asChild>
+              <Link to="/bilan-sante">
+                <Calendar className="h-5 w-5" />
+                Prendre Rendez-vous en ligne
+                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </Link>
             </Button>
             <Button variant="hero" size="xl" className="bg-background text-primary hover:bg-background/90 min-w-64">
               <Phone className="h-5 w-5" />

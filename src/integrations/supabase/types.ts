@@ -216,6 +216,42 @@ export type Database = {
           },
         ]
       }
+      health_check_registrations: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          image_url: string | null
+          message: string | null
+          phone: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          image_url?: string | null
+          message?: string | null
+          phone: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          image_url?: string | null
+          message?: string | null
+          phone?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       hero_slides: {
         Row: {
           created_at: string
