@@ -6,6 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -271,16 +278,21 @@ const Contact = () => {
                         <Label htmlFor="subject" className="text-foreground font-medium">
                           Sujet <span className="text-primary">*</span>
                         </Label>
-                        <Input
-                          id="subject"
-                          name="subject"
+                        <Select
                           value={formData.subject}
-                          onChange={handleChange}
-                          placeholder="Objet de votre message"
+                          onValueChange={(value) => setFormData(prev => ({ ...prev, subject: value }))}
                           required
-                          maxLength={150}
-                          className="h-12 bg-muted/50 border-muted-foreground/20 focus:border-primary focus:ring-primary/20"
-                        />
+                        >
+                          <SelectTrigger className="h-12 bg-muted/50 border-muted-foreground/20 focus:border-primary focus:ring-primary/20">
+                            <SelectValue placeholder="Sélectionnez un sujet" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Plainte & Réclamation">Plainte & Réclamation</SelectItem>
+                            <SelectItem value="Bilan de Santé">Bilan de Santé</SelectItem>
+                            <SelectItem value="Demande de renseignement">Demande de renseignement</SelectItem>
+                            <SelectItem value="Autres">Autres…</SelectItem>
+                          </SelectContent>
+                        </Select>
                       </div>
                     </div>
 
