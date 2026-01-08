@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -6,8 +7,11 @@ import Footer from "@/components/layout/Footer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import Autoplay from "embla-carousel-autoplay";
-import { Shield, FileText, ClipboardList, LogOut, Users } from "lucide-react";
+import { Shield, FileText, ClipboardList, LogOut, Users, Search, CheckCircle, XCircle, Loader2 } from "lucide-react";
 import contactHero from "@/assets/contact-hero.jpg";
 const charteArticles = [{
   title: "Article 1 : Droit à l'information",
@@ -44,6 +48,10 @@ const charteArticles = [{
   content: "Le patient est informé des conditions financières de sa prise en charge. Il s'engage à s'acquitter des frais restant à sa charge après intervention de son organisme d'assurance maladie et de sa mutuelle ou assurance complémentaire."
 }];
 const Patients = () => {
+  const [searchInsurance, setSearchInsurance] = useState('');
+  const [searchResult, setSearchResult] = useState<'found' | 'not-found' | null>(null);
+  const [isSearching, setIsSearching] = useState(false);
+
   const { data: insurancePartners } = useQuery({
     queryKey: ['insurance-partners'],
     queryFn: async () => {
@@ -57,6 +65,22 @@ const Patients = () => {
       return data;
     },
   });
+
+  const handleInsuranceSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchInsurance.trim()) return;
+    
+    setIsSearching(true);
+    
+    // Simuler une recherche
+    setTimeout(() => {
+      const found = insurancePartners?.some(
+        (partner) => partner.name.toLowerCase().includes(searchInsurance.toLowerCase())
+      );
+      setSearchResult(found ? 'found' : 'not-found');
+      setIsSearching(false);
+    }, 500);
+  };
 
   return <>
       <Helmet>
@@ -98,6 +122,67 @@ const Patients = () => {
               <p className="text-muted-foreground max-w-2xl mx-auto">
                 PISAM travaille en partenariat avec les principales compagnies d'assurance pour faciliter votre prise en charge
               </p>
+            </div>
+
+            {/* Formulaire de vérification */}
+            <div className="max-w-xl mx-auto mb-12">
+              <div className="bg-card rounded-2xl p-6 shadow-lg border">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-4 text-center">
+                  Vérifier si votre assurance est acceptée
+                </h3>
+                <form onSubmit={handleInsuranceSearch} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="insurance-search">Nom de votre assurance</Label>
+                    <div className="flex gap-2">
+                      <div className="relative flex-1">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input
+                          id="insurance-search"
+                          type="text"
+                          placeholder="Ex: NSIA, Allianz, AXA..."
+                          value={searchInsurance}
+                          onChange={(e) => {
+                            setSearchInsurance(e.target.value);
+                            setSearchResult(null);
+                          }}
+                          className="pl-10"
+                        />
+                      </div>
+                      <Button type="submit" disabled={isSearching || !searchInsurance.trim()}>
+                        {isSearching ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          'Vérifier'
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+                  
+                  {searchResult === 'found' && (
+                    <div className="flex items-center gap-3 p-4 bg-green-50 dark:bg-green-950/30 rounded-lg border border-green-200 dark:border-green-800">
+                      <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0" />
+                      <div>
+                        <p className="font-medium text-green-800 dark:text-green-200">Assurance acceptée</p>
+                        <p className="text-sm text-green-600 dark:text-green-400">
+                          Votre assurance "{searchInsurance}" est partenaire de PISAM
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {searchResult === 'not-found' && (
+                    <div className="flex items-center gap-3 p-4 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-200 dark:border-amber-800">
+                      <XCircle className="h-5 w-5 text-amber-600 flex-shrink-0" />
+                      <div>
+                        <p className="font-medium text-amber-800 dark:text-amber-200">Non trouvée dans nos partenaires</p>
+                        <p className="text-sm text-amber-600 dark:text-amber-400">
+                          Contactez-nous au (+225) 27 22 48 31 31 pour plus d'informations
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </form>
+              </div>
             </div>
 
             {insurancePartners && insurancePartners.length > 0 ? (
