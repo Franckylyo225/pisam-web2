@@ -58,6 +58,17 @@ const Contact = () => {
 
       if (error) throw error;
       
+      // Send notification email (don't wait for it, fire and forget)
+      supabase.functions.invoke('send-contact-notification', {
+        body: {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone || null,
+          subject: formData.subject,
+          message: formData.message
+        }
+      }).catch(err => console.error('Error sending notification:', err));
+      
       toast({
         title: "Message envoyé",
         description: "Nous vous répondrons dans les plus brefs délais.",
