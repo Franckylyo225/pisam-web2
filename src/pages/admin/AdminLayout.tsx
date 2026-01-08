@@ -26,7 +26,8 @@ import {
   Home,
   Mail,
   Palette,
-  HeartPulse
+  HeartPulse,
+  Bell
 } from 'lucide-react';
 import logoImage from '@/assets/logo-pisam.png';
 
@@ -38,6 +39,7 @@ const menuItems = [
   { title: 'Articles', url: '/admin/articles', icon: FileText },
   { title: 'Équipe dirigeante', url: '/admin/leadership', icon: UserCog },
   { title: 'CMS', url: '/admin/cms', icon: Palette },
+  { title: 'Notifications', url: '/admin/notifications', icon: Bell },
   { title: 'Administrateurs', url: '/admin/admins', icon: Shield },
 ];
 

@@ -32,6 +32,7 @@ import AdminsAdmin from "./pages/admin/AdminsAdmin";
 import MessagesAdmin from "./pages/admin/MessagesAdmin";
 import CMSAdmin from "./pages/admin/CMSAdmin";
 import HealthCheckAdmin from "./pages/admin/HealthCheckAdmin";
+import NotificationSettingsAdmin from "./pages/admin/NotificationSettingsAdmin";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -73,6 +74,7 @@ const App = () => (
               <Route path="/admin/cms" element={<AdminLayout><CMSAdmin /></AdminLayout>} />
               <Route path="/admin/admins" element={<AdminLayout><AdminsAdmin /></AdminLayout>} />
               <Route path="/admin/health-check" element={<AdminLayout><HealthCheckAdmin /></AdminLayout>} />
+              <Route path="/admin/notifications" element={<AdminLayout><NotificationSettingsAdmin /></AdminLayout>} />
               
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
