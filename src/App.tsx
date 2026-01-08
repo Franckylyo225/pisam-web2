@@ -20,6 +20,7 @@ import Pisam2 from "./pages/Pisam2";
 import Contact from "./pages/Contact";
 import MentionsLegales from "./pages/MentionsLegales";
 import PolitiqueConfidentialite from "./pages/PolitiqueConfidentialite";
+import BilanSante from "./pages/BilanSante";
 import Auth from "./pages/Auth";
 import ResetPassword from "./pages/ResetPassword";
 import AdminLayout from "./pages/admin/AdminLayout";
@@ -30,6 +31,7 @@ import LeadershipAdmin from "./pages/admin/LeadershipAdmin";
 import AdminsAdmin from "./pages/admin/AdminsAdmin";
 import MessagesAdmin from "./pages/admin/MessagesAdmin";
 import CMSAdmin from "./pages/admin/CMSAdmin";
+import HealthCheckAdmin from "./pages/admin/HealthCheckAdmin";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -58,6 +60,7 @@ const App = () => (
               <Route path="/contact" element={<Contact />} />
               <Route path="/mentions-legales" element={<MentionsLegales />} />
               <Route path="/politique-confidentialite" element={<PolitiqueConfidentialite />} />
+              <Route path="/bilan-sante" element={<BilanSante />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/reset-password" element={<ResetPassword />} />
               
@@ -69,6 +72,7 @@ const App = () => (
               <Route path="/admin/leadership" element={<AdminLayout><LeadershipAdmin /></AdminLayout>} />
               <Route path="/admin/cms" element={<AdminLayout><CMSAdmin /></AdminLayout>} />
               <Route path="/admin/admins" element={<AdminLayout><AdminsAdmin /></AdminLayout>} />
+              <Route path="/admin/health-check" element={<AdminLayout><HealthCheckAdmin /></AdminLayout>} />
               
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
