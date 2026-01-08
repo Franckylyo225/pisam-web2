@@ -176,7 +176,7 @@ const Patients = () => {
                       <div>
                         <p className="font-medium text-amber-800 dark:text-amber-200">Non trouvée dans nos partenaires</p>
                         <p className="text-sm text-amber-600 dark:text-amber-400">
-                          Contactez-nous au (+225) 27 22 48 31 31 pour plus d'informations
+                          Contactez-nous au (+225) 27 22 48 31 12 pour plus d'informations
                         </p>
                       </div>
                     </div>
