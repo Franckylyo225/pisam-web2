@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Stethoscope, Clock, Phone, Mail, Loader2, User } from "lucide-react";
+import { Stethoscope, Clock, Loader2, User } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 interface Specialty {
@@ -16,11 +16,10 @@ interface Specialty {
   description: string | null;
 }
 
+// Public doctor info - excludes sensitive contact information (email, phone)
 interface Doctor {
   id: string;
   name: string;
-  phone: string | null;
-  email: string | null;
   bio: string | null;
   image_url: string | null;
   available_days: string[] | null;
@@ -46,22 +45,30 @@ const Medecins = () => {
         .eq('is_active', true)
         .order('name');
       
-      // Fetch doctors with their specialty
+      // Fetch doctors from public view (excludes sensitive contact info like email/phone)
+      // Using type assertion since doctors_public is a view not in generated types
+      interface DoctorPublic {
+        id: string;
+        name: string;
+        bio: string | null;
+        image_url: string | null;
+        available_days: string[] | null;
+        available_hours: string | null;
+        specialty_id: string | null;
+      }
+      
       const { data: doctorsData } = await supabase
-        .from('doctors')
+        .from('doctors_public' as any)
         .select(`
           id,
           name,
-          phone,
-          email,
           bio,
           image_url,
           available_days,
           available_hours,
           specialty_id
         `)
-        .eq('is_active', true)
-        .order('name');
+        .order('name') as { data: DoctorPublic[] | null; error: any };
 
       if (specialtiesData) {
         setSpecialties(specialtiesData);
@@ -69,8 +76,13 @@ const Medecins = () => {
 
       if (doctorsData && specialtiesData) {
         // Map doctors with their specialty
-        const doctorsWithSpecialty = doctorsData.map(doctor => ({
-          ...doctor,
+        const doctorsWithSpecialty: Doctor[] = doctorsData.map(doctor => ({
+          id: doctor.id,
+          name: doctor.name,
+          bio: doctor.bio,
+          image_url: doctor.image_url,
+          available_days: doctor.available_days,
+          available_hours: doctor.available_hours,
           specialty: specialtiesData.find(s => s.id === doctor.specialty_id) || null
         }));
         setDoctors(doctorsWithSpecialty);
@@ -272,27 +284,6 @@ const Medecins = () => {
                 <p className="text-muted-foreground text-sm">{selectedDoctor.bio}</p>
               )}
 
-              {/* Contact Info */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {selectedDoctor.phone && (
-                  <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
-                    <Phone className="h-5 w-5 text-primary" />
-                    <div>
-                      <p className="text-xs text-muted-foreground">Téléphone</p>
-                      <p className="text-sm font-medium">{selectedDoctor.phone}</p>
-                    </div>
-                  </div>
-                )}
-                {selectedDoctor.email && (
-                  <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
-                    <Mail className="h-5 w-5 text-primary" />
-                    <div>
-                      <p className="text-xs text-muted-foreground">Email</p>
-                      <p className="text-sm font-medium">{selectedDoctor.email}</p>
-                    </div>
-                  </div>
-                )}
-              </div>
 
               {/* Availability */}
               <div className="space-y-4">
