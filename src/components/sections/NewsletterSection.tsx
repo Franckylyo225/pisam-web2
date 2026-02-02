@@ -1,27 +1,55 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Mail, Send, CheckCircle } from "lucide-react";
+import { Mail, Send, CheckCircle, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import newsletterAgent from "@/assets/newsletter-agent.png";
 
 const NewsletterSection = () => {
   const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
+    if (!email || isSubmitting) return;
     
-    // Simulate subscription
-    setIsSubmitted(true);
-    toast({
-      title: "Inscription réussie !",
-      description: "Vous recevrez bientôt nos actualités santé.",
-    });
-    setEmail("");
-    setTimeout(() => setIsSubmitted(false), 3000);
+    setIsSubmitting(true);
+    
+    try {
+      const { error } = await supabase
+        .from('newsletter_subscriptions')
+        .insert({ email: email.trim().toLowerCase() });
+      
+      if (error) {
+        if (error.code === '23505') {
+          toast({
+            title: "Déjà inscrit",
+            description: "Cette adresse email est déjà inscrite à notre newsletter.",
+          });
+        } else {
+          throw error;
+        }
+      } else {
+        setIsSubmitted(true);
+        toast({
+          title: "Inscription réussie !",
+          description: "Vous recevrez bientôt nos actualités santé.",
+        });
+        setEmail("");
+        setTimeout(() => setIsSubmitted(false), 3000);
+      }
+    } catch (error) {
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue. Veuillez réessayer.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -63,9 +91,14 @@ const NewsletterSection = () => {
                   type="submit" 
                   size="lg"
                   className="bg-pisam-green text-white hover:bg-pisam-green/90 font-semibold h-12 px-6 rounded-xl shadow-lg"
-                  disabled={isSubmitted}
+                  disabled={isSubmitting || isSubmitted}
                 >
-                  {isSubmitted ? (
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                      Envoi...
+                    </>
+                  ) : isSubmitted ? (
                     <>
                       <CheckCircle className="h-5 w-5" />
                       Inscrit !
