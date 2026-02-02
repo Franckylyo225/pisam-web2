@@ -27,13 +27,15 @@ import {
   Mail,
   Palette,
   HeartPulse,
-  Bell
+  Bell,
+  Newspaper
 } from 'lucide-react';
 import logoImage from '@/assets/logo-pisam.png';
 
 const menuItems = [
   { title: 'Tableau de bord', url: '/admin', icon: LayoutDashboard },
   { title: 'Messages', url: '/admin/messages', icon: Mail },
+  { title: 'Newsletter', url: '/admin/newsletter', icon: Newspaper },
   { title: 'Bilan de Santé', url: '/admin/health-check', icon: HeartPulse },
   { title: 'Médecins', url: '/admin/doctors', icon: Stethoscope },
   { title: 'Articles', url: '/admin/articles', icon: FileText },
