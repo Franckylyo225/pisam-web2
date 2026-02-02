@@ -500,7 +500,53 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      doctors_public: {
+        Row: {
+          available_days: string[] | null
+          available_hours: string | null
+          bio: string | null
+          created_at: string | null
+          id: string | null
+          image_url: string | null
+          is_active: boolean | null
+          name: string | null
+          specialty_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          available_days?: string[] | null
+          available_hours?: string | null
+          bio?: string | null
+          created_at?: string | null
+          id?: string | null
+          image_url?: string | null
+          is_active?: boolean | null
+          name?: string | null
+          specialty_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          available_days?: string[] | null
+          available_hours?: string | null
+          bio?: string | null
+          created_at?: string | null
+          id?: string | null
+          image_url?: string | null
+          is_active?: boolean | null
+          name?: string | null
+          specialty_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "doctors_specialty_id_fkey"
+            columns: ["specialty_id"]
+            isOneToOne: false
+            referencedRelation: "specialties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       has_role: {
