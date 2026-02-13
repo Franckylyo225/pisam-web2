@@ -22,6 +22,9 @@ import plateauBiocsam from "@/assets/plateau-biocsam.jpg";
 import plateauScanner from "@/assets/plateau-scanner.jpg";
 import plateauImagerie from "@/assets/plateau-imagerie.jpg";
 import plateauBlocOperatoire from "@/assets/plateau-bloc-operatoire.jpg";
+import plateauHospitalisation from "@/assets/plateau-hospitalisation.jpg";
+import plateauSoinsIntensifs from "@/assets/plateau-soins-intensifs.jpg";
+import plateauBlocObstetrical from "@/assets/plateau-bloc-obstetrical.jpg";
 
 const services = [
   {
@@ -34,6 +37,7 @@ const services = [
       "Une présence constante de médecins spécialistes expérimentés",
       "Un accès immédiat à des services supports de pointe (service de soins intensifs et soins d'un jour, service d'imagerie médicale, laboratoire, physiothérapie)",
     ],
+    image: plateauHospitalisation,
   },
   {
     icon: Stethoscope,
@@ -114,6 +118,7 @@ const services = [
       "2 salles d'accouchement",
       "4 salles de travail équipées",
     ],
+    image: plateauBlocObstetrical,
   },
   {
     icon: Shield,
@@ -136,6 +141,7 @@ const services = [
       "Système de surveillance monitorée centralisé",
       "6 médecins réanimateurs et spécialistes disponibles 24h/24",
     ],
+    image: plateauSoinsIntensifs,
   },
 ];
 
