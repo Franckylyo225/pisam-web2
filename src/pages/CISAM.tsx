@@ -17,70 +17,71 @@ import {
 
 const equipments = [
   {
-    name: "Scanner 64 barrettes",
-    description: "Tomodensitométrie haute résolution pour un diagnostic précis des pathologies complexes",
+    name: "Scanner CT 64 Barrettes",
+    description: "Imagerie complète en trois dimensions pour un diagnostic précis des pathologies complexes",
     icon: ScanLine,
-    specs: "Acquisition rapide, faible dose de radiation"
+    specs: "Technologie innovante et performante"
   },
   {
-    name: "IRM 1.5 Tesla",
-    description: "Imagerie par résonance magnétique pour l'exploration des tissus mous et du système nerveux",
+    name: "IRM",
+    description: "Images claires et détaillées d'une partie du corps grâce à un champ magnétique",
     icon: Monitor,
-    specs: "Haute définition, compatible cardiaque"
+    specs: "Sans rayonnement ionisant"
   },
   {
-    name: "Mammographie numérique",
-    description: "Dépistage et diagnostic des pathologies mammaires avec technologie numérique avancée",
+    name: "Mammographie",
+    description: "Méthode reconnue comme étant la plus efficace pour le dépistage du cancer du sein",
     icon: Radiation,
-    specs: "Faible dose, images haute qualité"
+    specs: "Technologie numérique avancée"
   },
   {
-    name: "Échographie 4D",
-    description: "Imagerie ultrasonore en temps réel pour examens obstétricaux et diagnostics généraux",
+    name: "Échographie",
+    description: "Images diagnostiques des tissus grâce à un faisceau d'ultrasons. Examen simple, indolore et sans risque",
     icon: Heart,
-    specs: "Visualisation 3D/4D en temps réel"
+    specs: "Examen sans rayonnement"
   },
   {
-    name: "Radiographie numérique",
-    description: "Radiologie conventionnelle avec capteurs numériques pour résultats immédiats",
+    name: "Radiologie standard",
+    description: "Diagnostic de fractures, maladies des os, blessures, infections, maladies dégénératives",
     icon: ScanLine,
-    specs: "Faible irradiation, archivage digital"
-  },
-  {
-    name: "Doppler vasculaire",
-    description: "Exploration non invasive du système vasculaire artériel et veineux",
-    icon: Heart,
-    specs: "Couleur et pulsé, mesures précises"
+    specs: "Imagerie de référence"
   }
 ];
 
-const examTypes = [
+const services = [
   {
-    category: "Scanner (TDM)",
-    exams: ["Scanner cérébral", "Scanner thoracique", "Scanner abdomino-pelvien", "Angioscanner", "Arthroscanner"]
+    title: "QUALITÉ MÉDICALE",
+    description: "Le service est doté d'un éventail d'équipements considéré comme les plus compétitifs en Afrique, entièrement neufs. Les médecins sont tous des experts dans leur discipline avec une spécialisation dans toutes les modalités techniques.",
+    icon: Shield
   },
   {
-    category: "IRM",
-    exams: ["IRM cérébrale", "IRM médullaire", "IRM articulaire", "IRM cardiaque", "IRM abdominale"]
+    title: "SÉCURISATION DU PATIENT",
+    description: "Le souci de réduire l'exposition au rayons X délivrée au patient, à qualité optimale des examens, demeure une préoccupation majeure. Nous avons choisi des équipements innovants et non irradiants afin de réduire tous risques.",
+    icon: Heart
   },
   {
-    category: "Échographie",
-    exams: ["Échographie abdominale", "Échographie pelvienne", "Échographie obstétricale", "Échographie cardiaque", "Échographie thyroïdienne"]
-  },
-  {
-    category: "Radiologie",
-    exams: ["Radiographie standard", "Mammographie", "Panoramique dentaire", "Hystérosalpingographie"]
+    title: "PRISE EN CHARGE INDIVIDUELLE",
+    description: "La plupart des examens de radiologie sont réalisés sans rendez-vous. Un secrétariat spécialisé met à votre disposition ses compétences professionnelles et veille au bon déroulement de vos examens.",
+    icon: Users
   }
+];
+
+const examCategories = [
+  "Radiologies standards",
+  "Scanner CT (imagerie 3D)",
+  "IRM (Imagerie par résonance magnétique)",
+  "Échographie (ultrasons)",
+  "Mammographie (dépistage cancer du sein)"
 ];
 
 const CISAM = () => {
   return (
     <>
       <Helmet>
-        <title>CISAM - Centre d'Imagerie Médicale | PISAM</title>
+        <title>CISAM - Centre d'Imagerie Sainte Anne Marie | PISAM</title>
         <meta 
           name="description" 
-          content="CISAM, le Centre d'Imagerie Sainte Anne Marie, dispose d'équipements de pointe : Scanner 64 barrettes, IRM 1.5 Tesla, mammographie numérique à Abidjan."
+          content="CISAM, Centre d'Imagerie Sainte Anne Marie. Scanner 64 barrettes, IRM, mammographie numérique, échographie à Abidjan. Équipements performants, radiologues experts."
         />
       </Helmet>
 
@@ -107,7 +108,7 @@ const CISAM = () => {
               Centre d'Imagerie Sainte Anne Marie
             </p>
             <p className="text-lg max-w-2xl mx-auto opacity-90">
-              Technologies d'imagerie avancées pour un diagnostic précis
+              L'un des centres d'imagerie les plus complets de la sous-région
             </p>
           </div>
         </section>
@@ -116,43 +117,35 @@ const CISAM = () => {
         <section className="py-16 bg-background">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              <div className="grid md:grid-cols-3 gap-6 mb-12">
-                <Card className="text-center border-secondary/20 hover:shadow-lg transition-shadow">
-                  <CardContent className="pt-6">
-                    <div className="w-14 h-14 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-4">
-                      <Shield className="h-7 w-7 text-secondary" />
-                    </div>
-                    <h3 className="font-proxima font-semibold text-lg mb-2">Équipements certifiés</h3>
-                    <p className="text-muted-foreground text-sm">Matériel aux normes internationales</p>
-                  </CardContent>
-                </Card>
-                <Card className="text-center border-secondary/20 hover:shadow-lg transition-shadow">
-                  <CardContent className="pt-6">
-                    <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                      <Clock className="h-7 w-7 text-primary" />
-                    </div>
-                    <h3 className="font-proxima font-semibold text-lg mb-2">Résultats rapides</h3>
-                    <p className="text-muted-foreground text-sm">Interprétation en temps réel</p>
-                  </CardContent>
-                </Card>
-                <Card className="text-center border-secondary/20 hover:shadow-lg transition-shadow">
-                  <CardContent className="pt-6">
-                    <div className="w-14 h-14 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4">
-                      <Users className="h-7 w-7 text-accent" />
-                    </div>
-                    <h3 className="font-proxima font-semibold text-lg mb-2">Radiologues experts</h3>
-                    <p className="text-muted-foreground text-sm">Spécialistes en imagerie médicale</p>
-                  </CardContent>
-                </Card>
+              <div className="prose prose-lg max-w-none text-center space-y-4 mb-12">
+                <p className="text-muted-foreground leading-relaxed">
+                  Le Centre d'Imagerie Sainte Anne Marie est doté d'équipements d'imagerie médicale et de radiologie 
+                  interventionnelle performants. Ce pôle d'imagerie possède des équipements récents et performants 
+                  <strong> faisant de lui l'un des plus complet de la sous-région</strong>.
+                </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  Ce centre est <strong>divisé en spécialités selon l'organe concerné</strong> par l'examen, l'âge ou le sexe 
+                  du patient. Il est composé d'une <strong>équipe pluridisciplinaire de médecins et de soignants spécialisés</strong> 
+                  organisée autour de trois principaux axes : qualité médicale, sécurisation du patient et prise en charge individuelle.
+                </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  Des équipements de pointe et des technologies innovantes sont mis à votre disposition afin de vous garantir 
+                  une fiabilité des résultats et une rapidité d'exécution.
+                </p>
               </div>
 
-              <div className="prose prose-lg max-w-none text-center">
-                <p className="text-muted-foreground leading-relaxed">
-                  Le CISAM est le centre d'imagerie médicale de référence de la PISAM. 
-                  Équipé d'un <strong>scanner 64 barrettes</strong>, d'une <strong>IRM 1.5 Tesla</strong> 
-                  et d'une <strong>mammographie numérique</strong>, il offre une gamme complète d'examens 
-                  d'imagerie diagnostique interprétés par des radiologues expérimentés.
-                </p>
+              <div className="grid md:grid-cols-3 gap-6">
+                {services.map((service, index) => (
+                  <Card key={index} className="text-center border-secondary/20 hover:shadow-lg transition-shadow">
+                    <CardContent className="pt-6">
+                      <div className="w-14 h-14 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-4">
+                        <service.icon className="h-7 w-7 text-secondary" />
+                      </div>
+                      <h3 className="font-proxima font-semibold text-lg mb-2 text-foreground">{service.title}</h3>
+                      <p className="text-muted-foreground text-sm">{service.description}</p>
+                    </CardContent>
+                  </Card>
+                ))}
               </div>
             </div>
           </div>
@@ -200,37 +193,81 @@ const CISAM = () => {
         {/* Types d'examens */}
         <section className="py-16 bg-background">
           <div className="container mx-auto px-4">
-            <div className="max-w-5xl mx-auto">
+            <div className="max-w-4xl mx-auto">
               <div className="text-center mb-12">
                 <h2 className="font-proxima text-3xl md:text-4xl font-bold text-foreground mb-4">
-                  Nos Examens
+                  Les services du centre d'imagerie
                 </h2>
-                <p className="text-muted-foreground">
-                  Une gamme complète d'examens d'imagerie pour tous vos besoins diagnostiques
+                <p className="text-muted-foreground max-w-2xl mx-auto">
+                  Il est important de savoir que la radiologie conventionnelle demeure nécessaire et conseillée en première 
+                  intention afin de minimiser les risques d'irradiations.
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-8">
-                {examTypes.map((category, index) => (
-                  <Card key={index} className="border-border/50">
-                    <CardContent className="p-6">
-                      <h3 className="font-proxima font-bold text-xl text-foreground mb-4 flex items-center gap-2">
-                        <span className="w-8 h-8 rounded-full bg-gradient-to-br from-secondary to-primary flex items-center justify-center text-white text-sm">
-                          {index + 1}
-                        </span>
-                        {category.category}
-                      </h3>
-                      <ul className="space-y-2">
-                        {category.exams.map((exam, examIndex) => (
-                          <li key={examIndex} className="flex items-center gap-3 text-muted-foreground">
-                            <CheckCircle className="h-4 w-4 text-secondary shrink-0" />
-                            <span>{exam}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {examCategories.map((exam, index) => (
+                  <div 
+                    key={index}
+                    className="flex items-start gap-3 p-4 rounded-lg bg-muted/50 hover:bg-secondary/5 transition-colors border border-border/50"
+                  >
+                    <CheckCircle className="h-5 w-5 text-secondary shrink-0 mt-0.5" />
+                    <span className="text-foreground font-medium text-sm">{exam}</span>
+                  </div>
                 ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Important Information */}
+        <section className="py-16 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="font-proxima text-3xl md:text-4xl font-bold text-foreground mb-4">
+                  Informations importantes
+                </h2>
+              </div>
+
+              <div className="space-y-4">
+                <Card className="border-secondary/20">
+                  <CardContent className="p-6 space-y-2">
+                    <h3 className="font-proxima font-semibold text-lg text-foreground mb-3">Avant votre rendez-vous</h3>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      <li className="flex gap-3">
+                        <CheckCircle className="h-4 w-4 text-secondary shrink-0 mt-0.5" />
+                        <span><strong>Si vous êtes enceinte :</strong> Vous devez impérativement le signaler.</span>
+                      </li>
+                      <li className="flex gap-3">
+                        <CheckCircle className="h-4 w-4 text-secondary shrink-0 mt-0.5" />
+                        <span><strong>Examens osseux et pulmonaires :</strong> Aucune préparation particulière.</span>
+                      </li>
+                      <li className="flex gap-3">
+                        <CheckCircle className="h-4 w-4 text-secondary shrink-0 mt-0.5" />
+                        <span><strong>Autres examens :</strong> Une préparation vous sera précisée lors de la prise de rendez-vous.</span>
+                      </li>
+                      <li className="flex gap-3">
+                        <CheckCircle className="h-4 w-4 text-secondary shrink-0 mt-0.5" />
+                        <span><strong>Documents à apporter :</strong> Prescription médicale, résultats antérieurs, carte vitale.</span>
+                      </li>
+                    </ul>
+                  </CardContent>
+                </Card>
+
+                <Card className="border-secondary/20">
+                  <CardContent className="p-6 space-y-4">
+                    <h3 className="font-proxima font-semibold text-lg text-foreground flex items-center gap-2">
+                      <Clock className="h-5 w-5 text-secondary" />
+                      Horaires et localisation
+                    </h3>
+                    <div className="text-sm text-muted-foreground space-y-2">
+                      <p><strong>Localisation :</strong> Premier sous-sol de la PISAM</p>
+                      <p><strong>Horaires :</strong> Du lundi au samedi, 07h30 à 18h00</p>
+                      <p><strong>Prise de rendez-vous :</strong> (+225) 27 22 48 31 15</p>
+                      <p><strong>La plupart des examens de radiologie sont réalisés sans rendez-vous.</strong></p>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
             </div>
           </div>
@@ -243,15 +280,15 @@ const CISAM = () => {
               Prendre rendez-vous pour un examen
             </h2>
             <p className="text-lg opacity-90 mb-8 max-w-2xl mx-auto">
-              Notre équipe de radiologues est disponible pour réaliser vos examens d'imagerie dans les meilleurs délais.
+              Notre équipe de radiologues experts est disponible pour réaliser vos examens d'imagerie dans les meilleurs délais.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a 
-                href="tel:+22527224453"
+                href="tel:+2252722483115"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-secondary font-semibold rounded-lg hover:bg-white/90 transition-colors"
               >
                 <Clock className="h-5 w-5" />
-                Prendre rendez-vous
+                Prendre rendez-vous : 27 22 48 31 15
               </a>
             </div>
           </div>
