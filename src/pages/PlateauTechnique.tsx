@@ -18,6 +18,10 @@ import {
   Calendar,
 } from "lucide-react";
 import heroImage from "@/assets/pisam-aerial-view.jpg";
+import plateauBiocsam from "@/assets/plateau-biocsam.jpg";
+import plateauScanner from "@/assets/plateau-scanner.jpg";
+import plateauImagerie from "@/assets/plateau-imagerie.jpg";
+import plateauBlocOperatoire from "@/assets/plateau-bloc-operatoire.jpg";
 
 const services = [
   {
@@ -51,6 +55,7 @@ const services = [
       "Disponibilité 24h/24",
       "Équipe spécialisée",
     ],
+    image: plateauScanner,
   },
   {
     icon: Microscope,
@@ -62,6 +67,7 @@ const services = [
       "Anatomie pathologie",
       "Banque de sang intégrée",
     ],
+    image: plateauBiocsam,
   },
   {
     icon: ScanLine,
@@ -73,6 +79,7 @@ const services = [
       "Scanner 64 barrettes",
       "Radiologie vasculaire et ostéo-articulaire",
     ],
+    image: plateauImagerie,
   },
   {
     icon: Siren,
@@ -95,6 +102,7 @@ const services = [
       "Amplificateur de brillance",
       "Chirurgie thoracique, neurochirurgie, vidéo-chirurgie",
     ],
+    image: plateauBlocOperatoire,
   },
   {
     icon: Baby,
@@ -185,6 +193,15 @@ const PlateauTechnique = () => {
                 key={index}
                 className="border-none shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
+                {service.image && (
+                  <div className="w-full h-48 overflow-hidden rounded-t-lg">
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
                 <CardContent className="p-8">
                   <div className="flex items-start gap-4">
                     <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
