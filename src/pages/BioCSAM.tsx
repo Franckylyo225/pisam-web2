@@ -16,67 +16,58 @@ import {
   Activity
 } from "lucide-react";
 
-const equipments = [
+const disciplines = [
   {
-    name: "Automates d'hématologie",
-    description: "Analyse complète des cellules sanguines avec comptage différentiel automatisé",
+    name: "Hématologie",
+    description: "Centre performant gérant en plus une banque de sang pour l'hospitalisation.",
     icon: Activity
   },
   {
-    name: "Analyseurs de biochimie",
-    description: "Dosages enzymatiques, métaboliques et ioniques de haute précision",
+    name: "Microbiologie",
+    description: "Unité équipée d'automates de dernière génération.",
+    icon: FlaskConical
+  },
+  {
+    name: "Biochimie",
+    description: "Chaîne entièrement automatisée révolutionnant le rendu des CIA (Culture, Identification, Antibiogramme) en moins de 24h.",
     icon: Beaker
   },
   {
-    name: "Immunohistochimie",
-    description: "Détection d'antigènes tissulaires pour le diagnostic oncologique",
+    name: "Anatomie Cytho-Pathologique (Ana-Path)",
+    description: "À partir des prélèvements cellulaires ou tissulaires, diagnostic basé sur l'interprétation macroscopique et microscopique des prélèvements biopsiques, chirurgicaux ou cytologiques. Première unité à pratiquer l'extemporanée.",
     icon: Microscope
   },
   {
-    name: "Anatomo-cytopathologie",
-    description: "Analyse microscopique des tissus et cellules pour diagnostic précis",
-    icon: FlaskConical
-  },
-  {
-    name: "Sérologie infectieuse",
-    description: "Dépistage et diagnostic des maladies infectieuses virales et bactériennes",
+    name: "Immuno-Histo-Chimie",
+    description: "Pour compléter la gamme technique d'Ana-Path et maîtriser la totalité de l'activité.",
     icon: TestTube
-  },
-  {
-    name: "Microbiologie",
-    description: "Culture et identification des agents pathogènes avec antibiogramme",
-    icon: FlaskConical
   }
 ];
 
-const services = [
-  "Hématologie et hémostase",
-  "Biochimie générale et spécialisée",
-  "Immunologie et auto-immunité",
-  "Microbiologie et parasitologie",
-  "Sérologie infectieuse",
-  "Hormonologie",
-  "Marqueurs tumoraux",
-  "Toxicologie",
-  "Anatomo-cytopathologie",
-  "Immunohistochimie"
+const checkups = [
+  "Le bilan de santé individuel, universellement recommandé pour détecter tôt d'éventuelles maladies",
+  "Le bilan d'embauche",
+  "La visite annuelle d'entreprise",
+  "Les bilans ciblés (cardiaque, pédiatrique, hormonal, etc.)",
+  "Les analyses de routine (bilan demandé par votre médecin lors des consultations, prise en charge par assurance)",
+  "Bilan annuel exigé par la CNPS"
 ];
 
 const BioCSAM = () => {
   return (
     <>
       <Helmet>
-        <title>BioCSAM - Laboratoire de Biologie Clinique | PISAM</title>
+        <title>BioCSAM - Laboratoire de Biologie Clinique Sainte Anne-Marie | PISAM</title>
         <meta 
           name="description" 
-          content="BioCSAM, le Laboratoire de Biologie Clinique Sainte Anne-Marie, offre des analyses médicales de pointe avec immunohistochimie et anatomo-cytopathologie à Abidjan."
+          content="BioCSAM, le Laboratoire de Biologie Clinique Sainte Anne-Marie, certifié ISO 9001. Analyses médicales 24h/24, 7j/7 à Abidjan. Hématologie, biochimie, anatomie pathologique."
         />
       </Helmet>
 
       <Header />
 
       <main className="min-h-screen">
-        {/* Hero Section */}
+        {/* Hero Section - kept intact */}
         <section className="relative h-[45vh] min-h-[350px] flex items-center justify-center overflow-hidden">
           <div 
             className="absolute inset-0 bg-cover bg-center"
@@ -111,8 +102,8 @@ const BioCSAM = () => {
                     <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
                       <Shield className="h-7 w-7 text-primary" />
                     </div>
-                    <h3 className="font-proxima font-semibold text-lg mb-2">Certifié ISO</h3>
-                    <p className="text-muted-foreground text-sm">Normes internationales de qualité</p>
+                    <h3 className="font-proxima font-semibold text-lg mb-2">Certifié ISO 9001</h3>
+                    <p className="text-muted-foreground text-sm">Certification BSI obtenue en décembre 2013</p>
                   </CardContent>
                 </Card>
                 <Card className="text-center border-primary/20 hover:shadow-lg transition-shadow">
@@ -120,8 +111,8 @@ const BioCSAM = () => {
                     <div className="w-14 h-14 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-4">
                       <Clock className="h-7 w-7 text-secondary" />
                     </div>
-                    <h3 className="font-proxima font-semibold text-lg mb-2">Résultats rapides</h3>
-                    <p className="text-muted-foreground text-sm">Délais optimisés pour urgences</p>
+                    <h3 className="font-proxima font-semibold text-lg mb-2">24h/24 – 7j/7</h3>
+                    <p className="text-muted-foreground text-sm">Au service des patients et équipes médicales en continu</p>
                   </CardContent>
                 </Card>
                 <Card className="text-center border-primary/20 hover:shadow-lg transition-shadow">
@@ -129,50 +120,87 @@ const BioCSAM = () => {
                     <div className="w-14 h-14 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4">
                       <Users className="h-7 w-7 text-accent" />
                     </div>
-                    <h3 className="font-proxima font-semibold text-lg mb-2">Équipe experte</h3>
-                    <p className="text-muted-foreground text-sm">Biologistes et techniciens qualifiés</p>
+                    <h3 className="font-proxima font-semibold text-lg mb-2">Ouvert à tous</h3>
+                    <p className="text-muted-foreground text-sm">Patients internes et externes sur prescription médicale</p>
                   </CardContent>
                 </Card>
               </div>
 
-              <div className="prose prose-lg max-w-none text-center">
+              <div className="prose prose-lg max-w-none text-center space-y-4">
                 <p className="text-muted-foreground leading-relaxed">
-                  Le laboratoire BioCSAM est un centre d'analyses médicales de référence en Côte d'Ivoire. 
-                  Équipé des technologies les plus avancées, il propose une gamme complète d'examens biologiques 
-                  incluant l'<strong>immunohistochimie</strong> et l'<strong>anatomo-cytopathologie</strong>, 
-                  essentiels au diagnostic oncologique et aux pathologies complexes.
+                  Engagée dans le système management par la qualité depuis 2007, la PISAM a ciblé la certification 
+                  de ses services en démarche qualité. Le but de la PISAM a toujours été la conformité aux normes 
+                  de qualité internationales, afin d'offrir à ses patients un accueil et une prise en charge personnalisés.
+                </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  C'est dans cette optique que le laboratoire <strong>BioCSAM</strong> (Laboratoire de Biologie Clinique 
+                  Sainte Anne-Marie) a vu le jour et a obtenu la certification (BSI) <strong>ISO 9001, version 2008</strong> en décembre 2013.
+                </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  Laboratoire conventionné, il est au service des patients et des équipes médicales et soignantes de 
+                  l'établissement <strong>24h/24 et 7j/7</strong>. Il est également ouvert à tout patient extérieur 
+                  pour la réalisation des analyses prescrites par son médecin traitant.
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Équipements */}
+        {/* Check-ups */}
         <section className="py-16 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="font-proxima text-3xl md:text-4xl font-bold text-foreground mb-4">
+                  Les services du laboratoire
+                </h2>
+                <p className="text-muted-foreground max-w-2xl mx-auto">
+                  Plus une maladie est détectée tôt, meilleure sera la prise en charge et le traitement. 
+                  Le laboratoire BioCSAM offre une variété de « check-up ».
+                </p>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                {checkups.map((item, index) => (
+                  <div 
+                    key={index}
+                    className="flex items-start gap-3 p-4 rounded-lg bg-background hover:bg-primary/5 transition-colors border border-border/50"
+                  >
+                    <CheckCircle className="h-5 w-5 text-secondary shrink-0 mt-0.5" />
+                    <span className="text-foreground text-sm">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Disciplines biologiques */}
+        <section className="py-16 bg-background">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <h2 className="font-proxima text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Plateau Technique
+                Disciplines biologiques
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Des équipements de dernière génération pour des analyses fiables et précises
+                Le laboratoire BioCSAM assure la quasi-totalité des disciplines biologiques grâce à plusieurs unités spécialisées.
               </p>
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-              {equipments.map((equipment, index) => (
+              {disciplines.map((discipline, index) => (
                 <Card key={index} className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-border/50">
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
                       <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center shrink-0">
-                        <equipment.icon className="h-6 w-6 text-white" />
+                        <discipline.icon className="h-6 w-6 text-white" />
                       </div>
                       <div>
                         <h3 className="font-proxima font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
-                          {equipment.name}
+                          {discipline.name}
                         </h3>
                         <p className="text-sm text-muted-foreground">
-                          {equipment.description}
+                          {discipline.description}
                         </p>
                       </div>
                     </div>
@@ -183,29 +211,45 @@ const BioCSAM = () => {
           </div>
         </section>
 
-        {/* Services */}
-        <section className="py-16 bg-background">
+        {/* Informations pratiques */}
+        <section className="py-16 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-12">
                 <h2 className="font-proxima text-3xl md:text-4xl font-bold text-foreground mb-4">
-                  Nos Analyses
+                  Informations pratiques
                 </h2>
-                <p className="text-muted-foreground">
-                  Une gamme complète d'examens biologiques pour répondre à tous vos besoins diagnostiques
-                </p>
               </div>
 
-              <div className="grid sm:grid-cols-2 gap-4">
-                {services.map((service, index) => (
-                  <div 
-                    key={index}
-                    className="flex items-center gap-3 p-4 rounded-lg bg-muted/50 hover:bg-primary/5 transition-colors"
-                  >
-                    <CheckCircle className="h-5 w-5 text-secondary shrink-0" />
-                    <span className="text-foreground font-medium">{service}</span>
-                  </div>
-                ))}
+              <div className="grid md:grid-cols-2 gap-6">
+                <Card className="border-primary/20">
+                  <CardContent className="p-6 space-y-4">
+                    <h3 className="font-proxima font-semibold text-lg text-foreground flex items-center gap-2">
+                      <Clock className="h-5 w-5 text-primary" />
+                      Localisation & Horaires
+                    </h3>
+                    <div className="text-sm text-muted-foreground space-y-2">
+                      <p><strong>Localisation :</strong> Rez-de-chaussée de la PISAM</p>
+                      <p><strong>Horaires :</strong> Du lundi au dimanche, 7h00 à 18h30</p>
+                      <p><strong>Urgences :</strong> 24h/24 et 7j/7</p>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="border-primary/20">
+                  <CardContent className="p-6 space-y-4">
+                    <h3 className="font-proxima font-semibold text-lg text-foreground flex items-center gap-2">
+                      <Users className="h-5 w-5 text-secondary" />
+                      Contacts
+                    </h3>
+                    <div className="text-sm text-muted-foreground space-y-2">
+                      <p><strong>Secrétariat / RDV :</strong> (225) 27 22 48 31 23</p>
+                      <p><strong>Service commercial :</strong> (225) 27 22 48 31 04</p>
+                      <p><strong>Standard :</strong> (225) 27 22 48 31 31</p>
+                      <p><strong>Email :</strong> bilandesanté@pisam.ci</p>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
             </div>
           </div>
@@ -222,11 +266,11 @@ const BioCSAM = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a 
-                href="tel:+22527224453"
+                href="tel:+2252722483123"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-primary font-semibold rounded-lg hover:bg-white/90 transition-colors"
               >
                 <Clock className="h-5 w-5" />
-                Prendre rendez-vous
+                Prendre rendez-vous : 27 22 48 31 23
               </a>
             </div>
           </div>
