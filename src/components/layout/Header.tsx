@@ -187,8 +187,8 @@ const Header = () => {
                   Urgences
                 </a>
               </Button>
-              <Button variant="default" size="default">
-                Prendre RDV
+              <Button variant="default" size="default" asChild>
+                <a href="tel:+2252722550000">Prendre RDV</a>
               </Button>
             </div>
 
@@ -295,8 +295,8 @@ const Header = () => {
                     +225 27 22 48 31 12
                   </a>
                 </Button>
-                <Button variant="default" className="w-full">
-                  Prendre Rendez-vous
+                <Button variant="default" className="w-full" asChild>
+                  <a href="tel:+2252722550000">Prendre Rendez-vous</a>
                 </Button>
               </div>
             </nav>

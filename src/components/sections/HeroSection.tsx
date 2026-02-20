@@ -38,7 +38,7 @@ const fallbackSlides = [
     primary_button_text: "Qui Sommes-nous ?",
     primary_button_link: "/pisam",
     secondary_button_text: "Prendre Rendez-vous",
-    secondary_button_link: "#",
+    secondary_button_link: "tel:+2252722550000",
     display_order: 0,
     is_active: true,
     overlay_opacity: 0.6,
@@ -52,7 +52,7 @@ const fallbackSlides = [
     primary_button_text: "En savoir plus",
     primary_button_link: "/pisam-2",
     secondary_button_text: "Prendre Rendez-vous",
-    secondary_button_link: "#",
+    secondary_button_link: "tel:+2252722550000",
     display_order: 1,
     is_active: true,
     overlay_opacity: 0.6,
@@ -66,7 +66,7 @@ const fallbackSlides = [
     primary_button_text: "Commandez ma Carte",
     primary_button_link: "/pisam-plus",
     secondary_button_text: "Prendre Rendez-vous",
-    secondary_button_link: "#",
+    secondary_button_link: "tel:+2252722550000",
     display_order: 2,
     is_active: true,
     overlay_opacity: 0.6,
@@ -240,10 +240,17 @@ const HeroSection = () => {
                   size="xl" 
                   className="bg-white/20 backdrop-blur-sm text-white border border-white/30 hover:bg-white/30 font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
                 >
-                  <Link to={slides[selectedIndex].secondary_button_link!}>
-                    <Calendar className="h-5 w-5" />
-                    {slides[selectedIndex].secondary_button_text}
-                  </Link>
+                  {slides[selectedIndex].secondary_button_link!.startsWith('tel:') ? (
+                    <a href={slides[selectedIndex].secondary_button_link!}>
+                      <Calendar className="h-5 w-5" />
+                      {slides[selectedIndex].secondary_button_text}
+                    </a>
+                  ) : (
+                    <Link to={slides[selectedIndex].secondary_button_link!}>
+                      <Calendar className="h-5 w-5" />
+                      {slides[selectedIndex].secondary_button_text}
+                    </Link>
+                  )}
                 </Button>
               )}
             </div>
