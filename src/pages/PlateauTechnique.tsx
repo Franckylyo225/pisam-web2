@@ -266,9 +266,12 @@ const PlateauTechnique = () => {
             <Button
               size="lg"
               className="bg-pisam-green hover:bg-pisam-green/90 text-white"
+              asChild
             >
-              <Calendar className="mr-2 h-5 w-5" />
-              Prendre rendez-vous
+              <a href="tel:+2252722550000">
+                <Calendar className="mr-2 h-5 w-5" />
+                Prendre rendez-vous
+              </a>
             </Button>
             <Button
               size="lg"
