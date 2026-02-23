@@ -267,7 +267,7 @@ Si vous ne disposez pas de numéro de dossier, informez-vous auprès de l’accu
                       Pour une consultation à PISAM, vous pouvez prendre rendez-vous de plusieurs manières :
                     </p>
                     <ul className="list-disc list-inside space-y-2 ml-4">
-                      <li>Par téléphone au <strong className="text-foreground">(+225) 27 22 48 31 31</strong></li>
+                      <li>Par téléphone au <strong className="text-foreground">(+225) 27 22 55 00 00</strong></li>
                       <li>En ligne via notre plateforme de prise de rendez-vous</li>
                       <li>Directement à l'accueil de la clinique</li>
                     </ul>
