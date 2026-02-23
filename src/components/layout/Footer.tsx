@@ -117,7 +117,7 @@ const Footer = () => {
       <div className="border-t border-background/10">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-background/60">
-            <p>© 2025 PISAM - Polyclinique Internationale Sainte Anne-Marie. Tous droits réservés.</p>
+            <p>© 2026 PISAM - Polyclinique Internationale Sainte Anne-Marie. Tous droits réservés.</p>
             <div className="flex items-center gap-6">
               <Link to="/mentions-legales" className="hover:text-background transition-colors">
                 Mentions légales
