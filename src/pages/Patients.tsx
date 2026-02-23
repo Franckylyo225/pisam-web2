@@ -55,23 +55,23 @@ const Patients = () => {
   const { data: insurancePartners } = useQuery({
     queryKey: ['insurance-partners'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('insurance_partners')
-        .select('*')
-        .eq('is_active', true)
-        .order('display_order', { ascending: true });
-      
+      const { data, error } = await supabase.
+      from('insurance_partners').
+      select('*').
+      eq('is_active', true).
+      order('display_order', { ascending: true });
+
       if (error) throw error;
       return data;
-    },
+    }
   });
 
   const handleInsuranceSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (!searchInsurance.trim()) return;
-    
+
     setIsSearching(true);
-    
+
     // Simuler une recherche
     setTimeout(() => {
       const found = insurancePartners?.some(
@@ -137,29 +137,29 @@ const Patients = () => {
                       <div className="relative flex-1">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                         <Input
-                          id="insurance-search"
-                          type="text"
-                          placeholder="Ex: NSIA, Allianz, AXA..."
-                          value={searchInsurance}
-                          onChange={(e) => {
-                            setSearchInsurance(e.target.value);
-                            setSearchResult(null);
-                          }}
-                          className="pl-10"
-                        />
+                        id="insurance-search"
+                        type="text"
+                        placeholder="Ex: NSIA, Allianz, AXA..."
+                        value={searchInsurance}
+                        onChange={(e) => {
+                          setSearchInsurance(e.target.value);
+                          setSearchResult(null);
+                        }}
+                        className="pl-10" />
+
                       </div>
                       <Button type="submit" disabled={isSearching || !searchInsurance.trim()}>
-                        {isSearching ? (
-                          <Loader2 className="h-4 w-4 animate-spin" />
-                        ) : (
-                          'Vérifier'
-                        )}
+                        {isSearching ?
+                      <Loader2 className="h-4 w-4 animate-spin" /> :
+
+                      'Vérifier'
+                      }
                       </Button>
                     </div>
                   </div>
                   
-                  {searchResult === 'found' && (
-                    <div className="flex items-center gap-3 p-4 bg-green-50 dark:bg-green-950/30 rounded-lg border border-green-200 dark:border-green-800">
+                  {searchResult === 'found' &&
+                <div className="flex items-center gap-3 p-4 bg-green-50 dark:bg-green-950/30 rounded-lg border border-green-200 dark:border-green-800">
                       <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0" />
                       <div>
                         <p className="font-medium text-green-800 dark:text-green-200">Assurance acceptée</p>
@@ -168,10 +168,10 @@ const Patients = () => {
                         </p>
                       </div>
                     </div>
-                  )}
+                }
                   
-                  {searchResult === 'not-found' && (
-                    <div className="flex items-center gap-3 p-4 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-200 dark:border-amber-800">
+                  {searchResult === 'not-found' &&
+                <div className="flex items-center gap-3 p-4 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-200 dark:border-amber-800">
                       <XCircle className="h-5 w-5 text-amber-600 flex-shrink-0" />
                       <div>
                         <p className="font-medium text-amber-800 dark:text-amber-200">Non trouvée dans nos partenaires</p>
@@ -180,46 +180,46 @@ const Patients = () => {
                         </p>
                       </div>
                     </div>
-                  )}
+                }
                 </form>
               </div>
             </div>
 
-            {insurancePartners && insurancePartners.length > 0 ? (
-              <Carousel opts={{
-                align: "start",
-                loop: true
-              }} plugins={[Autoplay({
-                delay: 2000,
-                stopOnInteraction: false
-              })]} className="w-full">
+            {insurancePartners && insurancePartners.length > 0 ?
+          <Carousel opts={{
+            align: "start",
+            loop: true
+          }} plugins={[Autoplay({
+            delay: 2000,
+            stopOnInteraction: false
+          })]} className="w-full">
                 <CarouselContent className="-ml-4">
-                  {insurancePartners.map((insurance) => (
-                    <CarouselItem key={insurance.id} className="pl-4 basis-1/2 md:basis-1/4 lg:basis-1/6">
+                  {insurancePartners.map((insurance) =>
+              <CarouselItem key={insurance.id} className="pl-4 basis-1/2 md:basis-1/4 lg:basis-1/6">
                       <div className="p-4">
                         <div className="bg-white h-20 rounded-xl flex items-center justify-center shadow-md hover:shadow-lg transition-shadow overflow-hidden p-3">
-                          {insurance.logo_url ? (
-                            <img 
-                              src={insurance.logo_url} 
-                              alt={insurance.name}
-                              className="max-w-full max-h-full object-contain"
-                            />
-                          ) : (
-                            <span className="font-bold text-sm text-center text-primary">
+                          {insurance.logo_url ?
+                    <img
+                      src={insurance.logo_url}
+                      alt={insurance.name}
+                      className="max-w-full max-h-full object-contain" /> :
+
+
+                    <span className="font-bold text-sm text-center text-primary">
                               {insurance.name}
                             </span>
-                          )}
+                    }
                         </div>
                       </div>
                     </CarouselItem>
-                  ))}
+              )}
                 </CarouselContent>
-              </Carousel>
-            ) : (
-              <p className="text-center text-muted-foreground py-8">
+              </Carousel> :
+
+          <p className="text-center text-muted-foreground py-8">
                 Aucune assurance partenaire configurée pour le moment
               </p>
-            )}
+          }
           </div>
         </section>
 
@@ -267,7 +267,8 @@ Si vous ne disposez pas de numéro de dossier, informez-vous auprès de l’accu
                       Pour une consultation à PISAM, vous pouvez prendre rendez-vous de plusieurs manières :
                     </p>
                     <ul className="list-disc list-inside space-y-2 ml-4">
-                      <li>Par téléphone au <strong className="text-foreground">(+225) 27 22 48 31 31</strong></li>
+                      <li>(+225) 27 22 55 00 00
+ <strong className="text-foreground">(+225) 27 22 48 31 31</strong></li>
                       <li>En ligne via notre plateforme de prise de rendez-vous</li>
                       <li>Directement à l'accueil de la clinique</li>
                     </ul>
@@ -391,6 +392,5 @@ Si vous ne disposez pas de numéro de dossier, informez-vous auprès de l’accu
       </main>
 
       <Footer />
-    </>;
-};
+    </>;};
 export default Patients;
