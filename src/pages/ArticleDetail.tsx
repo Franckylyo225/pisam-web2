@@ -106,7 +106,7 @@ const ArticleDetail = () => {
       "name": "PISAM - Polyclinique Internationale Sainte Anne-Marie",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://pisam.ci/logo-pisam.png"
+        "url": "https://www.groupepisam.com/logo-pisam.png"
       }
     },
     "mainEntityOfPage": {
