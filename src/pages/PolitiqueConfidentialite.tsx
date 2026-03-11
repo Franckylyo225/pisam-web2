@@ -45,7 +45,7 @@ const PolitiqueConfidentialite = () => {
                   <strong>Polyclinique Internationale Sainte Anne-Marie (PISAM)</strong><br />
                   Abidjan, Cocody, Rue Cannebière, Av. Joseph Blohorn<br />
                   01 BP 1463 Abidjan 01, Côte d'Ivoire<br /><br />
-                  <strong>Email de contact :</strong> contact@pisam.ci<br />
+                  <strong>Email de contact :</strong> contact@groupepisam.com<br />
                   <strong>Téléphone :</strong> +225 27 22 48 31 12
                 </p>
               </div>
