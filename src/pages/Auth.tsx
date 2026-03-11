@@ -259,7 +259,7 @@ export default function Auth() {
                     <Input
                       id="forgot-email"
                       type="email"
-                      placeholder="admin@pisam.ci"
+                      placeholder="admin@groupepisam.com"
                       value={forgotPasswordEmail}
                       onChange={(e) => setForgotPasswordEmail(e.target.value)}
                       className="pl-10"
