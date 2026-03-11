@@ -143,7 +143,7 @@ const PolitiqueConfidentialite = () => {
                   <li><strong>Droit de retirer votre consentement :</strong> à tout moment pour les traitements basés sur votre consentement</li>
                 </ul>
                 <p className="text-muted-foreground mt-4">
-                  Pour exercer ces droits, contactez-nous à : <strong>contact@pisam.ci</strong>
+                  Pour exercer ces droits, contactez-nous à : <strong>contact@groupepisam.com</strong>
                 </p>
               </div>
 
