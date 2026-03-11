@@ -88,7 +88,7 @@ const MentionsLegales = () => {
                   Conformément à la loi ivoirienne sur la protection des données personnelles, vous disposez d'un droit d'accès, de modification, de rectification et de suppression des données qui vous concernent.
                 </p>
                 <p className="text-muted-foreground mt-4">
-                  Pour exercer ce droit, veuillez nous contacter à l'adresse suivante : contact@pisam.ci
+                  Pour exercer ce droit, veuillez nous contacter à l'adresse suivante : contact@groupepisam.com
                 </p>
                 <p className="text-muted-foreground mt-4">
                   Les informations recueillies sur ce site sont destinées uniquement à PISAM et ne seront en aucun cas cédées à des tiers.

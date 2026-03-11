@@ -128,7 +128,7 @@ const ArticleDetail = () => {
         <meta property="og:title" content={article.meta_title || article.title} />
         <meta property="og:description" content={article.meta_description || article.excerpt || ''} />
         <meta property="og:image" content={article.image_url || ''} />
-        <meta property="og:url" content={`https://pisam.ci/blog/${article.slug}`} />
+        <meta property="og:url" content={`https://www.groupepisam.com/blog/${article.slug}`} />
         <meta property="og:type" content="article" />
         <meta property="article:published_time" content={article.published_at || ''} />
         <meta property="article:modified_time" content={article.updated_at} />
