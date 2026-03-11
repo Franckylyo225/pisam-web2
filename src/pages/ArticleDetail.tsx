@@ -111,7 +111,7 @@ const ArticleDetail = () => {
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://pisam.ci/blog/${article.slug}`
+      "@id": `https://www.groupepisam.com/blog/${article.slug}`
     },
     "keywords": article.keywords?.join(", ")
   };
