@@ -86,6 +86,7 @@ const Patients = () => {
       <Helmet>
         <title>Patients | PISAM - Polyclinique Internationale Sainte Anne-Marie</title>
         <meta name="description" content="Informations pour les patients de PISAM : assurances acceptées, procédures d'admission, consultation, hospitalisation et charte du patient." />
+        <link rel="canonical" href="https://www.groupepisam.com/patients" />
       </Helmet>
 
       <Header />

@@ -146,6 +146,27 @@ const Pisam = () => {
           name="description" 
           content="Découvrez PISAM, Polyclinique Internationale Sainte Anne-Marie. Excellence médicale, équipe dirigeante, mission, valeurs et certification ISO 9001:2015." 
         />
+        <link rel="canonical" href="https://www.groupepisam.com/pisam" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "AboutPage",
+            "name": "À propos de PISAM",
+            "url": "https://www.groupepisam.com/pisam",
+            "mainEntity": {
+              "@type": "MedicalOrganization",
+              "name": "PISAM - Polyclinique Internationale Sainte Anne-Marie",
+              "url": "https://www.groupepisam.com",
+              "description": "Excellence médicale, équipe dirigeante, mission, valeurs et certification ISO 9001:2015.",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Rue des Jardins, Cocody",
+                "addressLocality": "Abidjan",
+                "addressCountry": "CI"
+              }
+            }
+          })}
+        </script>
       </Helmet>
 
       <div className="flex flex-col min-h-screen">

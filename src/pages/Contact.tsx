@@ -92,6 +92,27 @@ const Contact = () => {
       <Helmet>
         <title>Contact - PISAM | Polyclinique Internationale Sainte Anne-Marie</title>
         <meta name="description" content="Contactez PISAM - Polyclinique Internationale Sainte Anne-Marie à Abidjan. Adresse, téléphone, email et formulaire de contact." />
+        <link rel="canonical" href="https://www.groupepisam.com/contact" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            "name": "Contactez PISAM",
+            "url": "https://www.groupepisam.com/contact",
+            "mainEntity": {
+              "@type": "MedicalBusiness",
+              "name": "PISAM",
+              "telephone": "+225 27 22 48 31 12",
+              "email": "info@groupepisam.com",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Rue des Jardins, Cocody",
+                "addressLocality": "Abidjan",
+                "addressCountry": "CI"
+              }
+            }
+          })}
+        </script>
       </Helmet>
       
       <Header />

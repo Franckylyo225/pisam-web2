@@ -160,6 +160,7 @@ const PisamPlus = () => {
           name="description" 
           content="Découvrez la Carte PISAM PLUS : carte d'identification patient couplée à une carte VISA prépayée. Avantages exclusifs, réductions chez nos partenaires. 10.000 FCFA."
         />
+        <link rel="canonical" href="https://www.groupepisam.com/pisam-plus" />
       </Helmet>
 
       <Header />

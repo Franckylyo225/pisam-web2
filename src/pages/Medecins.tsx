@@ -116,6 +116,17 @@ const Medecins = () => {
       <Helmet>
         <title>Nos Médecins - PISAM | Polyclinique Internationale Sainte Anne-Marie</title>
         <meta name="description" content="Découvrez notre équipe médicale d'excellence. Consultez l'annuaire des praticiens par spécialité et leurs disponibilités." />
+        <link rel="canonical" href="https://www.groupepisam.com/medecins" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "MedicalBusiness",
+            "name": "PISAM - Nos Médecins",
+            "url": "https://www.groupepisam.com/medecins",
+            "description": "Équipe médicale d'excellence de la PISAM. Annuaire des praticiens par spécialité.",
+            "medicalSpecialty": "MultiSpecialty"
+          })}
+        </script>
       </Helmet>
       
       <Header />
