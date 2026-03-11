@@ -62,6 +62,7 @@ const BioCSAM = () => {
           name="description" 
           content="BioCSAM, le Laboratoire de Biologie Clinique Sainte Anne-Marie, certifié ISO 9001. Analyses médicales 24h/24, 7j/7 à Abidjan. Hématologie, biochimie, anatomie pathologique."
         />
+        <link rel="canonical" href="https://www.groupepisam.com/biocsam" />
       </Helmet>
 
       <Header />

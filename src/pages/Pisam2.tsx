@@ -58,6 +58,7 @@ const Pisam2 = () => {
       <Helmet>
         <title>PISAM 2.0 - Transformation Digitale | PISAM - Polyclinique Internationale Sainte Anne-Marie</title>
         <meta name="description" content="Découvrez PISAM 2.0, le projet de transformation digitale de la PISAM pour devenir le hub régional de la santé en Afrique." />
+        <link rel="canonical" href="https://www.groupepisam.com/pisam-2" />
       </Helmet>
       
       <Header />

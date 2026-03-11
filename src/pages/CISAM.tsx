@@ -83,6 +83,7 @@ const CISAM = () => {
           name="description" 
           content="CISAM, Centre d'Imagerie Sainte Anne Marie. Scanner 64 barrettes, IRM, mammographie numérique, échographie à Abidjan. Équipements performants, radiologues experts."
         />
+        <link rel="canonical" href="https://www.groupepisam.com/cisam" />
       </Helmet>
 
       <Header />

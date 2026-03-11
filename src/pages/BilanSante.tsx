@@ -123,6 +123,7 @@ const BilanSante = () => {
       <Helmet>
         <title>Bilan de Santé - PISAM</title>
         <meta name="description" content="Prenez rendez-vous pour un bilan de santé complet à la Polyclinique Internationale Sainte Anne-Marie." />
+        <link rel="canonical" href="https://www.groupepisam.com/bilan-sante" />
       </Helmet>
 
       <Header />

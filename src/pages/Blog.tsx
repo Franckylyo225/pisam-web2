@@ -68,6 +68,7 @@ const Blog = () => {
           name="description" 
           content="Découvrez les dernières actualités, événements et conseils santé de la PISAM. Restez informé sur nos innovations et services médicaux." 
         />
+        <link rel="canonical" href="https://www.groupepisam.com/blog" />
       </Helmet>
 
       <div className="min-h-screen bg-background">

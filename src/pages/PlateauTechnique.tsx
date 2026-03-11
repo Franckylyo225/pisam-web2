@@ -148,6 +148,7 @@ const PlateauTechnique = () => {
           name="description"
           content="Découvrez le plateau technique de la PISAM : équipements de pointe, bloc opératoire moderne, imagerie avancée, laboratoire certifié ISO et unité de soins intensifs."
         />
+        <link rel="canonical" href="https://www.groupepisam.com/plateau-technique" />
       </Helmet>
 
       <Header />
