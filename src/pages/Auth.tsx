@@ -259,7 +259,7 @@ export default function Auth() {
                     <Input
                       id="forgot-email"
                       type="email"
-                      placeholder="admin@pisam.ci"
+                      placeholder="admin@groupepisam.com"
                       value={forgotPasswordEmail}
                       onChange={(e) => setForgotPasswordEmail(e.target.value)}
                       className="pl-10"
@@ -320,7 +320,7 @@ export default function Auth() {
                     <Input
                       id="login-email"
                       type="email"
-                      placeholder="admin@pisam.ci"
+                      placeholder="admin@groupepisam.com"
                       value={loginEmail}
                       onChange={(e) => setLoginEmail(e.target.value)}
                       className="pl-10"
@@ -389,7 +389,7 @@ export default function Auth() {
                     <Input
                       id="signup-email"
                       type="email"
-                      placeholder="admin@pisam.ci"
+                      placeholder="admin@groupepisam.com"
                       value={signupEmail}
                       onChange={(e) => setSignupEmail(e.target.value)}
                       className="pl-10"

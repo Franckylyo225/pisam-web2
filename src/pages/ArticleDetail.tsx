@@ -106,12 +106,12 @@ const ArticleDetail = () => {
       "name": "PISAM - Polyclinique Internationale Sainte Anne-Marie",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://pisam.ci/logo-pisam.png"
+        "url": "https://www.groupepisam.com/logo-pisam.png"
       }
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://pisam.ci/blog/${article.slug}`
+      "@id": `https://www.groupepisam.com/blog/${article.slug}`
     },
     "keywords": article.keywords?.join(", ")
   };
@@ -122,13 +122,13 @@ const ArticleDetail = () => {
         <title>{article.meta_title || article.title} | PISAM</title>
         <meta name="description" content={article.meta_description || article.excerpt || ''} />
         <meta name="keywords" content={article.keywords?.join(", ") || ''} />
-        <link rel="canonical" href={`https://pisam.ci/blog/${article.slug}`} />
+        <link rel="canonical" href={`https://www.groupepisam.com/blog/${article.slug}`} />
         
         {/* Open Graph */}
         <meta property="og:title" content={article.meta_title || article.title} />
         <meta property="og:description" content={article.meta_description || article.excerpt || ''} />
         <meta property="og:image" content={article.image_url || ''} />
-        <meta property="og:url" content={`https://pisam.ci/blog/${article.slug}`} />
+        <meta property="og:url" content={`https://www.groupepisam.com/blog/${article.slug}`} />
         <meta property="og:type" content="article" />
         <meta property="article:published_time" content={article.published_at || ''} />
         <meta property="article:modified_time" content={article.updated_at} />
