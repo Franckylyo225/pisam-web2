@@ -122,7 +122,7 @@ const ArticleDetail = () => {
         <title>{article.meta_title || article.title} | PISAM</title>
         <meta name="description" content={article.meta_description || article.excerpt || ''} />
         <meta name="keywords" content={article.keywords?.join(", ") || ''} />
-        <link rel="canonical" href={`https://pisam.ci/blog/${article.slug}`} />
+        <link rel="canonical" href={`https://www.groupepisam.com/blog/${article.slug}`} />
         
         {/* Open Graph */}
         <meta property="og:title" content={article.meta_title || article.title} />
