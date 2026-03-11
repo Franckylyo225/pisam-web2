@@ -37,7 +37,7 @@ const MentionsLegales = () => {
                   01 BP 1463 Abidjan 01<br />
                   Côte d'Ivoire<br /><br />
                   <strong>Téléphone :</strong> +225 27 22 48 31 12<br />
-                  <strong>Email :</strong> contact@pisam.ci
+                  <strong>Email :</strong> contact@groupepisam.com
                 </p>
               </div>
 

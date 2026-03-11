@@ -22,7 +22,7 @@ const Index = () => {
           content="PISAM, Polyclinique Internationale Sainte Anne-Marie à Abidjan. Excellence médicale, soins de qualité internationale, urgences 24h/24. Plus de 50 spécialités médicales." 
         />
         <meta name="keywords" content="PISAM, polyclinique, Abidjan, Côte d'Ivoire, hôpital, clinique, urgences, cardiologie, chirurgie, pédiatrie" />
-        <link rel="canonical" href="https://pisam.ci" />
+        <link rel="canonical" href="https://www.groupepisam.com" />
       </Helmet>
 
       <div className="min-h-screen bg-background">

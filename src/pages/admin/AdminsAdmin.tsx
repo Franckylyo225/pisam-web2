@@ -309,7 +309,7 @@ export default function AdminsAdmin() {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="utilisateur@pisam.ci"
+                    placeholder="utilisateur@groupepisam.com"
                     required
                   />
                   <p className="text-xs text-muted-foreground">

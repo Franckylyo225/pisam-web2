@@ -316,8 +316,8 @@ const BilanSante = () => {
               <div className="mt-8 text-center">
                 <p className="text-muted-foreground">
                   Pour toute question, contactez-nous à{" "}
-                  <a href="mailto:bilandesante@pisam.ci" className="text-primary font-semibold hover:underline">
-                    bilandesante@pisam.ci
+                  <a href="mailto:bilandesante@groupepisam.com" className="text-primary font-semibold hover:underline">
+                    bilandesante@groupepisam.com
                   </a>
                 </p>
               </div>

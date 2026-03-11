@@ -246,7 +246,7 @@ const BioCSAM = () => {
                       <p><strong>Secrétariat / RDV :</strong> (225) 27 22 48 31 23</p>
                       <p><strong>Service commercial :</strong> (225) 27 22 48 31 04</p>
                       <p><strong>Standard :</strong> (225) 27 22 48 31 31</p>
-                      <p><strong>Email :</strong> bilandesanté@pisam.ci</p>
+                      <p><strong>Email :</strong> bilandesante@groupepisam.com</p>
                     </div>
                   </CardContent>
                 </Card>

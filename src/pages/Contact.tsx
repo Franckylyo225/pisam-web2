@@ -193,8 +193,8 @@ const Contact = () => {
                   </div>
                   <h3 className="font-semibold text-lg mb-3">Emails</h3>
                   <div className="text-sm opacity-80 leading-relaxed space-y-1">
-                    <a href="mailto:info@pisam.ci" className="block hover:text-accent transition-colors">info@pisam.ci</a>
-                    <a href="mailto:bilandesante@pisam.ci" className="block hover:text-accent transition-colors">bilandesante@pisam.ci</a>
+                    <a href="mailto:info@groupepisam.com" className="block hover:text-accent transition-colors">info@groupepisam.com</a>
+                    <a href="mailto:bilandesante@groupepisam.com" className="block hover:text-accent transition-colors">bilandesante@groupepisam.com</a>
                   </div>
                 </div>
               </div>

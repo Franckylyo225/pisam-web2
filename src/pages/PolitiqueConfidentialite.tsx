@@ -201,7 +201,7 @@ const PolitiqueConfidentialite = () => {
                   Pour toute question concernant cette politique de confidentialité ou l'exercice de vos droits, vous pouvez nous contacter :
                 </p>
                 <p className="text-muted-foreground mt-4">
-                  <strong>Par email :</strong> contact@pisam.ci<br />
+                  <strong>Par email :</strong> contact@groupepisam.com<br />
                   <strong>Par courrier :</strong> PISAM - Service Protection des Données<br />
                   Abidjan, Cocody, Rue Cannebière, Av. Joseph Blohorn<br />
                   01 BP 1463 Abidjan 01, Côte d'Ivoire<br />
