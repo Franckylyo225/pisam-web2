@@ -200,7 +200,7 @@ const Pisam = () => {
                     className="rounded-2xl shadow-pisam w-full object-cover aspect-[4/3]"
                   />
                   <div className="absolute -bottom-6 -right-6 bg-primary text-primary-foreground p-6 rounded-xl shadow-lg hidden md:block">
-                    <p className="text-4xl font-bold">35+</p>
+                    <p className="text-4xl font-bold">40+</p>
                     <p className="text-sm opacity-90">Années d'excellence</p>
                   </div>
                 </div>
@@ -218,7 +218,7 @@ const Pisam = () => {
                       Abidjan, notre polyclinique incarne l'excellence médicale africaine.
                     </p>
                     <p>
-                      Avec plus de 35 ans d'expérience, PISAM s'est imposée comme un acteur majeur de la santé 
+                      Avec plus de 40 ans d'expérience, PISAM s'est imposée comme un acteur majeur de la santé 
                       privée, offrant des soins de qualité internationale dans un environnement moderne et 
                       accueillant.
                     </p>
