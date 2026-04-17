@@ -213,9 +213,9 @@ const Pisam = () => {
                   </h2>
                   <div className="space-y-4 text-muted-foreground">
                     <p>
-                      Fondée en 1987, la Polyclinique Internationale Sainte Anne-Marie (PISAM) est un établissement 
+                      Fondée en 1985, la Polyclinique Internationale Sainte Anne-Marie (PISAM) est un établissement 
                       de santé de référence en Côte d'Ivoire et en Afrique de l'Ouest. Située au cœur de Cocody à 
-                      Abidjan, notre clinique incarne l'excellence médicale africaine.
+                      Abidjan, notre polyclinique incarne l'excellence médicale africaine.
                     </p>
                     <p>
                       Avec plus de 35 ans d'expérience, PISAM s'est imposée comme un acteur majeur de la santé 
