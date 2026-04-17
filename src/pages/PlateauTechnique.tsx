@@ -49,9 +49,9 @@ const services = [
   {
     icon: HeartPulse,
     title: "Service d'hémodialyse",
-    description: "Doté de 6 postes de dialyse, le service d'hémodialyse est disponible 24h/24.",
+    description: "Doté de 13 postes de dialyse, le service d'hémodialyse est disponible 24h/24.",
     features: [
-      "6 postes de dialyse modernes",
+      "13 postes de dialyse modernes",
       "Disponibilité 24h/24",
       "Équipe spécialisée",
     ],
