@@ -71,7 +71,7 @@ const AboutSection = () => {
               Polyclinique Internationale Sainte Anne-Marie (PISAM)
             </h2>
             <p className="text-white/90 text-sm mb-5 leading-relaxed">
-              La Polyclinique Internationale Sainte Anne-Marie (PISAM) est un établissement hospitalier pluridisciplinaire, leader dans le secteur privé de la santé en Côte d'Ivoire et dans la sous-région depuis plus de 30 ans.
+              La Polyclinique Internationale Sainte Anne-Marie (PISAM) est un établissement hospitalier pluridisciplinaire, leader dans le secteur privé de la santé en Côte d'Ivoire et dans la sous-région depuis plus de 40 ans.
             </p>
             <div className="grid grid-cols-1 gap-3 mb-5">
               <div className="flex items-center gap-2">
