@@ -16,6 +16,29 @@ interface ContactNotificationRequest {
   message: string;
 }
 
+// Escape HTML to prevent injection in email templates
+const escapeHtml = (value: unknown): string => {
+  if (value === null || value === undefined) return "";
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};
+
+// Basic input validation to mirror DB CHECK constraints
+const validate = (body: ContactNotificationRequest): string | null => {
+  if (!body || typeof body !== "object") return "Invalid request body";
+  const { name, email, phone, subject, message } = body;
+  if (typeof name !== "string" || name.trim().length < 2 || name.length > 100) return "Invalid name";
+  if (typeof email !== "string" || email.length > 255 || !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email)) return "Invalid email";
+  if (typeof subject !== "string" || subject.length === 0 || subject.length > 200) return "Invalid subject";
+  if (typeof message !== "string" || message.trim().length < 1 || message.length > 5000) return "Invalid message";
+  if (phone !== null && phone !== undefined && (typeof phone !== "string" || phone.length > 50)) return "Invalid phone";
+  return null;
+};
+
 const handler = async (req: Request): Promise<Response> => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -23,9 +46,19 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { name, email, phone, subject, message }: ContactNotificationRequest = await req.json();
+    const body: ContactNotificationRequest = await req.json();
 
-    console.log("Received contact notification request:", { name, email, subject });
+    const validationError = validate(body);
+    if (validationError) {
+      return new Response(
+        JSON.stringify({ error: validationError }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    const { name, email, phone, subject, message } = body;
+
+    console.log("Received contact notification request:", { subject });
 
     // Create Supabase client with service role to bypass RLS
     const supabaseUrl = Deno.env.get("SUPABASE_URL") as string;
@@ -63,6 +96,13 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("Sending notification to:", settings.email_addresses);
 
+    // Escape ALL user-provided values before interpolating into HTML
+    const safeName = escapeHtml(name);
+    const safeEmail = escapeHtml(email);
+    const safePhone = phone ? escapeHtml(phone) : null;
+    const safeSubject = escapeHtml(subject);
+    const safeMessage = escapeHtml(message);
+
     // Send email using Resend API directly
     const emailResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -95,30 +135,30 @@ const handler = async (req: Request): Promise<Response> => {
           <div class="container">
             <div class="header">
               <h1 style="margin: 0;">Nouveau Message de Contact</h1>
-              <p style="margin: 10px 0 0 0; opacity: 0.9;">${subject}</p>
+              <p style="margin: 10px 0 0 0; opacity: 0.9;">${safeSubject}</p>
             </div>
             <div class="content">
               <div class="field">
                 <div class="label">Nom</div>
-                <div class="value">${name}</div>
+                <div class="value">${safeName}</div>
               </div>
               <div class="field">
                 <div class="label">Email</div>
-                <div class="value"><a href="mailto:${email}">${email}</a></div>
+                <div class="value">${safeEmail}</div>
               </div>
-              ${phone ? `
+              ${safePhone ? `
               <div class="field">
                 <div class="label">Téléphone</div>
-                <div class="value"><a href="tel:${phone}">${phone}</a></div>
+                <div class="value">${safePhone}</div>
               </div>
               ` : ''}
               <div class="field">
                 <div class="label">Sujet</div>
-                <div class="value">${subject}</div>
+                <div class="value">${safeSubject}</div>
               </div>
               <div class="field">
                 <div class="label">Message</div>
-                <div class="value message-box">${message}</div>
+                <div class="value message-box">${safeMessage}</div>
               </div>
             </div>
             <div class="footer">
@@ -138,16 +178,16 @@ const handler = async (req: Request): Promise<Response> => {
       throw new Error(emailResult.message || "Failed to send email");
     }
 
-    console.log("Email sent successfully:", emailResult);
+    console.log("Email sent successfully");
 
     return new Response(
-      JSON.stringify({ success: true, emailResult }),
+      JSON.stringify({ success: true }),
       { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
   } catch (error: any) {
     console.error("Error in send-contact-notification function:", error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: "An error occurred while processing the request" }),
       { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
   }
