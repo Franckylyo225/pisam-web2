@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 import heroImage from "@/assets/pisam-aerial-view.jpg";
 import plateauBiocsam from "@/assets/plateau-biocsam.jpg";
-import plateauScanner from "@/assets/plateau-scanner.jpg";
+import plateauHemodialyse from "@/assets/plateau-hemodialyse.jpg";
 import plateauImagerie from "@/assets/plateau-imagerie.jpg";
 import plateauBlocOperatoire from "@/assets/plateau-bloc-operatoire.jpg";
 
@@ -55,7 +55,7 @@ const services = [
       "Disponibilité 24h/24",
       "Équipe spécialisée",
     ],
-    image: plateauScanner,
+    image: plateauHemodialyse,
   },
   {
     icon: Microscope,
