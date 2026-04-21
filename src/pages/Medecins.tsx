@@ -306,32 +306,61 @@ const Medecins = () => {
                   <Clock className="h-5 w-5 text-primary" />
                   Disponibilités
                 </h4>
-                
-                {/* Days */}
-                {selectedDoctor.available_days && selectedDoctor.available_days.length > 0 && (
-                  <div>
-                    <p className="text-sm text-muted-foreground mb-2">Jours de consultation</p>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedDoctor.available_days.map((day) => (
-                        <Badge key={day} variant="secondary" className="bg-accent/20 text-accent-foreground">
-                          {day}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                )}
 
-                {/* Hours */}
-                {selectedDoctor.available_hours && (
-                  <div>
-                    <p className="text-sm text-muted-foreground mb-2">Horaires</p>
-                    <div className="p-4 bg-primary/10 rounded-lg text-center">
-                      <p className="text-lg font-semibold text-primary">
-                        {selectedDoctor.available_hours}
-                      </p>
-                    </div>
-                  </div>
-                )}
+                {(() => {
+                  const availability = selectedDoctor.availability || {};
+                  const daysWithSlots = Object.keys(availability).filter(
+                    (d) => Array.isArray(availability[d]) && availability[d].length > 0
+                  );
+
+                  if (daysWithSlots.length > 0) {
+                    const orderedDays = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche']
+                      .filter(d => daysWithSlots.includes(d));
+                    return (
+                      <div className="space-y-2">
+                        {orderedDays.map((day) => (
+                          <div key={day} className="flex items-start justify-between gap-3 p-3 rounded-lg bg-primary/5 border border-primary/10">
+                            <span className="font-semibold text-foreground min-w-[90px]">{day}</span>
+                            <div className="flex flex-wrap gap-2 justify-end">
+                              {availability[day].map((slot: { start: string; end: string }, idx: number) => (
+                                <Badge key={idx} variant="secondary" className="bg-primary/10 text-primary font-medium">
+                                  {slot.start} – {slot.end}
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <>
+                      {selectedDoctor.available_days && selectedDoctor.available_days.length > 0 && (
+                        <div>
+                          <p className="text-sm text-muted-foreground mb-2">Jours de consultation</p>
+                          <div className="flex flex-wrap gap-2">
+                            {selectedDoctor.available_days.map((day) => (
+                              <Badge key={day} variant="secondary" className="bg-accent/20 text-accent-foreground">
+                                {day}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      {selectedDoctor.available_hours && (
+                        <div>
+                          <p className="text-sm text-muted-foreground mb-2">Horaires</p>
+                          <div className="p-4 bg-primary/10 rounded-lg text-center">
+                            <p className="text-lg font-semibold text-primary">
+                              {selectedDoctor.available_hours}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                    </>
+                  );
+                })()}
 
                 {/* Contact CTA */}
                 <div className="p-4 bg-muted/50 rounded-lg text-center">
