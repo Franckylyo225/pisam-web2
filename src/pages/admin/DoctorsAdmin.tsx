@@ -144,6 +144,7 @@ export default function DoctorsAdmin() {
       email: doctorFormData.email || null,
       available_days: doctorFormData.available_days,
       available_hours: doctorFormData.available_hours || null,
+      availability: doctorFormData.availability,
       is_active: doctorFormData.is_active,
     };
 
