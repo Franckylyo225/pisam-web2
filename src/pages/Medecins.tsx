@@ -24,6 +24,7 @@ interface Doctor {
   image_url: string | null;
   available_days: string[] | null;
   available_hours: string | null;
+  availability: Record<string, { start: string; end: string }[]> | null;
   specialty: Specialty | null;
 }
 
