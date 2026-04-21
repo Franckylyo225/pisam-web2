@@ -69,6 +69,7 @@ export default function DoctorsAdmin() {
     email: '',
     available_days: [] as string[],
     available_hours: '',
+    availability: {} as Availability,
     is_active: true,
   });
 
