@@ -184,12 +184,39 @@ export default function DoctorsAdmin() {
   };
 
   const toggleDay = (day: string) => {
-    setDoctorFormData(prev => ({
-      ...prev,
-      available_days: prev.available_days.includes(day)
-        ? prev.available_days.filter(d => d !== day)
-        : [...prev.available_days, day]
-    }));
+    setDoctorFormData(prev => {
+      const has = prev.available_days.includes(day);
+      const newDays = has ? prev.available_days.filter(d => d !== day) : [...prev.available_days, day];
+      const newAvailability = { ...prev.availability };
+      if (has) {
+        delete newAvailability[day];
+      } else if (!newAvailability[day] || newAvailability[day].length === 0) {
+        newAvailability[day] = [{ ...DEFAULT_SLOT }];
+      }
+      return { ...prev, available_days: newDays, availability: newAvailability };
+    });
+  };
+
+  const updateSlot = (day: string, idx: number, field: 'start' | 'end', value: string) => {
+    setDoctorFormData(prev => {
+      const slots = [...(prev.availability[day] || [])];
+      slots[idx] = { ...slots[idx], [field]: value };
+      return { ...prev, availability: { ...prev.availability, [day]: slots } };
+    });
+  };
+
+  const addSlot = (day: string) => {
+    setDoctorFormData(prev => {
+      const slots = [...(prev.availability[day] || []), { start: '14:00', end: '17:00' }];
+      return { ...prev, availability: { ...prev.availability, [day]: slots } };
+    });
+  };
+
+  const removeSlot = (day: string, idx: number) => {
+    setDoctorFormData(prev => {
+      const slots = (prev.availability[day] || []).filter((_, i) => i !== idx);
+      return { ...prev, availability: { ...prev.availability, [day]: slots } };
+    });
   };
 
   // Specialty functions
