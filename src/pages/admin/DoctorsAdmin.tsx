@@ -389,31 +389,73 @@ export default function DoctorsAdmin() {
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <Label>Jours de disponibilité</Label>
-                    <div className="flex flex-wrap gap-2">
-                      {DAYS.map(day => (
-                        <Button
-                          key={day}
-                          type="button"
-                          variant={doctorFormData.available_days.includes(day) ? 'default' : 'outline'}
-                          size="sm"
-                          onClick={() => toggleDay(day)}
-                        >
-                          {day}
-                        </Button>
-                      ))}
+                  <div className="space-y-3">
+                    <Label>Disponibilités par jour</Label>
+                    <p className="text-xs text-muted-foreground">
+                      Cochez un jour pour activer la consultation, puis définissez une ou plusieurs plages horaires (matin / après-midi).
+                    </p>
+                    <div className="space-y-3">
+                      {DAYS.map(day => {
+                        const isActive = doctorFormData.available_days.includes(day);
+                        const slots = doctorFormData.availability[day] || [];
+                        return (
+                          <div key={day} className="rounded-md border p-3 space-y-3">
+                            <div className="flex items-center justify-between">
+                              <Button
+                                type="button"
+                                variant={isActive ? 'default' : 'outline'}
+                                size="sm"
+                                onClick={() => toggleDay(day)}
+                              >
+                                {day}
+                              </Button>
+                              {isActive && (
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => addSlot(day)}
+                                >
+                                  <Plus className="h-3 w-3 mr-1" /> Ajouter une plage
+                                </Button>
+                              )}
+                            </div>
+                            {isActive && (
+                              <div className="space-y-2">
+                                {slots.length === 0 && (
+                                  <p className="text-xs text-muted-foreground">Aucune plage. Cliquez sur "Ajouter une plage".</p>
+                                )}
+                                {slots.map((slot, idx) => (
+                                  <div key={idx} className="flex items-center gap-2">
+                                    <Input
+                                      type="time"
+                                      value={slot.start}
+                                      onChange={(e) => updateSlot(day, idx, 'start', e.target.value)}
+                                      className="w-32"
+                                    />
+                                    <span className="text-muted-foreground text-sm">à</span>
+                                    <Input
+                                      type="time"
+                                      value={slot.end}
+                                      onChange={(e) => updateSlot(day, idx, 'end', e.target.value)}
+                                      className="w-32"
+                                    />
+                                    <Button
+                                      type="button"
+                                      variant="ghost"
+                                      size="icon"
+                                      onClick={() => removeSlot(day, idx)}
+                                    >
+                                      <Trash2 className="h-4 w-4 text-destructive" />
+                                    </Button>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
                     </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="available_hours">Horaires</Label>
-                    <Input
-                      id="available_hours"
-                      value={doctorFormData.available_hours}
-                      onChange={(e) => setDoctorFormData(prev => ({ ...prev, available_hours: e.target.value }))}
-                      placeholder="Ex: 08h00 - 17h00"
-                    />
                   </div>
 
                   <div className="flex items-center gap-2">
