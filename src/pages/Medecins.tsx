@@ -55,6 +55,7 @@ const Medecins = () => {
         image_url: string | null;
         available_days: string[] | null;
         available_hours: string | null;
+        availability: any;
         specialty_id: string | null;
       }
       
@@ -67,6 +68,7 @@ const Medecins = () => {
           image_url,
           available_days,
           available_hours,
+          availability,
           specialty_id
         `)
         .order('name') as { data: DoctorPublic[] | null; error: any };
@@ -84,6 +86,7 @@ const Medecins = () => {
           image_url: doctor.image_url,
           available_days: doctor.available_days,
           available_hours: doctor.available_hours,
+          availability: (doctor.availability && typeof doctor.availability === 'object') ? doctor.availability : null,
           specialty: specialtiesData.find(s => s.id === doctor.specialty_id) || null
         }));
         setDoctors(doctorsWithSpecialty);

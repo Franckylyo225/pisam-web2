@@ -523,6 +523,7 @@ export type Database = {
     Views: {
       doctors_public: {
         Row: {
+          availability: Json | null
           available_days: string[] | null
           available_hours: string | null
           bio: string | null
@@ -535,6 +536,7 @@ export type Database = {
           updated_at: string | null
         }
         Insert: {
+          availability?: Json | null
           available_days?: string[] | null
           available_hours?: string | null
           bio?: string | null
@@ -547,6 +549,7 @@ export type Database = {
           updated_at?: string | null
         }
         Update: {
+          availability?: Json | null
           available_days?: string[] | null
           available_hours?: string | null
           bio?: string | null
