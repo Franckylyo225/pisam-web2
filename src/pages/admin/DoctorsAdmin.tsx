@@ -108,6 +108,7 @@ export default function DoctorsAdmin() {
       email: '',
       available_days: [],
       available_hours: '',
+      availability: {},
       is_active: true,
     });
     setEditingDoctor(null);
@@ -124,6 +125,7 @@ export default function DoctorsAdmin() {
       email: doctor.email || '',
       available_days: doctor.available_days || [],
       available_hours: doctor.available_hours || '',
+      availability: (doctor.availability && typeof doctor.availability === 'object' ? doctor.availability : {}) as Availability,
       is_active: doctor.is_active,
     });
     setDoctorDialogOpen(true);
