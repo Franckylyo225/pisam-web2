@@ -32,11 +32,17 @@ interface Doctor {
   email: string | null;
   available_days: string[];
   available_hours: string | null;
+  availability: Record<string, { start: string; end: string }[]> | null;
   is_active: boolean;
   specialties?: Specialty | null;
 }
 
 const DAYS = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+
+type DaySlot = { start: string; end: string };
+type Availability = Record<string, DaySlot[]>;
+
+const DEFAULT_SLOT: DaySlot = { start: '08:00', end: '17:00' };
 
 export default function DoctorsAdmin() {
   const [doctors, setDoctors] = useState<Doctor[]>([]);
