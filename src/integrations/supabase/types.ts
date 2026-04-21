@@ -165,6 +165,7 @@ export type Database = {
       }
       doctors: {
         Row: {
+          availability: Json
           available_days: string[] | null
           available_hours: string | null
           bio: string | null
@@ -179,6 +180,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          availability?: Json
           available_days?: string[] | null
           available_hours?: string | null
           bio?: string | null
@@ -193,6 +195,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          availability?: Json
           available_days?: string[] | null
           available_hours?: string | null
           bio?: string | null

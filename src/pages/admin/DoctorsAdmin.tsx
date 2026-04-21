@@ -32,11 +32,17 @@ interface Doctor {
   email: string | null;
   available_days: string[];
   available_hours: string | null;
+  availability: any;
   is_active: boolean;
   specialties?: Specialty | null;
 }
 
 const DAYS = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+
+type DaySlot = { start: string; end: string };
+type Availability = Record<string, DaySlot[]>;
+
+const DEFAULT_SLOT: DaySlot = { start: '08:00', end: '17:00' };
 
 export default function DoctorsAdmin() {
   const [doctors, setDoctors] = useState<Doctor[]>([]);
@@ -63,6 +69,7 @@ export default function DoctorsAdmin() {
     email: '',
     available_days: [] as string[],
     available_hours: '',
+    availability: {} as Availability,
     is_active: true,
   });
 
@@ -101,6 +108,7 @@ export default function DoctorsAdmin() {
       email: '',
       available_days: [],
       available_hours: '',
+      availability: {},
       is_active: true,
     });
     setEditingDoctor(null);
@@ -117,6 +125,7 @@ export default function DoctorsAdmin() {
       email: doctor.email || '',
       available_days: doctor.available_days || [],
       available_hours: doctor.available_hours || '',
+      availability: (doctor.availability && typeof doctor.availability === 'object' ? doctor.availability : {}) as Availability,
       is_active: doctor.is_active,
     });
     setDoctorDialogOpen(true);
@@ -135,6 +144,7 @@ export default function DoctorsAdmin() {
       email: doctorFormData.email || null,
       available_days: doctorFormData.available_days,
       available_hours: doctorFormData.available_hours || null,
+      availability: doctorFormData.availability,
       is_active: doctorFormData.is_active,
     };
 
@@ -174,12 +184,39 @@ export default function DoctorsAdmin() {
   };
 
   const toggleDay = (day: string) => {
-    setDoctorFormData(prev => ({
-      ...prev,
-      available_days: prev.available_days.includes(day)
-        ? prev.available_days.filter(d => d !== day)
-        : [...prev.available_days, day]
-    }));
+    setDoctorFormData(prev => {
+      const has = prev.available_days.includes(day);
+      const newDays = has ? prev.available_days.filter(d => d !== day) : [...prev.available_days, day];
+      const newAvailability = { ...prev.availability };
+      if (has) {
+        delete newAvailability[day];
+      } else if (!newAvailability[day] || newAvailability[day].length === 0) {
+        newAvailability[day] = [{ ...DEFAULT_SLOT }];
+      }
+      return { ...prev, available_days: newDays, availability: newAvailability };
+    });
+  };
+
+  const updateSlot = (day: string, idx: number, field: 'start' | 'end', value: string) => {
+    setDoctorFormData(prev => {
+      const slots = [...(prev.availability[day] || [])];
+      slots[idx] = { ...slots[idx], [field]: value };
+      return { ...prev, availability: { ...prev.availability, [day]: slots } };
+    });
+  };
+
+  const addSlot = (day: string) => {
+    setDoctorFormData(prev => {
+      const slots = [...(prev.availability[day] || []), { start: '14:00', end: '17:00' }];
+      return { ...prev, availability: { ...prev.availability, [day]: slots } };
+    });
+  };
+
+  const removeSlot = (day: string, idx: number) => {
+    setDoctorFormData(prev => {
+      const slots = (prev.availability[day] || []).filter((_, i) => i !== idx);
+      return { ...prev, availability: { ...prev.availability, [day]: slots } };
+    });
   };
 
   // Specialty functions
@@ -352,31 +389,73 @@ export default function DoctorsAdmin() {
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <Label>Jours de disponibilité</Label>
-                    <div className="flex flex-wrap gap-2">
-                      {DAYS.map(day => (
-                        <Button
-                          key={day}
-                          type="button"
-                          variant={doctorFormData.available_days.includes(day) ? 'default' : 'outline'}
-                          size="sm"
-                          onClick={() => toggleDay(day)}
-                        >
-                          {day}
-                        </Button>
-                      ))}
+                  <div className="space-y-3">
+                    <Label>Disponibilités par jour</Label>
+                    <p className="text-xs text-muted-foreground">
+                      Cochez un jour pour activer la consultation, puis définissez une ou plusieurs plages horaires (matin / après-midi).
+                    </p>
+                    <div className="space-y-3">
+                      {DAYS.map(day => {
+                        const isActive = doctorFormData.available_days.includes(day);
+                        const slots = doctorFormData.availability[day] || [];
+                        return (
+                          <div key={day} className="rounded-md border p-3 space-y-3">
+                            <div className="flex items-center justify-between">
+                              <Button
+                                type="button"
+                                variant={isActive ? 'default' : 'outline'}
+                                size="sm"
+                                onClick={() => toggleDay(day)}
+                              >
+                                {day}
+                              </Button>
+                              {isActive && (
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => addSlot(day)}
+                                >
+                                  <Plus className="h-3 w-3 mr-1" /> Ajouter une plage
+                                </Button>
+                              )}
+                            </div>
+                            {isActive && (
+                              <div className="space-y-2">
+                                {slots.length === 0 && (
+                                  <p className="text-xs text-muted-foreground">Aucune plage. Cliquez sur "Ajouter une plage".</p>
+                                )}
+                                {slots.map((slot, idx) => (
+                                  <div key={idx} className="flex items-center gap-2">
+                                    <Input
+                                      type="time"
+                                      value={slot.start}
+                                      onChange={(e) => updateSlot(day, idx, 'start', e.target.value)}
+                                      className="w-32"
+                                    />
+                                    <span className="text-muted-foreground text-sm">à</span>
+                                    <Input
+                                      type="time"
+                                      value={slot.end}
+                                      onChange={(e) => updateSlot(day, idx, 'end', e.target.value)}
+                                      className="w-32"
+                                    />
+                                    <Button
+                                      type="button"
+                                      variant="ghost"
+                                      size="icon"
+                                      onClick={() => removeSlot(day, idx)}
+                                    >
+                                      <Trash2 className="h-4 w-4 text-destructive" />
+                                    </Button>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
                     </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="available_hours">Horaires</Label>
-                    <Input
-                      id="available_hours"
-                      value={doctorFormData.available_hours}
-                      onChange={(e) => setDoctorFormData(prev => ({ ...prev, available_hours: e.target.value }))}
-                      placeholder="Ex: 08h00 - 17h00"
-                    />
                   </div>
 
                   <div className="flex items-center gap-2">
