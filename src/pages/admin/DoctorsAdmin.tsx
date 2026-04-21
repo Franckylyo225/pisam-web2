@@ -32,7 +32,7 @@ interface Doctor {
   email: string | null;
   available_days: string[];
   available_hours: string | null;
-  availability: Record<string, { start: string; end: string }[]> | null;
+  availability: any;
   is_active: boolean;
   specialties?: Specialty | null;
 }
