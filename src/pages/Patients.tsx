@@ -11,7 +11,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import Autoplay from "embla-carousel-autoplay";
-import { Shield, FileText, ClipboardList, LogOut, Users, Search, CheckCircle, XCircle, Loader2 } from "lucide-react";
+import { Shield, FileText, ClipboardList, LogOut, Users, Search, CheckCircle, XCircle, Loader2, ChevronDown } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import contactHero from "@/assets/contact-hero.jpg";
 const charteArticles = [{
   title: "Article 1 : Droit à l'information",
@@ -51,6 +52,8 @@ const Patients = () => {
   const [searchInsurance, setSearchInsurance] = useState('');
   const [searchResult, setSearchResult] = useState<'found' | 'not-found' | null>(null);
   const [isSearching, setIsSearching] = useState(false);
+  const [showFullList, setShowFullList] = useState(false);
+  const [fullListFilter, setFullListFilter] = useState('');
 
   const { data: insurancePartners } = useQuery({
     queryKey: ['insurance-partners'],
@@ -186,41 +189,114 @@ const Patients = () => {
               </div>
             </div>
 
-            {insurancePartners && insurancePartners.length > 0 ?
-          <Carousel opts={{
-            align: "start",
-            loop: true
-          }} plugins={[Autoplay({
-            delay: 2000,
-            stopOnInteraction: false
-          })]} className="w-full">
-                <CarouselContent className="-ml-4">
-                  {insurancePartners.map((insurance) =>
-              <CarouselItem key={insurance.id} className="pl-4 basis-1/2 md:basis-1/4 lg:basis-1/6">
-                      <div className="p-4">
-                        <div className="bg-white h-20 rounded-xl flex items-center justify-center shadow-md hover:shadow-lg transition-shadow overflow-hidden p-3">
-                          {insurance.logo_url ?
-                    <img
-                      src={insurance.logo_url}
-                      alt={insurance.name}
-                      className="max-w-full max-h-full object-contain" /> :
+            {(() => {
+              const partnersWithLogo = insurancePartners?.filter((p) => !!p.logo_url) ?? [];
+              const sortedAll = [...(insurancePartners ?? [])].sort((a, b) =>
+                a.name.localeCompare(b.name, 'fr', { sensitivity: 'base' })
+              );
+              const filteredAll = sortedAll.filter((p) =>
+                p.name.toLowerCase().includes(fullListFilter.toLowerCase())
+              );
 
+              return (
+                <>
+                  {partnersWithLogo.length > 0 ? (
+                    <Carousel
+                      opts={{ align: "start", loop: true }}
+                      plugins={[Autoplay({ delay: 2000, stopOnInteraction: false })]}
+                      className="w-full"
+                    >
+                      <CarouselContent className="-ml-4">
+                        {partnersWithLogo.map((insurance) => (
+                          <CarouselItem
+                            key={insurance.id}
+                            className="pl-4 basis-1/2 md:basis-1/4 lg:basis-1/6"
+                          >
+                            <div className="p-4">
+                              <div className="bg-white h-20 rounded-xl flex items-center justify-center shadow-md hover:shadow-lg transition-shadow overflow-hidden p-3">
+                                <img
+                                  src={insurance.logo_url!}
+                                  alt={insurance.name}
+                                  className="max-w-full max-h-full object-contain"
+                                />
+                              </div>
+                            </div>
+                          </CarouselItem>
+                        ))}
+                      </CarouselContent>
+                    </Carousel>
+                  ) : insurancePartners && insurancePartners.length > 0 ? null : (
+                    <p className="text-center text-muted-foreground py-8">
+                      Aucune assurance partenaire configurée pour le moment
+                    </p>
+                  )}
 
-                    <span className="font-bold text-sm text-center text-primary">
-                              {insurance.name}
+                  {/* Liste complète déroulante */}
+                  {sortedAll.length > 0 && (
+                    <div className="max-w-3xl mx-auto mt-10">
+                      <Collapsible open={showFullList} onOpenChange={setShowFullList}>
+                        <CollapsibleTrigger asChild>
+                          <Button variant="outline" className="w-full justify-between">
+                            <span>
+                              Voir la liste complète des assurances acceptées ({sortedAll.length})
                             </span>
-                    }
-                        </div>
-                      </div>
-                    </CarouselItem>
-              )}
-                </CarouselContent>
-              </Carousel> :
+                            <ChevronDown
+                              className={`h-4 w-4 transition-transform ${
+                                showFullList ? 'rotate-180' : ''
+                              }`}
+                            />
+                          </Button>
+                        </CollapsibleTrigger>
+                        <CollapsibleContent className="mt-4">
+                          <div className="bg-card rounded-2xl p-6 shadow-sm border space-y-4">
+                            <div className="relative">
+                              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                              <Input
+                                type="text"
+                                placeholder="Filtrer la liste..."
+                                value={fullListFilter}
+                                onChange={(e) => setFullListFilter(e.target.value)}
+                                className="pl-10"
+                              />
+                            </div>
 
-          <p className="text-center text-muted-foreground py-8">
-                Aucune assurance partenaire configurée pour le moment
-              </p>
-          }
+                            {filteredAll.length > 0 ? (
+                              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 max-h-96 overflow-y-auto">
+                                {filteredAll.map((insurance) => (
+                                  <div
+                                    key={insurance.id}
+                                    className="flex items-center gap-3 p-3 rounded-lg bg-muted/40 hover:bg-muted transition-colors"
+                                  >
+                                    <div className="w-10 h-10 rounded-md bg-white flex items-center justify-center flex-shrink-0 overflow-hidden border">
+                                      {insurance.logo_url ? (
+                                        <img
+                                          src={insurance.logo_url}
+                                          alt={insurance.name}
+                                          className="max-w-full max-h-full object-contain p-1"
+                                        />
+                                      ) : (
+                                        <Shield className="h-4 w-4 text-muted-foreground" />
+                                      )}
+                                    </div>
+                                    <span className="text-sm font-medium text-foreground truncate">
+                                      {insurance.name}
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+                            ) : (
+                              <p className="text-center text-sm text-muted-foreground py-6">
+                                Aucun résultat pour "{fullListFilter}"
+                              </p>
+                            )}
+                          </div>
+                        </CollapsibleContent>
+                      </Collapsible>
+                    </div>
+                  )}
+                </>
+              );
+            })()}
           </div>
         </section>
 
