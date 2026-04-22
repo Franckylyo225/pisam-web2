@@ -31,7 +31,7 @@ import { CSS } from '@dnd-kit/utilities';
 interface InsurancePartner {
   id: string;
   name: string;
-  logo_url: string;
+  logo_url: string | null;
   website_url: string | null;
   display_order: number;
   is_active: boolean;
@@ -93,11 +93,16 @@ function SortablePartnerCard({ partner, onEdit, onDelete, onToggleActive }: Sort
                   className="max-w-full max-h-full object-contain p-2"
                 />
               ) : (
-                <span className="text-xs text-muted-foreground">Pas de logo</span>
+                <span className="text-xs text-muted-foreground italic">Sans logo (recherche uniquement)</span>
               )}
             </div>
             
             <h4 className="font-medium text-sm truncate">{partner.name}</h4>
+            {!partner.logo_url && (
+              <span className="inline-block text-[10px] uppercase tracking-wide bg-muted px-2 py-0.5 rounded mt-1 text-muted-foreground">
+                Hors carrousel
+              </span>
+            )}
             
             {partner.website_url && (
               <a 
@@ -179,7 +184,7 @@ export function InsurancePartnersManager() {
         .from('insurance_partners')
         .insert({
           name: data.name,
-          logo_url: data.logo_url,
+          logo_url: data.logo_url || null,
           website_url: data.website_url || null,
           is_active: data.is_active,
           display_order: maxOrder + 1,
@@ -203,7 +208,7 @@ export function InsurancePartnersManager() {
         .from('insurance_partners')
         .update({
           name: data.name,
-          logo_url: data.logo_url,
+          logo_url: data.logo_url || null,
           website_url: data.website_url || null,
           is_active: data.is_active,
         })
@@ -316,8 +321,8 @@ export function InsurancePartnersManager() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.logo_url) {
-      toast.error('Le nom et le logo sont obligatoires');
+    if (!formData.name) {
+      toast.error('Le nom de l\'assurance est obligatoire');
       return;
     }
 
@@ -373,11 +378,16 @@ export function InsurancePartnersManager() {
                 />
               </div>
 
-              <ImageUploader
-                value={formData.logo_url}
-                onChange={(url) => setFormData({ ...formData, logo_url: url })}
-                bucket="article-images"
-              />
+              <div className="space-y-1">
+                <ImageUploader
+                  value={formData.logo_url}
+                  onChange={(url) => setFormData({ ...formData, logo_url: url })}
+                  bucket="article-images"
+                />
+                <p className="text-xs text-muted-foreground">
+                  Logo optionnel. Sans logo, l'assurance reste recherchable mais n'apparaît pas dans le carrousel défilant.
+                </p>
+              </div>
 
               <div className="space-y-2">
                 <Label htmlFor="website_url">Site web (optionnel)</Label>
