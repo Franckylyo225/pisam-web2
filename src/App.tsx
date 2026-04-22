@@ -34,7 +34,9 @@ import CMSAdmin from "./pages/admin/CMSAdmin";
 import HealthCheckAdmin from "./pages/admin/HealthCheckAdmin";
 import NotificationSettingsAdmin from "./pages/admin/NotificationSettingsAdmin";
 import NewsletterAdmin from "./pages/admin/NewsletterAdmin";
+import MaintenanceAdmin from "./pages/admin/MaintenanceAdmin";
 import NotFound from "./pages/NotFound";
+import { MaintenanceGate } from "./components/MaintenanceGate";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +48,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <MaintenanceGate>
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/pisam" element={<Pisam />} />
@@ -77,10 +80,12 @@ const App = () => (
               <Route path="/admin/health-check" element={<AdminLayout><HealthCheckAdmin /></AdminLayout>} />
               <Route path="/admin/notifications" element={<AdminLayout><NotificationSettingsAdmin /></AdminLayout>} />
               <Route path="/admin/newsletter" element={<AdminLayout><NewsletterAdmin /></AdminLayout>} />
+              <Route path="/admin/maintenance" element={<AdminLayout><MaintenanceAdmin /></AdminLayout>} />
               
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
+            </MaintenanceGate>
           </BrowserRouter>
         </TooltipProvider>
       </AuthProvider>

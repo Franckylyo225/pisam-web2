@@ -28,7 +28,8 @@ import {
   Palette,
   HeartPulse,
   Bell,
-  Newspaper
+  Newspaper,
+  Wrench
 } from 'lucide-react';
 import logoImage from '@/assets/logo-pisam.png';
 
@@ -42,6 +43,7 @@ const menuItems = [
   { title: 'Équipe dirigeante', url: '/admin/leadership', icon: UserCog },
   { title: 'CMS', url: '/admin/cms', icon: Palette },
   { title: 'Notifications', url: '/admin/notifications', icon: Bell },
+  { title: 'Maintenance', url: '/admin/maintenance', icon: Wrench },
   { title: 'Administrateurs', url: '/admin/admins', icon: Shield },
 ];
 
