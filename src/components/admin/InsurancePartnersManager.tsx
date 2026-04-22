@@ -31,7 +31,7 @@ import { CSS } from '@dnd-kit/utilities';
 interface InsurancePartner {
   id: string;
   name: string;
-  logo_url: string;
+  logo_url: string | null;
   website_url: string | null;
   display_order: number;
   is_active: boolean;
@@ -179,7 +179,7 @@ export function InsurancePartnersManager() {
         .from('insurance_partners')
         .insert({
           name: data.name,
-          logo_url: data.logo_url,
+          logo_url: data.logo_url || null,
           website_url: data.website_url || null,
           is_active: data.is_active,
           display_order: maxOrder + 1,
@@ -203,7 +203,7 @@ export function InsurancePartnersManager() {
         .from('insurance_partners')
         .update({
           name: data.name,
-          logo_url: data.logo_url,
+          logo_url: data.logo_url || null,
           website_url: data.website_url || null,
           is_active: data.is_active,
         })
@@ -316,8 +316,8 @@ export function InsurancePartnersManager() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.logo_url) {
-      toast.error('Le nom et le logo sont obligatoires');
+    if (!formData.name) {
+      toast.error('Le nom de l\'assurance est obligatoire');
       return;
     }
 

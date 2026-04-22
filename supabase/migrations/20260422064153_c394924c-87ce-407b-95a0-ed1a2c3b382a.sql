@@ -1,0 +1,1 @@
+ALTER TABLE public.insurance_partners ALTER COLUMN logo_url DROP NOT NULL;
