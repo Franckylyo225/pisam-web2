@@ -93,11 +93,16 @@ function SortablePartnerCard({ partner, onEdit, onDelete, onToggleActive }: Sort
                   className="max-w-full max-h-full object-contain p-2"
                 />
               ) : (
-                <span className="text-xs text-muted-foreground">Pas de logo</span>
+                <span className="text-xs text-muted-foreground italic">Sans logo (recherche uniquement)</span>
               )}
             </div>
             
             <h4 className="font-medium text-sm truncate">{partner.name}</h4>
+            {!partner.logo_url && (
+              <span className="inline-block text-[10px] uppercase tracking-wide bg-muted px-2 py-0.5 rounded mt-1 text-muted-foreground">
+                Hors carrousel
+              </span>
+            )}
             
             {partner.website_url && (
               <a 
@@ -373,11 +378,16 @@ export function InsurancePartnersManager() {
                 />
               </div>
 
-              <ImageUploader
-                value={formData.logo_url}
-                onChange={(url) => setFormData({ ...formData, logo_url: url })}
-                bucket="article-images"
-              />
+              <div className="space-y-1">
+                <ImageUploader
+                  value={formData.logo_url}
+                  onChange={(url) => setFormData({ ...formData, logo_url: url })}
+                  bucket="article-images"
+                />
+                <p className="text-xs text-muted-foreground">
+                  Logo optionnel. Sans logo, l'assurance reste recherchable mais n'apparaît pas dans le carrousel défilant.
+                </p>
+              </div>
 
               <div className="space-y-2">
                 <Label htmlFor="website_url">Site web (optionnel)</Label>
