@@ -161,7 +161,11 @@ export default function DoctorsAdmin() {
     setSavingDoctor(false);
 
     if (error) {
-      toast.error('Erreur lors de la sauvegarde');
+      toast.error(
+        error.message.includes('duplicate') || error.code === '23505'
+          ? 'Un médecin avec ce nom existe déjà dans cette spécialité'
+          : 'Erreur lors de la sauvegarde'
+      );
       return;
     }
 
