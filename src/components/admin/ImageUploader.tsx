@@ -108,8 +108,11 @@ export function ImageUploader({ value, onChange, bucket = 'article-images', labe
         </div>
       ) : (
         <div 
-          className="border-2 border-dashed rounded-lg p-8 text-center cursor-pointer hover:border-primary/50 transition-colors"
+          className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${isDragging ? 'border-primary bg-primary/5' : 'hover:border-primary/50'}`}
           onClick={() => fileInputRef.current?.click()}
+          onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+          onDragLeave={() => setIsDragging(false)}
+          onDrop={handleDrop}
         >
           {uploading ? (
             <Loader2 className="h-10 w-10 mx-auto text-muted-foreground animate-spin" />
@@ -117,7 +120,7 @@ export function ImageUploader({ value, onChange, bucket = 'article-images', labe
             <>
               <ImageIcon className="h-10 w-10 mx-auto text-muted-foreground mb-2" />
               <p className="text-sm text-muted-foreground mb-2">
-                Cliquez pour ajouter une image
+                Cliquez ou glissez-déposez une image
               </p>
               <p className="text-xs text-muted-foreground">
                 JPG, PNG, WebP (max 5 Mo)
