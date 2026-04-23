@@ -12,6 +12,7 @@ import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import { Plus, Pencil, Trash2, Loader2, Users, Stethoscope } from 'lucide-react';
+import { ImageUploader } from '@/components/admin/ImageUploader';
 
 interface Specialty {
   id: string;
@@ -350,12 +351,11 @@ export default function DoctorsAdmin() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="image_url">URL de l'image</Label>
-                    <Input
-                      id="image_url"
+                    <ImageUploader
+                      label="Photo du médecin"
+                      bucket="doctor-images"
                       value={doctorFormData.image_url}
-                      onChange={(e) => setDoctorFormData(prev => ({ ...prev, image_url: e.target.value }))}
-                      placeholder="https://..."
+                      onChange={(url) => setDoctorFormData(prev => ({ ...prev, image_url: url }))}
                     />
                   </div>
 

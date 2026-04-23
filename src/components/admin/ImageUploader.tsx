@@ -10,9 +10,10 @@ interface ImageUploaderProps {
   value: string;
   onChange: (url: string) => void;
   bucket?: string;
+  label?: string;
 }
 
-export function ImageUploader({ value, onChange, bucket = 'article-images' }: ImageUploaderProps) {
+export function ImageUploader({ value, onChange, bucket = 'article-images', label = 'Image principale' }: ImageUploaderProps) {
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -66,7 +67,7 @@ export function ImageUploader({ value, onChange, bucket = 'article-images' }: Im
 
   return (
     <div className="space-y-2">
-      <Label>Image principale</Label>
+      <Label>{label}</Label>
       
       {value ? (
         <div className="relative group">
