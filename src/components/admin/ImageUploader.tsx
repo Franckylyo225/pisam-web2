@@ -16,12 +16,10 @@ interface ImageUploaderProps {
 
 export function ImageUploader({ value, onChange, bucket = 'article-images', label = 'Image principale', allowUrlInput = true }: ImageUploaderProps) {
   const [uploading, setUploading] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
+  const uploadFile = async (file: File) => {
     if (!file.type.startsWith('image/')) {
       toast.error('Veuillez sélectionner une image');
       return;
@@ -52,6 +50,18 @@ export function ImageUploader({ value, onChange, bucket = 'article-images', labe
     onChange(publicUrl);
     toast.success('Image uploadée');
     setUploading(false);
+  };
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) await uploadFile(file);
+  };
+
+  const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file) await uploadFile(file);
   };
 
   const handleRemove = async () => {
