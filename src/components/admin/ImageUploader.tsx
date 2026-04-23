@@ -11,16 +11,15 @@ interface ImageUploaderProps {
   onChange: (url: string) => void;
   bucket?: string;
   label?: string;
+  allowUrlInput?: boolean;
 }
 
-export function ImageUploader({ value, onChange, bucket = 'article-images', label = 'Image principale' }: ImageUploaderProps) {
+export function ImageUploader({ value, onChange, bucket = 'article-images', label = 'Image principale', allowUrlInput = true }: ImageUploaderProps) {
   const [uploading, setUploading] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
+  const uploadFile = async (file: File) => {
     if (!file.type.startsWith('image/')) {
       toast.error('Veuillez sélectionner une image');
       return;
@@ -51,6 +50,18 @@ export function ImageUploader({ value, onChange, bucket = 'article-images', labe
     onChange(publicUrl);
     toast.success('Image uploadée');
     setUploading(false);
+  };
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) await uploadFile(file);
+  };
+
+  const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file) await uploadFile(file);
   };
 
   const handleRemove = async () => {
@@ -97,8 +108,11 @@ export function ImageUploader({ value, onChange, bucket = 'article-images', labe
         </div>
       ) : (
         <div 
-          className="border-2 border-dashed rounded-lg p-8 text-center cursor-pointer hover:border-primary/50 transition-colors"
+          className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${isDragging ? 'border-primary bg-primary/5' : 'hover:border-primary/50'}`}
           onClick={() => fileInputRef.current?.click()}
+          onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+          onDragLeave={() => setIsDragging(false)}
+          onDrop={handleDrop}
         >
           {uploading ? (
             <Loader2 className="h-10 w-10 mx-auto text-muted-foreground animate-spin" />
@@ -106,7 +120,7 @@ export function ImageUploader({ value, onChange, bucket = 'article-images', labe
             <>
               <ImageIcon className="h-10 w-10 mx-auto text-muted-foreground mb-2" />
               <p className="text-sm text-muted-foreground mb-2">
-                Cliquez pour ajouter une image
+                Cliquez ou glissez-déposez une image
               </p>
               <p className="text-xs text-muted-foreground">
                 JPG, PNG, WebP (max 5 Mo)
@@ -125,14 +139,16 @@ export function ImageUploader({ value, onChange, bucket = 'article-images', labe
         disabled={uploading}
       />
 
-      <div className="flex gap-2">
-        <Input
-          placeholder="Ou collez une URL d'image..."
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="text-xs"
-        />
-      </div>
+      {allowUrlInput && (
+        <div className="flex gap-2">
+          <Input
+            placeholder="Ou collez une URL d'image..."
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            className="text-xs"
+          />
+        </div>
+      )}
     </div>
   );
 }

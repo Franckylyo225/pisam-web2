@@ -356,6 +356,7 @@ export default function DoctorsAdmin() {
                       bucket="doctor-images"
                       value={doctorFormData.image_url}
                       onChange={(url) => setDoctorFormData(prev => ({ ...prev, image_url: url }))}
+                      allowUrlInput={false}
                     />
                   </div>
 
