@@ -12,6 +12,7 @@ import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import { Plus, Pencil, Trash2, Loader2, Users, Stethoscope } from 'lucide-react';
+import { ImageUploader } from '@/components/admin/ImageUploader';
 
 interface Specialty {
   id: string;
