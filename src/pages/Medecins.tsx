@@ -367,8 +367,8 @@ const Medecins = () => {
                   <p className="text-sm text-muted-foreground">
                     Pour prendre rendez-vous, contactez-nous au
                   </p>
-                  <a href="tel:+22527224831 12" className="text-lg font-bold text-primary mt-1 block hover:underline">
-                    +225 27 22 48 31 12
+                  <a href="tel:+2252722550000" className="text-lg font-bold text-primary mt-1 block hover:underline">
+                    +225 27 22 55 00 00
                   </a>
                 </div>
               </div>
