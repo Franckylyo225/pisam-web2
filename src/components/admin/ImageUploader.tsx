@@ -126,14 +126,16 @@ export function ImageUploader({ value, onChange, bucket = 'article-images', labe
         disabled={uploading}
       />
 
-      <div className="flex gap-2">
-        <Input
-          placeholder="Ou collez une URL d'image..."
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="text-xs"
-        />
-      </div>
+      {allowUrlInput && (
+        <div className="flex gap-2">
+          <Input
+            placeholder="Ou collez une URL d'image..."
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            className="text-xs"
+          />
+        </div>
+      )}
     </div>
   );
 }
