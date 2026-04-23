@@ -11,9 +11,10 @@ interface ImageUploaderProps {
   onChange: (url: string) => void;
   bucket?: string;
   label?: string;
+  allowUrlInput?: boolean;
 }
 
-export function ImageUploader({ value, onChange, bucket = 'article-images', label = 'Image principale' }: ImageUploaderProps) {
+export function ImageUploader({ value, onChange, bucket = 'article-images', label = 'Image principale', allowUrlInput = true }: ImageUploaderProps) {
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
