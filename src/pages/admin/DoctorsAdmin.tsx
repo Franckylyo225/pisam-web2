@@ -351,12 +351,11 @@ export default function DoctorsAdmin() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="image_url">URL de l'image</Label>
-                    <Input
-                      id="image_url"
+                    <ImageUploader
+                      label="Photo du médecin"
+                      bucket="doctor-images"
                       value={doctorFormData.image_url}
-                      onChange={(e) => setDoctorFormData(prev => ({ ...prev, image_url: e.target.value }))}
-                      placeholder="https://..."
+                      onChange={(url) => setDoctorFormData(prev => ({ ...prev, image_url: url }))}
                     />
                   </div>
 
