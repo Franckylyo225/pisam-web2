@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { toast } from "sonner";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
+import * as XLSX from "xlsx";
 import { 
   Search, 
   Eye, 
@@ -24,7 +25,8 @@ import {
   Image,
   CheckCircle,
   Clock,
-  XCircle
+  XCircle,
+  Download
 } from "lucide-react";
 
 interface HealthCheckRegistration {
@@ -128,11 +130,65 @@ const HealthCheckAdmin = () => {
     completed: registrations?.filter(r => r.status === 'completed').length || 0,
   };
 
+  const statusLabel = (status: string) => {
+    switch (status) {
+      case 'pending': return 'En attente';
+      case 'confirmed': return 'Confirmé';
+      case 'completed': return 'Terminé';
+      case 'cancelled': return 'Annulé';
+      default: return status;
+    }
+  };
+
+  const handleExportExcel = () => {
+    const dataToExport = filteredRegistrations && filteredRegistrations.length > 0
+      ? filteredRegistrations
+      : registrations;
+
+    if (!dataToExport || dataToExport.length === 0) {
+      toast.error("Aucune donnée à exporter");
+      return;
+    }
+
+    const rows = dataToExport.map((reg) => ({
+      "Nom complet": reg.full_name,
+      "Email": reg.email,
+      "Téléphone": reg.phone,
+      "Statut": statusLabel(reg.status),
+      "Message": reg.message || "",
+      "Document joint": reg.image_url || "",
+      "Date de demande": format(new Date(reg.created_at), "dd/MM/yyyy HH:mm", { locale: fr }),
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(rows);
+    worksheet['!cols'] = [
+      { wch: 25 }, { wch: 30 }, { wch: 18 }, { wch: 14 },
+      { wch: 40 }, { wch: 40 }, { wch: 20 },
+    ];
+
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Bilans de santé");
+
+    const fileName = `bilans-sante-${format(new Date(), "yyyy-MM-dd")}.xlsx`;
+    XLSX.writeFile(workbook, fileName);
+    toast.success(`${dataToExport.length} demande(s) exportée(s)`);
+  };
+
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">Bilan de Santé</h1>
-        <p className="text-muted-foreground mt-1">Gérez les demandes de rendez-vous pour le bilan de santé</p>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">Bilan de Santé</h1>
+          <p className="text-muted-foreground mt-1">Gérez les demandes de rendez-vous pour le bilan de santé</p>
+        </div>
+        <Button
+          onClick={handleExportExcel}
+          variant="outline"
+          disabled={!registrations || registrations.length === 0}
+        >
+          <Download className="w-4 h-4 mr-2" />
+          Exporter Excel
+        </Button>
       </div>
 
       {/* Stats Cards */}
