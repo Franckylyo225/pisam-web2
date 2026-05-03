@@ -54,6 +54,7 @@ const Patients = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [showFullList, setShowFullList] = useState(false);
   const [fullListFilter, setFullListFilter] = useState('');
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const { data: insurancePartners } = useQuery({
     queryKey: ['insurance-partners'],
@@ -74,16 +75,26 @@ const Patients = () => {
     if (!searchInsurance.trim()) return;
 
     setIsSearching(true);
+    setShowSuggestions(false);
 
     // Simuler une recherche
     setTimeout(() => {
+      const query = searchInsurance.trim().toLowerCase();
       const found = insurancePartners?.some(
-        (partner) => partner.name.toLowerCase().includes(searchInsurance.toLowerCase())
+        (partner) => partner.name.toLowerCase() === query
       );
       setSearchResult(found ? 'found' : 'not-found');
       setIsSearching(false);
     }, 500);
   };
+
+  const suggestions = (() => {
+    const q = searchInsurance.trim().toLowerCase();
+    if (!q || !insurancePartners) return [];
+    return insurancePartners
+      .filter((p) => p.name.toLowerCase().startsWith(q))
+      .slice(0, 8);
+  })();
 
   return <>
       <Helmet>
@@ -148,10 +159,36 @@ const Patients = () => {
                         onChange={(e) => {
                           setSearchInsurance(e.target.value);
                           setSearchResult(null);
+                          setShowSuggestions(true);
                         }}
+                        onFocus={() => setShowSuggestions(true)}
+                        onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
+                        autoComplete="off"
                         className="pl-10" />
 
                       </div>
+                      {showSuggestions && suggestions.length > 0 && (
+                        <div className="absolute left-0 right-0 top-full mt-1 z-20 bg-popover border rounded-md shadow-lg max-h-64 overflow-y-auto">
+                          {suggestions.map((s) => (
+                            <button
+                              type="button"
+                              key={s.id}
+                              onMouseDown={(e) => e.preventDefault()}
+                              onClick={() => {
+                                setSearchInsurance(s.name);
+                                setSearchResult('found');
+                                setShowSuggestions(false);
+                              }}
+                              className="w-full text-left px-4 py-2 hover:bg-accent hover:text-accent-foreground text-sm flex items-center gap-2"
+                            >
+                              {s.logo_url && (
+                                <img src={s.logo_url} alt={s.name} className="h-6 w-6 object-contain" />
+                              )}
+                              <span>{s.name}</span>
+                            </button>
+                          ))}
+                        </div>
+                      )}
                       <Button type="submit" disabled={isSearching || !searchInsurance.trim()}>
                         {isSearching ?
                       <Loader2 className="h-4 w-4 animate-spin" /> :
