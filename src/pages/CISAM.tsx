@@ -4,6 +4,7 @@ import Footer from "@/components/layout/Footer";
 import cisamHero from "@/assets/cisam-scanner.jpg";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import ImagingExamsSection from "@/components/sections/ImagingExamsSection";
 import { 
   ScanLine, 
   Shield, 
@@ -66,14 +67,6 @@ const services = [
   }
 ];
 
-const examCategories = [
-  "Radiologies standards",
-  "Scanner CT (imagerie 3D)",
-  "IRM (Imagerie par résonance magnétique)",
-  "Échographie (ultrasons)",
-  "Mammographie (dépistage cancer du sein)"
-];
-
 const CISAM = () => {
   return (
     <>
@@ -81,7 +74,7 @@ const CISAM = () => {
         <title>CISAM - Centre d'Imagerie Sainte Anne Marie | PISAM</title>
         <meta 
           name="description" 
-          content="CISAM, Centre d'Imagerie Sainte Anne Marie. Scanner 64 barrettes, IRM, mammographie numérique, échographie à Abidjan. Équipements performants, radiologues experts."
+          content="CISAM, Centre d'Imagerie Sainte Anne Marie à Abidjan : catalogue complet des examens de radiologie, échographie, scanner et IRM. Équipements performants, radiologues experts."
         />
         <link rel="canonical" href="https://www.groupepisam.com/cisam" />
       </Helmet>
