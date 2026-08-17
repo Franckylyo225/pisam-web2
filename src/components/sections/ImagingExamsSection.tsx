@@ -87,9 +87,7 @@ const ImagingExamsSection = () => {
   useEffect(() => {
     setOpenValues((current) => {
       const visibleKeys = grouped.map((group) => group.key);
-      const kept = current.filter((key) => visibleKeys.includes(key));
-      const missing = visibleKeys.filter((key) => !kept.includes(key));
-      return kept.length > 0 ? kept : missing;
+      return current.filter((key) => visibleKeys.includes(key));
     });
   }, [grouped]);
 
