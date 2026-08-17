@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <script type="module">import { injectIntoGlobalHook } from "/@react-refresh";
+injectIntoGlobalHook(window);
+window.$RefreshReg$ = () => {};
+window.$RefreshSig$ = () => (type) => type;</script>
+
+    <script type="module" src="/@vite/client"></script>
+
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PISAM - Polyclinique Internationale Sainte Anne-Marie | Abidjan</title>
+    <meta name="description" content="PISAM, Polyclinique Internationale Sainte Anne-Marie à Abidjan. Excellence médicale, soins de qualité internationale, urgences 24h/24. Plus de 50 spécialités médicales." />
+    <meta name="keywords" content="PISAM, polyclinique, Abidjan, Côte d'Ivoire, hôpital, clinique, urgences, cardiologie, chirurgie, pédiatrie" />
+    <meta name="author" content="PISAM" />
+
+    <meta property="og:title" content="PISAM - Polyclinique Internationale Sainte Anne-Marie" />
+    <meta property="og:description" content="Excellence médicale au cœur d'Abidjan. Soins de qualité internationale, urgences 24h/24." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.groupepisam.com" />
+    <meta property="og:image" content="https://www.groupepisam.com/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="fr_CI" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="PISAM - Polyclinique Internationale Sainte Anne-Marie" />
+    <meta name="twitter:description" content="Excellence médicale au cœur d'Abidjan. Soins de qualité internationale, urgences 24h/24." />
+    <meta name="twitter:image" content="https://www.groupepisam.com/og-image.jpg" />
+
+    <link rel="canonical" href="https://www.groupepisam.com" />
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx?t=1786980939488"></script>
+  </body>
+</html>
