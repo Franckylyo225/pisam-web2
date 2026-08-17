@@ -5,6 +5,11 @@ import cisamHero from "@/assets/cisam-scanner.jpg";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import ImagingExamsSection from "@/components/sections/ImagingExamsSection";
+import equipScanner from "@/assets/cisam-equip-scanner.jpg";
+import equipIrm from "@/assets/cisam-equip-irm.jpg";
+import equipMammographie from "@/assets/cisam-equip-mammographie.jpg";
+import equipEchographie from "@/assets/cisam-equip-echographie.jpg";
+import equipRadiologie from "@/assets/cisam-equip-radiologie.jpg";
 import { 
   ScanLine, 
   Shield, 
@@ -21,31 +26,36 @@ const equipments = [
     name: "Scanner CT 64 Barrettes",
     description: "Imagerie complète en trois dimensions pour un diagnostic précis des pathologies complexes",
     icon: ScanLine,
-    specs: "Technologie innovante et performante"
+    specs: "Technologie innovante et performante",
+    image: equipScanner
   },
   {
     name: "IRM",
     description: "Images claires et détaillées d'une partie du corps grâce à un champ magnétique",
     icon: Monitor,
-    specs: "Sans rayonnement ionisant"
+    specs: "Sans rayonnement ionisant",
+    image: equipIrm
   },
   {
     name: "Mammographie",
     description: "Méthode reconnue comme étant la plus efficace pour le dépistage du cancer du sein",
     icon: Radiation,
-    specs: "Technologie numérique avancée"
+    specs: "Technologie numérique avancée",
+    image: equipMammographie
   },
   {
     name: "Échographie",
     description: "Images diagnostiques des tissus grâce à un faisceau d'ultrasons. Examen simple, indolore et sans risque",
     icon: Heart,
-    specs: "Examen sans rayonnement"
+    specs: "Examen sans rayonnement",
+    image: equipEchographie
   },
   {
     name: "Radiologie standard",
     description: "Diagnostic de fractures, maladies des os, blessures, infections, maladies dégénératives",
     icon: ScanLine,
-    specs: "Imagerie de référence"
+    specs: "Imagerie de référence",
+    image: equipRadiologie
   }
 ];
 
@@ -159,7 +169,17 @@ const CISAM = () => {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
               {equipments.map((equipment, index) => (
-                <Card key={index} className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-border/50">
+                <Card key={index} className="group overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-border/50">
+                  <div className="relative h-44 overflow-hidden bg-muted">
+                    <img
+                      src={equipment.image}
+                      alt={`${equipment.name} - plateau technique CISAM`}
+                      loading="lazy"
+                      width={800}
+                      height={600}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
                       <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-secondary to-primary flex items-center justify-center shrink-0">
