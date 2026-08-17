@@ -78,6 +78,7 @@ export default function ImagingExamsAdmin() {
   const [saving, setSaving] = useState(false);
   const [search, setSearch] = useState("");
   const [modalityFilter, setModalityFilter] = useState("ALL");
+  const [activeTab, setActiveTab] = useState("cisam");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState({ ...emptyForm });
