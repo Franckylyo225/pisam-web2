@@ -198,112 +198,136 @@ export default function ImagingExamsAdmin() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Examens d'imagerie</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Examens disponibles</h1>
           <p className="text-muted-foreground">
-            Gérez le catalogue d'examens affiché sur la page CISAM.
+            Gérez les catalogues d'examens affichés sur les pages CISAM et BioCSAM.
           </p>
         </div>
-        <Button onClick={openCreate}>
-          <Plus className="h-4 w-4 mr-2" />
-          Ajouter un examen
-        </Button>
+        {activeTab === "cisam" && (
+          <Button onClick={openCreate}>
+            <Plus className="h-4 w-4 mr-2" />
+            Ajouter un examen
+          </Button>
+        )}
       </div>
 
-      <Card>
-        <CardContent className="pt-6 space-y-4">
-          <div className="flex flex-col sm:flex-row gap-3">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                value={search}
-                onChange={(event) => setSearch(event.target.value)}
-                placeholder="Rechercher un examen…"
-                className="pl-9"
-              />
-            </div>
-            <Select value={modalityFilter} onValueChange={setModalityFilter}>
-              <SelectTrigger className="sm:w-56">
-                <SelectValue placeholder="Modalité" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="ALL">Toutes les modalités</SelectItem>
-                {MODALITIES.map((item) => (
-                  <SelectItem key={item.value} value={item.value}>
-                    {item.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+      <Tabs value={activeTab} onValueChange={setActiveTab}>
+        <TabsList>
+          <TabsTrigger value="cisam">CISAM (Imagerie)</TabsTrigger>
+          <TabsTrigger value="biocsam">BioCSAM</TabsTrigger>
+        </TabsList>
 
-          <p className="text-sm text-muted-foreground">
-            {filtered.length} examen(s) affiché(s) sur {exams.length}
-          </p>
+        <TabsContent value="cisam" className="space-y-6">
+          <Card>
+            <CardContent className="pt-6 space-y-4">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    value={search}
+                    onChange={(event) => setSearch(event.target.value)}
+                    placeholder="Rechercher un examen…"
+                    className="pl-9"
+                  />
+                </div>
+                <Select value={modalityFilter} onValueChange={setModalityFilter}>
+                  <SelectTrigger className="sm:w-56">
+                    <SelectValue placeholder="Modalité" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="ALL">Toutes les modalités</SelectItem>
+                    {MODALITIES.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
-          {loading ? (
-            <div className="flex justify-center py-12">
-              <Loader2 className="h-6 w-6 animate-spin" />
-            </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Examen</TableHead>
-                    <TableHead>Modalité</TableHead>
-                    <TableHead className="w-24">Ordre</TableHead>
-                    <TableHead className="w-28">Actif</TableHead>
-                    <TableHead className="w-28 text-right">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filtered.map((exam) => (
-                    <TableRow key={exam.id}>
-                      <TableCell>
-                        <div className="font-medium">{exam.name}</div>
-                        {exam.description && (
-                          <div className="text-xs text-muted-foreground">
-                            {exam.description}
-                          </div>
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant="outline">{labelOf(exam.modality)}</Badge>
-                      </TableCell>
-                      <TableCell>{exam.display_order}</TableCell>
-                      <TableCell>
-                        <Switch
-                          checked={exam.is_active}
-                          onCheckedChange={() => toggleActive(exam)}
-                        />
-                      </TableCell>
-                      <TableCell className="text-right space-x-1">
-                        <Button variant="ghost" size="icon" onClick={() => openEdit(exam)}>
-                          <Pencil className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => setDeleteId(exam.id)}
-                        >
-                          <Trash2 className="h-4 w-4 text-destructive" />
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                  {filtered.length === 0 && (
-                    <TableRow>
-                      <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
-                        Aucun examen trouvé
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </div>
-          )}
-        </CardContent>
-      </Card>
+              <p className="text-sm text-muted-foreground">
+                {filtered.length} examen(s) affiché(s) sur {exams.length}
+              </p>
+
+              {loading ? (
+                <div className="flex justify-center py-12">
+                  <Loader2 className="h-6 w-6 animate-spin" />
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Examen</TableHead>
+                        <TableHead>Modalité</TableHead>
+                        <TableHead className="w-24">Ordre</TableHead>
+                        <TableHead className="w-28">Actif</TableHead>
+                        <TableHead className="w-28 text-right">Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {filtered.map((exam) => (
+                        <TableRow key={exam.id}>
+                          <TableCell>
+                            <div className="font-medium">{exam.name}</div>
+                            {exam.description && (
+                              <div className="text-xs text-muted-foreground">
+                                {exam.description}
+                              </div>
+                            )}
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant="outline">{labelOf(exam.modality)}</Badge>
+                          </TableCell>
+                          <TableCell>{exam.display_order}</TableCell>
+                          <TableCell>
+                            <Switch
+                              checked={exam.is_active}
+                              onCheckedChange={() => toggleActive(exam)}
+                            />
+                          </TableCell>
+                          <TableCell className="text-right space-x-1">
+                            <Button variant="ghost" size="icon" onClick={() => openEdit(exam)}>
+                              <Pencil className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => setDeleteId(exam.id)}
+                            >
+                              <Trash2 className="h-4 w-4 text-destructive" />
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                      {filtered.length === 0 && (
+                        <TableRow>
+                          <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
+                            Aucun examen trouvé
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </Table>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="biocsam">
+          <Card>
+            <CardContent className="pt-6 text-center py-12">
+              <h3 className="font-proxima font-semibold text-lg text-foreground mb-2">
+                Catalogue BioCSAM
+              </h3>
+              <p className="text-muted-foreground max-w-md mx-auto">
+                Cet onglet permettra bientôt de gérer les examens disponibles au laboratoire BioCSAM.
+              </p>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="max-w-lg">
