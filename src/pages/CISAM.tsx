@@ -5,11 +5,15 @@ import cisamHero from "@/assets/cisam-scanner.jpg";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import ImagingExamsSection from "@/components/sections/ImagingExamsSection";
-import equipScanner from "@/assets/cisam-equip-scanner.jpg";
-import equipIrm from "@/assets/cisam-equip-irm.jpg";
 import equipMammographie from "@/assets/cisam-equip-mammographie.jpg";
 import equipEchographie from "@/assets/cisam-equip-echographie.jpg";
-import equipRadiologie from "@/assets/cisam-equip-radiologie.jpg";
+import scannerAsset from "@/assets/cisam-scanner-reel.jpg.asset.json";
+import irmAsset from "@/assets/cisam-irm-reel.jpg.asset.json";
+import radiologieAsset from "@/assets/cisam-radiologie-reel.jpg.asset.json";
+
+const equipScanner = scannerAsset.url;
+const equipIrm = irmAsset.url;
+const equipRadiologie = radiologieAsset.url;
 import { 
   ScanLine, 
   Shield, 
