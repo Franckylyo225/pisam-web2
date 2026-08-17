@@ -39,6 +39,7 @@ const ImagingExamsSection = () => {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [modality, setModality] = useState<string>("ALL");
+  const [openValues, setOpenValues] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchExams = async () => {
@@ -83,7 +84,14 @@ const ImagingExamsSection = () => {
     })).filter((group) => group.items.length > 0);
   }, [filtered]);
 
-  const openValues = useMemo(() => grouped.map((group) => group.key), [grouped]);
+  useEffect(() => {
+    setOpenValues((current) => {
+      const visibleKeys = grouped.map((group) => group.key);
+      const kept = current.filter((key) => visibleKeys.includes(key));
+      const missing = visibleKeys.filter((key) => !kept.includes(key));
+      return kept.length > 0 ? kept : missing;
+    });
+  }, [grouped]);
 
   return (
     <section className="py-16 bg-background" id="examens">
@@ -155,7 +163,7 @@ const ImagingExamsSection = () => {
             <Accordion
               type="multiple"
               value={openValues}
-              onValueChange={() => undefined}
+              onValueChange={setOpenValues}
               className="space-y-3"
             >
               {grouped.map((group) => (
