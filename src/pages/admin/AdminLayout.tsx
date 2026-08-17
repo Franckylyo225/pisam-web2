@@ -40,7 +40,7 @@ const menuItems = [
   { title: 'Newsletter', url: '/admin/newsletter', icon: Newspaper },
   { title: 'Bilan de Santé', url: '/admin/health-check', icon: HeartPulse },
   { title: 'Médecins', url: '/admin/doctors', icon: Stethoscope },
-  { title: "Examens d'imagerie", url: '/admin/imaging-exams', icon: ScanLine },
+  { title: "Examens disponibles", url: '/admin/imaging-exams', icon: ScanLine },
   { title: 'Articles', url: '/admin/articles', icon: FileText },
   { title: 'Équipe dirigeante', url: '/admin/leadership', icon: UserCog },
   { title: 'CMS', url: '/admin/cms', icon: Palette },
