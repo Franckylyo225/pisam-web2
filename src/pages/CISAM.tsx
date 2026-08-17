@@ -11,6 +11,7 @@ import irmAsset from "@/assets/cisam-irm-reel.jpg.asset.json";
 import radiologieAsset from "@/assets/cisam-radiologie-reel.jpg.asset.json";
 
 const equipScanner = scannerAsset.url;
+const cisamHero = scannerAsset.url;
 const equipIrm = irmAsset.url;
 const equipRadiologie = radiologieAsset.url;
 import { 
