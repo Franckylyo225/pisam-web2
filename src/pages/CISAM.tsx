@@ -9,6 +9,9 @@ import equipEchographie from "@/assets/cisam-equip-echographie.jpg";
 import scannerAsset from "@/assets/cisam-scanner-reel.jpg.asset.json";
 import irmAsset from "@/assets/cisam-irm-reel.jpg.asset.json";
 import radiologieAsset from "@/assets/cisam-radiologie-reel.jpg.asset.json";
+import cisamPresentationAsset from "@/assets/cisam-presentation.jpg.asset.json";
+
+const cisamPresentationImage = cisamPresentationAsset.url;
 
 const equipScanner = scannerAsset.url;
 const cisamHero = scannerAsset.url;
@@ -124,22 +127,37 @@ const CISAM = () => {
         {/* Introduction */}
         <section className="py-16 bg-background">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <div className="prose prose-lg max-w-none text-center space-y-4 mb-12">
-                <p className="text-muted-foreground leading-relaxed">
-                  Le Centre d'Imagerie Sainte Anne Marie est doté d'équipements d'imagerie médicale et de radiologie 
-                  interventionnelle performants. Ce pôle d'imagerie possède des équipements récents et performants 
-                  <strong> faisant de lui l'un des plus complet de la sous-région</strong>.
-                </p>
-                <p className="text-muted-foreground leading-relaxed">
-                  Ce centre est <strong>divisé en spécialités selon l'organe concerné</strong> par l'examen, l'âge ou le sexe 
-                  du patient. Il est composé d'une <strong>équipe pluridisciplinaire de médecins et de soignants spécialisés</strong> 
-                  organisée autour de trois principaux axes : qualité médicale, sécurisation du patient et prise en charge individuelle.
-                </p>
-                <p className="text-muted-foreground leading-relaxed">
-                  Des équipements de pointe et des technologies innovantes sont mis à votre disposition afin de vous garantir 
-                  une fiabilité des résultats et une rapidité d'exécution.
-                </p>
+            <div className="max-w-6xl mx-auto">
+              <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center mb-12">
+                <div className="order-2 lg:order-1 space-y-4">
+                  <p className="text-muted-foreground leading-relaxed">
+                    Le Centre d'Imagerie Sainte Anne Marie est doté d'équipements d'imagerie médicale et de radiologie 
+                    interventionnelle performants. Ce pôle d'imagerie possède des équipements récents et performants 
+                    <strong> faisant de lui l'un des plus complet de la sous-région</strong>.
+                  </p>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Ce centre est <strong>divisé en spécialités selon l'organe concerné</strong> par l'examen, l'âge ou le sexe 
+                    du patient. Il est composé d'une <strong>équipe pluridisciplinaire de médecins et de soignants spécialisés</strong> 
+                    organisée autour de trois principaux axes : qualité médicale, sécurisation du patient et prise en charge individuelle.
+                  </p>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Des équipements de pointe et des technologies innovantes sont mis à votre disposition afin de vous garantir 
+                    une fiabilité des résultats et une rapidité d'exécution.
+                  </p>
+                </div>
+
+                <div className="order-1 lg:order-2">
+                  <div className="relative overflow-hidden rounded-2xl shadow-xl">
+                    <img
+                      src={cisamPresentationImage}
+                      alt="Équipement moderne du Centre d'Imagerie Sainte Anne Marie"
+                      loading="lazy"
+                      width={800}
+                      height={600}
+                      className="w-full h-auto object-cover"
+                    />
+                  </div>
+                </div>
               </div>
 
               <div className="grid md:grid-cols-3 gap-6">
