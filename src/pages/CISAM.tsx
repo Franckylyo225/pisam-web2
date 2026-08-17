@@ -184,34 +184,8 @@ const CISAM = () => {
           </div>
         </section>
 
-        {/* Types d'examens */}
-        <section className="py-16 bg-background">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-12">
-                <h2 className="font-proxima text-3xl md:text-4xl font-bold text-foreground mb-4">
-                  Les services du centre d'imagerie
-                </h2>
-                <p className="text-muted-foreground max-w-2xl mx-auto">
-                  Il est important de savoir que la radiologie conventionnelle demeure nécessaire et conseillée en première 
-                  intention afin de minimiser les risques d'irradiations.
-                </p>
-              </div>
-
-              <div className="grid sm:grid-cols-2 gap-4">
-                {examCategories.map((exam, index) => (
-                  <div 
-                    key={index}
-                    className="flex items-start gap-3 p-4 rounded-lg bg-muted/50 hover:bg-secondary/5 transition-colors border border-border/50"
-                  >
-                    <CheckCircle className="h-5 w-5 text-secondary shrink-0 mt-0.5" />
-                    <span className="text-foreground font-medium text-sm">{exam}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* Catalogue des examens */}
+        <ImagingExamsSection />
 
         {/* Important Information */}
         <section className="py-16 bg-muted/30">
