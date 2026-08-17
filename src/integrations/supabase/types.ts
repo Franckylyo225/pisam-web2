@@ -306,6 +306,42 @@ export type Database = {
         }
         Relationships: []
       }
+      imaging_exams: {
+        Row: {
+          created_at: string
+          description: string | null
+          display_order: number
+          id: string
+          is_active: boolean
+          modality: string
+          name: string
+          preparation: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          id?: string
+          is_active?: boolean
+          modality: string
+          name: string
+          preparation?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          id?: string
+          is_active?: boolean
+          modality?: string
+          name?: string
+          preparation?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       insurance_partners: {
         Row: {
           created_at: string
