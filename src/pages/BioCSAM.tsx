@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import LabExamsSection from "@/components/sections/LabExamsSection";
 import biocsamHero from "@/assets/biocsam-hero.jpg";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -211,6 +212,9 @@ const BioCSAM = () => {
             </div>
           </div>
         </section>
+
+        {/* Examens disponibles */}
+        <LabExamsSection />
 
         {/* Informations pratiques */}
         <section className="py-16 bg-muted/30">

@@ -42,6 +42,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { Plus, Pencil, Trash2, Loader2, Search } from "lucide-react";
+import LabExamsManager from "@/components/admin/LabExamsManager";
 
 type Exam = {
   id: string;
@@ -316,16 +317,7 @@ export default function ImagingExamsAdmin() {
         </TabsContent>
 
         <TabsContent value="biocsam">
-          <Card>
-            <CardContent className="pt-6 text-center py-12">
-              <h3 className="font-proxima font-semibold text-lg text-foreground mb-2">
-                Catalogue BioCSAM
-              </h3>
-              <p className="text-muted-foreground max-w-md mx-auto">
-                Cet onglet permettra bientôt de gérer les examens disponibles au laboratoire BioCSAM.
-              </p>
-            </CardContent>
-          </Card>
+          <LabExamsManager />
         </TabsContent>
       </Tabs>
 

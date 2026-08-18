@@ -375,6 +375,45 @@ export type Database = {
         }
         Relationships: []
       }
+      lab_exams: {
+        Row: {
+          b_value: number | null
+          category: string
+          created_at: string
+          description: string | null
+          display_order: number
+          id: string
+          is_active: boolean
+          name: string
+          preparation: string | null
+          updated_at: string
+        }
+        Insert: {
+          b_value?: number | null
+          category: string
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          id?: string
+          is_active?: boolean
+          name: string
+          preparation?: string | null
+          updated_at?: string
+        }
+        Update: {
+          b_value?: number | null
+          category?: string
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          id?: string
+          is_active?: boolean
+          name?: string
+          preparation?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       leadership_team: {
         Row: {
           bio: string | null
