@@ -33,6 +33,7 @@ import {
   ScanLine
 } from 'lucide-react';
 import logoImage from '@/assets/logo-pisam.png';
+import { toast } from '@/hooks/use-toast';
 
 const menuItems = [
   { title: 'Tableau de bord', url: '/admin', icon: LayoutDashboard },
