@@ -98,6 +98,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       email,
       password,
     });
+    if (!error) {
+      localStorage.setItem(SESSION_START_KEY, String(Date.now()));
+      localStorage.setItem(LAST_ACTIVITY_KEY, String(Date.now()));
+      setSessionExpired(false);
+    }
     return { error: error as Error | null };
   };
 
