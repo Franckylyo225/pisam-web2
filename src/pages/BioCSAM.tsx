@@ -212,26 +212,44 @@ const BioCSAM = () => {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-              {disciplines.map((discipline, index) => (
-                <Card key={index} className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-border/50">
-                  <CardContent className="p-6">
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center shrink-0">
-                        <discipline.icon className="h-6 w-6 text-white" />
-                      </div>
-                      <div>
-                        <h3 className="font-proxima font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
-                          {discipline.name}
-                        </h3>
-                        <p className="text-sm text-muted-foreground">
+            <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-start max-w-6xl mx-auto">
+              {/* Image à gauche */}
+              <div className="relative overflow-hidden rounded-2xl shadow-xl">
+                <img
+                  src={labScientist}
+                  alt="Technicienne de laboratoire BioCSAM - Disciplines biologiques"
+                  loading="lazy"
+                  width={800}
+                  height={600}
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+
+              {/* Accordion à droite */}
+              <Accordion type="single" collapsible className="w-full">
+                {disciplines.map((discipline, index) => {
+                  const Icon = discipline.icon;
+                  return (
+                    <AccordionItem key={index} value={`discipline-${index}`}>
+                      <AccordionTrigger className="text-left hover:no-underline py-5">
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center shrink-0">
+                            <Icon className="h-5 w-5 text-white" />
+                          </div>
+                          <span className="font-proxima font-semibold text-foreground">
+                            {discipline.name}
+                          </span>
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <p className="text-muted-foreground leading-relaxed pl-14">
                           {discipline.description}
                         </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                      </AccordionContent>
+                    </AccordionItem>
+                  );
+                })}
+              </Accordion>
             </div>
           </div>
         </section>
