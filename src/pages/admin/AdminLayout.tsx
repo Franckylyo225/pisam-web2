@@ -30,7 +30,8 @@ import {
   Bell,
   Newspaper,
   Wrench,
-  ScanLine
+  ScanLine,
+  UserCircle
 } from 'lucide-react';
 import logoImage from '@/assets/logo-pisam.png';
 import { toast } from '@/hooks/use-toast';
@@ -48,6 +49,7 @@ const menuItems = [
   { title: 'Notifications', url: '/admin/notifications', icon: Bell },
   { title: 'Maintenance', url: '/admin/maintenance', icon: Wrench },
   { title: 'Administrateurs', url: '/admin/admins', icon: Shield },
+  { title: 'Mon compte', url: '/admin/profile', icon: UserCircle },
 ];
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
