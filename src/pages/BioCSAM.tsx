@@ -3,7 +3,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import LabExamsSection from "@/components/sections/LabExamsSection";
 import biocsamHero from "@/assets/biocsam-hero.jpg";
-import biocsamPresentationImage from "@/assets/biocsam-presentation.jpg.asset.json";
+import biocsamPresentationImage from "@/assets/biocsam-presentation.jpg";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { 
