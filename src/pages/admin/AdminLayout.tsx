@@ -50,9 +50,19 @@ const menuItems = [
 ];
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
-  const { user, isAdmin, isApproved, isSuperAdmin, isLoading, signOut } = useAuth();
+  const { user, isAdmin, isApproved, isSuperAdmin, isLoading, signOut, sessionExpired } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    if (sessionExpired) {
+      toast({
+        title: 'Session expirée',
+        description: 'Vous avez été déconnecté après 30 minutes d\'inactivité.',
+        variant: 'destructive',
+      });
+    }
+  }, [sessionExpired]);
 
   useEffect(() => {
     if (!isLoading) {
