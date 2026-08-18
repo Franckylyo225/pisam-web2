@@ -3,6 +3,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import LabExamsSection from "@/components/sections/LabExamsSection";
 import biocsamHero from "@/assets/biocsam-hero.jpg";
+import biocsamPresentationImage from "@/assets/biocsam-presentation.jpg";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { 
@@ -97,8 +98,40 @@ const BioCSAM = () => {
         {/* Introduction */}
         <section className="py-16 bg-background">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <div className="grid md:grid-cols-3 gap-6 mb-12">
+            <div className="max-w-6xl mx-auto">
+              <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center mb-12">
+                <div className="order-2 lg:order-1 space-y-4">
+                  <p className="text-muted-foreground leading-relaxed">
+                    Engagée dans le système management par la qualité depuis 2007, la PISAM a ciblé la certification 
+                    de ses services en démarche qualité. Le but de la PISAM a toujours été la conformité aux normes 
+                    de qualité internationales, afin d'offrir à ses patients un accueil et une prise en charge personnalisés.
+                  </p>
+                  <p className="text-muted-foreground leading-relaxed">
+                    C'est dans cette optique que le laboratoire <strong>BioCSAM</strong> (Laboratoire de Biologie Clinique 
+                    Sainte Anne-Marie) a vu le jour et a obtenu la certification (BSI) <strong>ISO 9001, version 2008</strong> en décembre 2013.
+                  </p>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Laboratoire conventionné, il est au service des patients et des équipes médicales et soignantes de 
+                    l'établissement <strong>24h/24 et 7j/7</strong>. Il est également ouvert à tout patient extérieur 
+                    pour la réalisation des analyses prescrites par son médecin traitant.
+                  </p>
+                </div>
+
+                <div className="order-1 lg:order-2">
+                  <div className="relative overflow-hidden rounded-2xl shadow-xl">
+                    <img
+                      src={biocsamPresentationImage}
+                      alt="Laboratoire BioCSAM - Analyses médicales à PISAM"
+                      loading="lazy"
+                      width={800}
+                      height={600}
+                      className="w-full h-auto object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-6">
                 <Card className="text-center border-primary/20 hover:shadow-lg transition-shadow">
                   <CardContent className="pt-6">
                     <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
@@ -126,23 +159,6 @@ const BioCSAM = () => {
                     <p className="text-muted-foreground text-sm">Patients internes et externes sur prescription médicale</p>
                   </CardContent>
                 </Card>
-              </div>
-
-              <div className="prose prose-lg max-w-none text-center space-y-4">
-                <p className="text-muted-foreground leading-relaxed">
-                  Engagée dans le système management par la qualité depuis 2007, la PISAM a ciblé la certification 
-                  de ses services en démarche qualité. Le but de la PISAM a toujours été la conformité aux normes 
-                  de qualité internationales, afin d'offrir à ses patients un accueil et une prise en charge personnalisés.
-                </p>
-                <p className="text-muted-foreground leading-relaxed">
-                  C'est dans cette optique que le laboratoire <strong>BioCSAM</strong> (Laboratoire de Biologie Clinique 
-                  Sainte Anne-Marie) a vu le jour et a obtenu la certification (BSI) <strong>ISO 9001, version 2008</strong> en décembre 2013.
-                </p>
-                <p className="text-muted-foreground leading-relaxed">
-                  Laboratoire conventionné, il est au service des patients et des équipes médicales et soignantes de 
-                  l'établissement <strong>24h/24 et 7j/7</strong>. Il est également ouvert à tout patient extérieur 
-                  pour la réalisation des analyses prescrites par son médecin traitant.
-                </p>
               </div>
             </div>
           </div>
