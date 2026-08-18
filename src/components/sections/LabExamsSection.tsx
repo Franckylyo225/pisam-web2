@@ -119,7 +119,7 @@ const LabExamsSection = () => {
             <p className="text-muted-foreground max-w-2xl mx-auto">
               {loading
                 ? "Chargement du catalogue des analyses…"
-                : `${exams.length} analyses réalisées au laboratoire BioCSAM, en biochimie, hématologie, sérologie, microbiologie et hormonologie.`}
+                : `${exams.length} analyses réalisées au laboratoire BIOCSAM, en biochimie, hématologie, sérologie, microbiologie et hormonologie.`}
             </p>
           </div>
 
