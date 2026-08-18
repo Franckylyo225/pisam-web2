@@ -66,10 +66,10 @@ const BioCSAM = () => {
   return (
     <>
       <Helmet>
-        <title>BioCSAM - Laboratoire de Biologie Clinique Sainte Anne-Marie | PISAM</title>
+        <title>BIOCSAM - Laboratoire de Biologie Clinique Sainte Anne-Marie | PISAM</title>
         <meta 
           name="description" 
-          content="BioCSAM, le Laboratoire de Biologie Clinique Sainte Anne-Marie, certifié ISO 9001. Analyses médicales 24h/24, 7j/7 à Abidjan. Hématologie, biochimie, anatomie pathologique."
+          content="BIOCSAM, le Laboratoire de Biologie Clinique Sainte Anne-Marie, certifié ISO 9001. Analyses médicales 24h/24, 7j/7 à Abidjan. Hématologie, biochimie, anatomie pathologique."
         />
         <link rel="canonical" href="https://www.groupepisam.com/biocsam" />
       </Helmet>
@@ -91,7 +91,7 @@ const BioCSAM = () => {
               Laboratoire d'excellence
             </Badge>
             <h1 className="font-proxima text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-              BioCSAM
+              BIOCSAM
             </h1>
             <p className="text-xl md:text-2xl font-light mb-2">
               Laboratoire de Biologie Clinique Sainte Anne-Marie
@@ -114,7 +114,7 @@ const BioCSAM = () => {
                     de qualité internationales, afin d'offrir à ses patients un accueil et une prise en charge personnalisés.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
-                    C'est dans cette optique que le laboratoire <strong>BioCSAM</strong> (Laboratoire de Biologie Clinique 
+                    C'est dans cette optique que le laboratoire <strong>BIOCSAM</strong> (Laboratoire de Biologie Clinique 
                     Sainte Anne-Marie) a vu le jour et a obtenu la certification (BSI) <strong>ISO 9001, version 2008</strong> en décembre 2013.
                   </p>
                   <p className="text-muted-foreground leading-relaxed">
@@ -128,7 +128,7 @@ const BioCSAM = () => {
                   <div className="relative overflow-hidden rounded-2xl shadow-xl">
                     <img
                       src={biocsamPresentationImage}
-                      alt="Laboratoire BioCSAM - Analyses médicales à PISAM"
+                      alt="Laboratoire BIOCSAM - Analyses médicales à PISAM"
                       loading="lazy"
                       width={800}
                       height={600}
@@ -181,7 +181,7 @@ const BioCSAM = () => {
                 </h2>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
                   Plus une maladie est détectée tôt, meilleure sera la prise en charge et le traitement. 
-                  Le laboratoire BioCSAM offre une variété de « check-up ».
+                  Le laboratoire BIOCSAM offre une variété de « check-up ».
                 </p>
               </div>
 
@@ -208,7 +208,7 @@ const BioCSAM = () => {
                 Disciplines biologiques
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Le laboratoire BioCSAM assure la quasi-totalité des disciplines biologiques grâce à plusieurs unités spécialisées.
+                Le laboratoire BIOCSAM assure la quasi-totalité des disciplines biologiques grâce à plusieurs unités spécialisées.
               </p>
             </div>
 
@@ -217,7 +217,7 @@ const BioCSAM = () => {
               <div className="relative overflow-hidden rounded-2xl shadow-xl">
                 <img
                   src={labScientist}
-                  alt="Technicienne de laboratoire BioCSAM - Disciplines biologiques"
+                  alt="Technicienne de laboratoire BIOCSAM - Disciplines biologiques"
                   loading="lazy"
                   width={800}
                   height={600}
