@@ -75,13 +75,14 @@ const LabExamsSection = () => {
   const filtered = useMemo(() => {
     const term = normalize(search.trim());
     return exams.filter((exam) => {
-      const matchCategory = category === "ALL" || exam.category === category;
-      if (!matchCategory) return false;
-      if (!term) return true;
-      const haystack = normalize(
-        `${exam.name} ${LAB_CATEGORY_LABELS[exam.category] ?? exam.category} ${exam.description ?? ""}`
-      );
-      return haystack.includes(term);
+      const matchCategory =
+        !term && (category === "ALL" || exam.category === category);
+      const matchSearch =
+        !term ||
+        normalize(
+          `${exam.name} ${LAB_CATEGORY_LABELS[exam.category] ?? exam.category} ${exam.description ?? ""}`
+        ).includes(term);
+      return matchCategory && matchSearch;
     });
   }, [exams, search, category]);
 
