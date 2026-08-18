@@ -36,6 +36,7 @@ import NotificationSettingsAdmin from "./pages/admin/NotificationSettingsAdmin";
 import NewsletterAdmin from "./pages/admin/NewsletterAdmin";
 import MaintenanceAdmin from "./pages/admin/MaintenanceAdmin";
 import ImagingExamsAdmin from "./pages/admin/ImagingExamsAdmin";
+import ProfileAdmin from "./pages/admin/ProfileAdmin";
 import NotFound from "./pages/NotFound";
 import { MaintenanceGate } from "./components/MaintenanceGate";
 
@@ -83,6 +84,7 @@ const App = () => (
               <Route path="/admin/newsletter" element={<AdminLayout><NewsletterAdmin /></AdminLayout>} />
               <Route path="/admin/maintenance" element={<AdminLayout><MaintenanceAdmin /></AdminLayout>} />
               <Route path="/admin/imaging-exams" element={<AdminLayout><ImagingExamsAdmin /></AdminLayout>} />
+              <Route path="/admin/profile" element={<AdminLayout><ProfileAdmin /></AdminLayout>} />
               
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
