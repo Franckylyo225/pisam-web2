@@ -120,7 +120,7 @@ const BioCSAM = () => {
                 <div className="order-1 lg:order-2">
                   <div className="relative overflow-hidden rounded-2xl shadow-xl">
                     <img
-                      src={biocsamPresentationImage.url}
+                      src={biocsamPresentationImage}
                       alt="Laboratoire BioCSAM - Analyses médicales à PISAM"
                       loading="lazy"
                       width={800}
