@@ -66,13 +66,14 @@ const ImagingExamsSection = () => {
   const filtered = useMemo(() => {
     const term = normalize(search.trim());
     return exams.filter((exam) => {
-      const matchModality = modality === "ALL" || exam.modality === modality;
-      if (!matchModality) return false;
-      if (!term) return true;
-      const haystack = normalize(
-        `${exam.name} ${MODALITY_LABELS[exam.modality] ?? exam.modality} ${exam.description ?? ""}`
-      );
-      return haystack.includes(term);
+      const matchModality =
+        !term && (modality === "ALL" || exam.modality === modality);
+      const matchSearch =
+        !term ||
+        normalize(
+          `${exam.name} ${MODALITY_LABELS[exam.modality] ?? exam.modality} ${exam.description ?? ""}`
+        ).includes(term);
+      return matchModality && matchSearch;
     });
   }, [exams, search, modality]);
 
