@@ -4,14 +4,21 @@ import Footer from "@/components/layout/Footer";
 import LabExamsSection from "@/components/sections/LabExamsSection";
 import biocsamHero from "@/assets/biocsam-hero.jpg";
 import biocsamPresentationImage from "@/assets/biocsam-presentation.jpg";
+import labScientist from "@/assets/pisam2-lab-scientist.jpg";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { 
-  FlaskConical, 
-  Microscope, 
-  TestTube, 
-  Shield, 
-  Clock, 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
+  FlaskConical,
+  Microscope,
+  TestTube,
+  Shield,
+  Clock,
   Users,
   CheckCircle,
   Beaker,
