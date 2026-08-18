@@ -1,8 +1,15 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useRef, useState, ReactNode } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 
 type AppRole = 'super_admin' | 'admin' | 'editor' | null;
+
+// Durée d'inactivité avant déconnexion automatique (30 minutes)
+const IDLE_TIMEOUT_MS = 30 * 60 * 1000;
+// Durée de vie maximale d'une session, même active (12 heures)
+const ABSOLUTE_SESSION_MS = 12 * 60 * 60 * 1000;
+const LAST_ACTIVITY_KEY = 'pisam_last_activity';
+const SESSION_START_KEY = 'pisam_session_start';
 
 interface AuthContextType {
   user: User | null;
@@ -15,6 +22,7 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
   signUp: (email: string, password: string, fullName?: string) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
+  sessionExpired: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -25,6 +33,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [userRole, setUserRole] = useState<AppRole>(null);
   const [isApproved, setIsApproved] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [sessionExpired, setSessionExpired] = useState(false);
+  const idleTimerRef = useRef<number | null>(null);
 
   const isAdmin = userRole === 'admin' || userRole === 'super_admin';
   const isSuperAdmin = userRole === 'super_admin';
@@ -113,7 +123,62 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setSession(null);
     setUserRole(null);
     setIsApproved(false);
+    localStorage.removeItem(LAST_ACTIVITY_KEY);
+    localStorage.removeItem(SESSION_START_KEY);
   };
+
+  // Expiration de session : inactivité (30 min) + durée absolue (12 h)
+  useEffect(() => {
+    if (!user) {
+      if (idleTimerRef.current) window.clearTimeout(idleTimerRef.current);
+      return;
+    }
+
+    if (!localStorage.getItem(SESSION_START_KEY)) {
+      localStorage.setItem(SESSION_START_KEY, String(Date.now()));
+    }
+
+    const expire = async () => {
+      setSessionExpired(true);
+      await signOut();
+    };
+
+    const schedule = () => {
+      if (idleTimerRef.current) window.clearTimeout(idleTimerRef.current);
+      idleTimerRef.current = window.setTimeout(expire, IDLE_TIMEOUT_MS);
+    };
+
+    const markActivity = () => {
+      localStorage.setItem(LAST_ACTIVITY_KEY, String(Date.now()));
+      setSessionExpired(false);
+      schedule();
+    };
+
+    const checkExpiry = () => {
+      const last = Number(localStorage.getItem(LAST_ACTIVITY_KEY) ?? Date.now());
+      const start = Number(localStorage.getItem(SESSION_START_KEY) ?? Date.now());
+      const now = Date.now();
+      if (now - last > IDLE_TIMEOUT_MS || now - start > ABSOLUTE_SESSION_MS) {
+        expire();
+      }
+    };
+
+    const events = ['mousedown', 'keydown', 'touchstart', 'scroll', 'click'];
+    events.forEach((e) => window.addEventListener(e, markActivity, { passive: true }));
+    document.addEventListener('visibilitychange', checkExpiry);
+
+    markActivity();
+    checkExpiry();
+    const interval = window.setInterval(checkExpiry, 60 * 1000);
+
+    return () => {
+      events.forEach((e) => window.removeEventListener(e, markActivity));
+      document.removeEventListener('visibilitychange', checkExpiry);
+      window.clearInterval(interval);
+      if (idleTimerRef.current) window.clearTimeout(idleTimerRef.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id]);
 
   return (
     <AuthContext.Provider value={{ 
@@ -126,7 +191,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       isLoading, 
       signIn, 
       signUp, 
-      signOut 
+      signOut,
+      sessionExpired
     }}>
       {children}
     </AuthContext.Provider>
